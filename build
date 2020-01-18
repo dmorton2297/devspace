@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Testing Command
+test="npm test"
+
+# Start Command
+start="npm start"
+
+while [[ $# -gt 0 ]]; do
+    param="$1"
+    shift
+    case "$param" in
+        test)
+            npm test -- --watchAll
+            break
+            ;;
+        test:watch)
+            npm test
+            break
+            ;;
+        start)
+            npm start
+            break
+            ;;
+    esac
+done
