@@ -14,13 +14,14 @@ const store = createStore(rootReducer);
 
 // Render out the root of the application
 render(
-    <BrowserRouter>
-        <Provider store={store}>
+    <Provider store={store}>
+        <BrowserRouter>
             <ThemeProvider theme={theme}>
                 <Root />
             </ThemeProvider>
-        </Provider>
-    </BrowserRouter>
+        </BrowserRouter>
+    </Provider>
+
     ,
     document.getElementById('root')
 );
