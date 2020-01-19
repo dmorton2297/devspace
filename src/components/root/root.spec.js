@@ -1,6 +1,5 @@
 import React from 'react';
 import { expect } from 'chai';
-'chai';
 import { mount } from 'enzyme';
 
 
