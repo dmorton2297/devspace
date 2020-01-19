@@ -1,10 +1,12 @@
 import React from 'react'
 import styles from './styles';
 import { withStyles } from '@material-ui/core';
-import classNames from 'classnames';
 import { object } from 'prop-types';
 import Login from '../login';
 import { useSelector } from 'react-redux'
+import { Route, Switch } from 'react-router-dom'
+import classNames from 'classnames';
+
 
 /**
  * Root Component of portfolium-frontend.
@@ -17,8 +19,11 @@ const Root = ({ classes }) => {
 
     return (
         <div className={classNames(classes.root, 'root')}>
-            <Login />
+            <Switch>
+                <Route path="/" component={Login} />
+            </Switch>
         </div>
+
     );
 };
 
