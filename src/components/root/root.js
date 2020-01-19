@@ -3,6 +3,7 @@ import styles from './styles';
 import { withStyles } from '@material-ui/core';
 import classNames from 'classnames';
 import { object } from 'prop-types';
+import Login from '../login';
 import { useSelector } from 'react-redux'
 
 /**
@@ -16,7 +17,7 @@ const Root = ({ classes }) => {
 
     return (
         <div className={classNames(classes.root, 'root')}>
-            <h1>{user.name}</h1>
+            <Login />
         </div>
     );
 };
