@@ -3,9 +3,10 @@ import styles from './styles';
 import { withStyles } from '@material-ui/core';
 import { object } from 'prop-types';
 import Login from '../login';
-import { useSelector } from 'react-redux'
+import Home from '../home';
 import { Route, Switch } from 'react-router-dom'
 import classNames from 'classnames';
+import ProtectedRoute from './protected-route';
 
 
 /**
@@ -14,12 +15,10 @@ import classNames from 'classnames';
  * @param {object} $0.classes - Styling classes. 
  */
 const Root = ({ classes }) => {
-    // Get the user from the redux store.
-    const user = useSelector(state => state.user);
-
     return (
         <div className={classNames(classes.root, 'root')}>
             <Switch>
+                <ProtectedRoute path="/home" component={Home} />
                 <Route path="/" component={Login} />
             </Switch>
         </div>

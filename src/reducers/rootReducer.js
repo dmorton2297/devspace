@@ -1,17 +1,6 @@
-// Initial State of the applciation
-const initialState = {
-    user: {
-        name: 'Dan Morton'
-    }
-};
+import userReducer from './userReducer';
+import { combineReducers } from 'redux'
 
-/**
- * 
- * @param {object} state - State object 
- * @param {object} action - Action to perform on state.
- */
-const rootReducer = (state = initialState, action) => {
-    return state;
-};
+const rootReducer = combineReducers({ userReducer });
 
 export default rootReducer;
