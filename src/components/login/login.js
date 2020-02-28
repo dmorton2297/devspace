@@ -31,7 +31,7 @@ const Login = ({ classes }) => {
     return (
         <div className={classNames(classes.container, 'container')}>
             <h1>Login Page</h1>
-            <button onClick={login}></button>
+            <button onClick={login}>Login</button>
         </div>
     );
 };

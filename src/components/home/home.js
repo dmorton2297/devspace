@@ -3,12 +3,13 @@ import { withStyles } from '@material-ui/styles';
 import styles from './styles';
 import { object  } from 'prop-types';
 import { useSelector } from 'react-redux';
+import Profile from '../profile';
 
 const Home = ({ classes }) => {
     const user = useSelector(state => state.userReducer);
     return (
         <div className={classes.container}>
-            <h1>Welcome {user.user.name}</h1>
+            <Profile user={user}/>
         </div>
     );
 };
