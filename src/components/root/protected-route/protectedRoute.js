@@ -6,7 +6,7 @@ const ProtectedRoute = ({ path, component }) => {
 
     const user = useSelector(state => state.userReducer);
     const history = useHistory();
-    
+
     useEffect(() => {
         if (!user.user) {
             history.push('/login');

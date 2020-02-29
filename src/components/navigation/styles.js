@@ -20,6 +20,10 @@ const styles = theme => {
             alignItems: 'end'
         },
         navigationButton: {
+            fontFamily: 'Righteous',
+            fontSize: '18px',
+            textAlign: 'right',
+            paddingTop: 10,
             background: 'transparent',
             height: 40,
             border: 'none',
@@ -27,15 +31,15 @@ const styles = theme => {
             borderRight: '1px solid #fff',
             backgroundPosition:'right bottom',
             backgroundSize: '200% 100%',
-            transition:'all 0.5s ease',
-            '&:focus': {
-                background: 'white',
-                color: 'black',
-                outline: '0'
-            }
+            transition:'all 0.3s ease',
+            outline: 0
+        },
+        clicked: {
+            background: 'white',
+            color: 'black',
         },
         firstNavigationButton: {
-            borderLeft: '1px solid #fff'
+            borderLeft: '1px solid #fff',
         }
     });
 }

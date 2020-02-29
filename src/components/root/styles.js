@@ -1,4 +1,4 @@
-const mainSidePadding = 30;
+const mainSidePadding = 0;
 const mainWidth = `calc(100% - ${mainSidePadding * 2}px)`;
 const navigationHeight = 80;
 

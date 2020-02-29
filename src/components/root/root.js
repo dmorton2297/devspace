@@ -8,7 +8,7 @@ import { Route, Switch } from 'react-router-dom'
 import classNames from 'classnames';
 import ProtectedRoute from './protected-route';
 import Navigation from '../navigation/navigation';
-
+  
 
 /**
  * Root Component of portfolium-frontend.

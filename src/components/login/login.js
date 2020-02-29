@@ -20,6 +20,7 @@ const Login = ({ classes }) => {
         }
     }, [user, history])
 
+
     const login = () => {
         loginUser('dan@dev.com', 'pass').then((res) => {
             dispatch(setUser(res.data.user));
@@ -27,6 +28,8 @@ const Login = ({ classes }) => {
             console.error(error);
         });
     };
+
+    login(); //TODO Uncomment
 
     return (
         <div className={classNames(classes.container, 'container')}>
