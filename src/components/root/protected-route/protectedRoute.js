@@ -8,13 +8,13 @@ const ProtectedRoute = ({ path, component }) => {
     const history = useHistory();
 
     useEffect(() => {
-        if (!user.user) {
+        if (!user.id) {
             history.push('/login');
         };
         
     }, [user, history]);
 
-    if (!user.user) {
+    if (!user.id) {
         return <h1>Error occured</h1>;
     }
 

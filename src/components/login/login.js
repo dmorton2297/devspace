@@ -15,7 +15,9 @@ const Login = ({ classes }) => {
 
     // Check to see if the user is logged in
     useEffect(() => {
-        if (user.user) {
+        console.log('in here');
+        console.log(user);
+        if (user.id) {
             history.push('/home');
         }
     }, [user, history])
@@ -23,13 +25,13 @@ const Login = ({ classes }) => {
 
     const login = () => {
         loginUser('dan@dev.com', 'pass').then((res) => {
-            dispatch(setUser(res.data.user));
+            dispatch(setUser(res.data));
         }).catch(error => {
             console.error(error);
         });
     };
 
-    login(); //TODO Uncomment
+    login(); // TODO remove
 
     return (
         <div className={classNames(classes.container, 'container')}>

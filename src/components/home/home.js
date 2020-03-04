@@ -7,6 +7,9 @@ import Profile from '../profile';
 
 const Home = ({ classes }) => {
     const user = useSelector(state => state.userReducer);
+    if (!user.id) {
+        return <div></div>; // TODO - Add spinner
+    } 
     return (
         <div className={classes.container}>
             <Profile user={user}/>
@@ -16,7 +19,7 @@ const Home = ({ classes }) => {
 
 Home.propTypes = {
     classes: object.isRequired,
-    history: object.isRequired
+    history: object.isRequired,
 }
 
 export default withStyles(styles)(Home);

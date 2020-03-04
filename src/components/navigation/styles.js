@@ -5,13 +5,14 @@ const styles = theme => {
             height: '100%',
             backgroundColor: theme.palette.primary.dark,
             display: 'grid',
-            gridTemplateColumns: '150px auto'
+            gridTemplateColumns: '150px calc(100% - 620px) auto'
         },
         logo: {
-            height: '80px',
+            height: '100%',
             width: '100%',
             display: 'grid',
             alignItems: 'center',
+            justifyConent: 'center'
         },
         navigationControl: {
             paddingLeft: 20,
@@ -20,7 +21,7 @@ const styles = theme => {
             alignItems: 'end'
         },
         navigationButton: {
-            fontFamily: 'Righteous',
+            fontFamily: 'Rajdhani',
             fontSize: '18px',
             textAlign: 'right',
             paddingTop: 10,
@@ -38,9 +39,6 @@ const styles = theme => {
             background: 'white',
             color: 'black',
         },
-        firstNavigationButton: {
-            borderLeft: '1px solid #fff',
-        }
     });
 }
 

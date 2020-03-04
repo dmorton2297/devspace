@@ -1,12 +1,13 @@
-const mainSidePadding = 0;
+const mainSidePadding = 100;
 const mainWidth = `calc(100% - ${mainSidePadding * 2}px)`;
 const navigationHeight = 80;
 
-const styles = () => {
+const styles = theme => {
     return ({
         root: {
-            width: '100vw',
-            height: '100vh',
+            width: '100%',
+            height: 'calc(100vh)',
+            backgroundColor: theme.palette.primary.light
         },
         navigation: {
             height: navigationHeight,

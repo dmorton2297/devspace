@@ -6,8 +6,8 @@ import { useSelector } from 'react-redux';
 
 const Button = ({ classes, clicked, first, onClick, text }) => {
     return clicked ?
-        <button onClick={onClick} className={classNames(classes.navigationButton, first ? classes.firstNavigationButton : '', classes.clicked)}>{text}</button> :
-        <button onClick={onClick} className={classNames(classes.navigationButton, classes.firstNavigationButton)}>{text}</button>
+        <button onClick={onClick} className={classNames(classes.navigationButton, classes.clicked)}>{text}</button> :
+        <button onClick={onClick} className={classNames(classes.navigationButton)}>{text}</button>
 }
 
 
@@ -39,9 +39,10 @@ const Navigation = ({ classes }) => {
     return (
         <div className={classNames(classes.container, 'navigation-container')}>
             <div className={classes.logo}>
-                <img src="app-logo.png" alt="app-logo" />
+                <img src="app-logo.png" width="160px" alt="app-logo" />
             </div>
-            {user.user &&
+            <div></div>
+            {user.id &&
                 <div className={classes.navigationControl}>
                     <Button classes={classes} clicked={profile} first={true} onClick={onProfileClicked} text={'Profile'} />
                     <Button classes={classes} clicked={blog} first={false} onClick={onBlogClicked} text={'Blog'} />
