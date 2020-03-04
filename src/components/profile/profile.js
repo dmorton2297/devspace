@@ -2,7 +2,7 @@ import React from 'react'
 import { withStyles } from '@material-ui/styles'
 import styles from './styles';
 import classNames from 'classnames';
-import { Button } from '@material-ui/core';
+import DefaultButton from '../default-button';
 
 
 const Profile = ({ classes, user }) => {
@@ -11,6 +11,11 @@ const Profile = ({ classes, user }) => {
         <div className={classNames(classes.container, 'profile-container')}>
             <div className={classes.header}>
                 <h1 className={classes.headerText}>{user.name}'s Portfolio</h1>
+                <div className={classes.tags}>
+                    {user.tags.map(x => (
+                        <p className={classes.tag}>{x}</p>
+                    ))}
+                </div>
             </div>
             <div className={classNames(classes.infoContainer)}>
                 <div className={classNames(classes.imageContainer)}>
@@ -21,12 +26,17 @@ const Profile = ({ classes, user }) => {
                         <h2 className={classNames(classes.infoItem)}>{user.title}</h2>
                         <h3 className={classNames(classes.infoItem, classes.company)}>{user.company}</h3>
                         <h3 className={classNames(classes.infoItem)}>Contact: {user.email}</h3>
-                        <div>
-                            <Button>Github</Button>
-                            <Button>LinkedIn</Button>
+                        <p className={classNames(classes.infoItem, classes.summary)}>"{user.summary}"</p>
+                        <div className={classes.socialButtons}>
+                            <DefaultButton>Github</DefaultButton>
+                            <DefaultButton>LinkedIn</DefaultButton>
                         </div>
                     </div>
                 </div>
+
+            </div>
+            <div className={classNames(classes.projectsContainer)}>
+                <h2 className={classes.projectsHeader}>Projects</h2>
             </div>
         </div>
     )

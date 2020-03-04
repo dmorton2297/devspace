@@ -1,6 +1,9 @@
 ## Portfolium Frontend Repository
 Last Revision: 1/19/2020 13:38 PM
 
+### Screen Capture
+![App Image](app.png)
+
 ### About
 > Portfolium is a portfolio building tool specifically designed for software engineers. A place to share your skills, provide though leadership, and showcase your projects all in one.
 
