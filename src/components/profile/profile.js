@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/styles'
 import styles from './styles';
 import classNames from 'classnames';
 import DefaultButton from '../default-button';
+import { Typography } from '@material-ui/core';
 
 
 const Profile = ({ classes, user }) => {
@@ -10,10 +11,10 @@ const Profile = ({ classes, user }) => {
     return (
         <div className={classNames(classes.container, 'profile-container')}>
             <div className={classes.header}>
-                <h1 className={classes.headerText}>{user.name}'s Portfolio</h1>
+                <Typography variant="h1" className={classes.headerText}>{user.name}'s Portfolio</Typography>
                 <div className={classes.tags}>
                     {user.tags.map(x => (
-                        <p className={classes.tag}>{x}</p>
+                        <Typography variant="body1" className={classes.tag}>{x}</Typography>
                     ))}
                 </div>
             </div>
@@ -23,10 +24,10 @@ const Profile = ({ classes, user }) => {
                 </div>
                 <div className={classNames(classes.generalInfoContainer)}>
                     <div>
-                        <h2 className={classNames(classes.infoItem)}>{user.title}</h2>
-                        <h3 className={classNames(classes.infoItem, classes.company)}>{user.company}</h3>
-                        <h3 className={classNames(classes.infoItem)}>Contact: {user.email}</h3>
-                        <p className={classNames(classes.infoItem, classes.summary)}>"{user.summary}"</p>
+                        <Typography variant="h2" className={classNames(classes.infoItem)}>{user.title}</Typography>
+                        <Typography variant="h3" className={classNames(classes.infoItem, classes.company)}>{user.company}</Typography>
+                        <Typography variant="h3" className={classNames(classes.infoItem)}>Contact: {user.email}</Typography>
+                        <Typography variant="h2" className={classNames(classes.infoItem, classes.summary)}>"{user.summary}"</Typography>
                         <div className={classes.socialButtons}>
                             <DefaultButton>Github</DefaultButton>
                             <DefaultButton>LinkedIn</DefaultButton>

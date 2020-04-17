@@ -21,9 +21,6 @@ const styles = (theme) => {
             padding: '20px 0',
             display: 'flex'
         },
-        headerText: {
-            fontWeight: 400,
-        },
         test: {
             marginLeft: 50
         },
@@ -36,8 +33,6 @@ const styles = (theme) => {
             backgroundColor: theme.palette.primary.main,
             color: theme.palette.primary.light,
             padding: 30,
-            fontStyle: 'italic',
-            fontSize: '18px'
         },
         tag: {
             backgroundColor: theme.palette.primary.main,
