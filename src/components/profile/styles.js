@@ -45,7 +45,7 @@ const styles = (theme) => {
             display: 'flex',
             justifyContent: 'flex-end',
             flexGrow: 1,
-        }
+        },
     });
 };
 

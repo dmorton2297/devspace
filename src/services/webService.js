@@ -8,3 +8,7 @@ import axios from 'axios';
 export const loginUser = (email, password) => {
     return axios.post('http://localhost:3200/login', { email: email, password: password });
 }; 
+
+export const getUserProjects = userId => {
+    return axios.get(`http://localhost:3200/user/${userId}/projects`);
+};

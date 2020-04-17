@@ -1,13 +1,31 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { withStyles } from '@material-ui/styles'
 import styles from './styles';
 import classNames from 'classnames';
 import DefaultButton from '../default-button';
-import { Typography, Card } from '@material-ui/core';
+import { Typography, Card, Grid } from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserProjects } from '../../services/webService';
+import { setProjects } from '../../actions/projectsActions';
+import ProjectCard from '../project-card';
 
 
 const Profile = ({ classes, user }) => {
-    console.log(user);
+    const dispatch = useDispatch();
+    const projects = useSelector(state => state.projectsReducer);
+
+    useEffect(() => {
+        getUserProjects(user.id).then((res) => {
+            dispatch(setProjects(res.data));
+        }).catch(error => {
+            console.error(error);
+        })
+    }, [dispatch, user]);
+
+    if (projects.length === 0) {
+        return <div></div>;
+    }
+    console.log(projects);
     return (
         <div className={classNames(classes.container, 'profile-container')}>
             <Card>
@@ -37,9 +55,18 @@ const Profile = ({ classes, user }) => {
                     </div>
                 </div>
             </Card>
-            <div className={classNames(classes.projectsContainer)}>
-                <h2 className={classes.projectsHeader}>Projects</h2>
-            </div>
+            <React.Fragment>
+                <Typography variant="h1">Projects</Typography>
+                <Grid container spacing={3}>
+                    {projects.map(project => (
+                        <Grid item xs={4}>
+                            <ProjectCard project={project} key={project.id} />
+                        </Grid>
+                    ))
+
+                    }
+                </Grid>
+            </React.Fragment>
         </div>
     )
 }

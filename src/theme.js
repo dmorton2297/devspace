@@ -31,7 +31,7 @@ export const overrides = {
   MuiCard: {
     root: {
       padding: '20px 50px',
-      margin: '10px 0'
+      margin: '10px 0 30px 0'
     }
   }
 }
