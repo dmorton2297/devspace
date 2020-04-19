@@ -25,14 +25,13 @@ const styles = (theme) => {
             marginLeft: 50
         },
         projectsHeader: {
-            marginTop: 10,
-            borderBottom: `1px solid ${theme.palette.primary.dark}`,
-            paddingBottom: 10
+            display: 'flex'
         },
         summary: {
             backgroundColor: theme.palette.primary.main,
             color: theme.palette.primary.light,
             padding: 30,
+            borderRadius: 5
         },
         tag: {
             backgroundColor: theme.palette.primary.main,

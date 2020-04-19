@@ -2,7 +2,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 
 export const palette = {
   primary: {
-    main: '#567E8E',
+    main: '#232C35',
     light: '#fcfcfc',
     dark: '#232C35'
   },
@@ -32,14 +32,25 @@ export const overrides = {
     root: {
       padding: '20px 50px',
       margin: '10px 0 30px 0'
+    },
+  },
+  MuiIconButton: {
+    root: {
+      padding: '0 5px'
     }
+  },
+  MuiFormControl: {
+    root: {
+      width: '100%',
+      margin: '10px 0'
+    },
   }
 }
 
 const theme = createMuiTheme({
   typography,
   palette,
-  overrides
+  overrides,
 });
 
 export default theme;

@@ -15,8 +15,6 @@ const Login = ({ classes }) => {
 
     // Check to see if the user is logged in
     useEffect(() => {
-        console.log('in here');
-        console.log(user);
         if (user.id) {
             history.push('/home');
         }
