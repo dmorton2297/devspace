@@ -12,3 +12,11 @@ export const loginUser = (email, password) => {
 export const getUserProjects = userId => {
     return axios.get(`http://localhost:3200/user/${userId}/projects`);
 };
+
+export const createUserProject = (project, userId) => {
+    return axios.post(`http://localhost:3200/user/${userId}/projects/create`, project);
+}
+
+export const editUserProject = (project, userId) => {
+    return axios.post(`http://localhost:3200/user/${userId}/projects/edit`, project);
+}

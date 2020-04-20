@@ -3,7 +3,7 @@ const styles = (theme) => {
         container: {
             width: '100%',
             height: '100%',
-            backgroundColor: theme.palette.primary.light
+            backgroundColor: theme.palette.primary.light,
         },
         infoContainer: {
             display: 'grid',
@@ -25,7 +25,12 @@ const styles = (theme) => {
             marginLeft: 50
         },
         projectsHeader: {
-            display: 'flex'
+            display: 'flex',
+            position: 'sticky',
+            backgroundColor: theme.palette.primary.light,
+            padding: '30px 0',
+            zIndex: 2,
+            top: 0
         },
         summary: {
             backgroundColor: theme.palette.primary.main,
@@ -45,6 +50,18 @@ const styles = (theme) => {
             justifyContent: 'flex-end',
             flexGrow: 1,
         },
+        topPortion: {
+            position: 'sticky',
+            top: 0,
+            zIndex: 0
+        },
+        projects: {
+            position: 'sticky',
+            top: 0,
+            zIndex: 1,
+            backgroundColor: theme.palette.primary.light,
+            height: '102%'
+        }
     });
 };
 

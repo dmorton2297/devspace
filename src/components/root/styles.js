@@ -7,21 +7,31 @@ const styles = theme => {
         root: {
             width: '100%',
             height: 'calc(100vh)',
-            backgroundColor: theme.palette.primary.light
+            backgroundColor: theme.palette.primary.light,
         },
         navigation: {
             height: navigationHeight,
         },
+        scrollContainer: {
+            overflowY: 'scroll',
+            display: 'grid',
+            justifyItems: 'center'
+        },
         mainContainer: {
             padding: `0 ${mainSidePadding}px`,
             width: mainWidth,
-            height: `calc(100vh - ${navigationHeight}px)`,
+            maxWidth: '1500px',
+            height: `calc(100vh - ${navigationHeight + 10}px)`,
         },
         '@global': {
             '.full-size-modal': {
                 margin: 50,
                 height: 'calc(100vh - 140px)',
-                backgroundColor: theme.palette.primary.light
+                backgroundColor: theme.palette.primary.light,
+                '@media(min-width: 1500px)': {
+                    maxWidth: 1400,
+                    transform: `translate(calc(50vw - ${1612 / 2}px), 0%) !important;`                    
+                },
             },
             '.bottom-margin': {
                 marginBottom: 10
@@ -30,6 +40,13 @@ const styles = theme => {
                 boxSizing: 'border-box',
                 borderBottom: '1px solid red',
                 borderLeft: '1px solid red'
+            },
+            '.flex': {
+                display: 'flex'
+            },
+            '.flex-vert': {
+                display: 'flex',
+                flexDirector: 'column'
             }
         }
     })

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { withStyles } from '@material-ui/styles'
 import styles from './styles';
 import classNames from 'classnames';
@@ -12,11 +12,14 @@ import ProjectModal from '../modals/project-modal';
 import AddIcon from '@material-ui/icons/Add';
 import { object, bool } from 'prop-types';
 import AddProjectModal from '../modals/add-project-modal';
+import theme from '../../theme';
 
 
 const Profile = ({ classes, user, readOnly }) => {
     const dispatch = useDispatch();
     const projects = useSelector(state => state.projectsReducer);
+    const projectsSection = useRef();
+    const overviewCard = useRef();
 
     const [selectedProject, setSelectedProject] = useState(null);
     const [addProject, setAddProject] = useState(false);
@@ -27,6 +30,27 @@ const Profile = ({ classes, user, readOnly }) => {
         }).catch(error => {
             console.error(error);
         })
+
+        const onScroll = () => {
+            const position = projectsSection.current.getBoundingClientRect();
+            const cardRect = overviewCard.current.getBoundingClientRect();
+            console.log(cardRect);
+            if (position.y <= cardRect.bottom) {
+                const percentage = (cardRect.bottom - position.y) / cardRect.bottom;
+                console.log(percentage);
+                overviewCard.current.style.backgroundColor = `rgba(0, 0, 0, ${percentage}`;
+                overviewCard.current.style.boxShadow = 'none';
+            } else {
+                overviewCard.current.style.backgroundColor = theme.palette.primary.light;
+                overviewCard.current.style.boxShadow = '0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)';
+
+            }
+        }
+        const scrollContainer = document.getElementById('scroll-container');
+        scrollContainer.addEventListener('scroll', onScroll);
+        return () => {
+            scrollContainer.removeEventListener('scroll', onScroll)
+        }
     }, [dispatch, user]);
 
     if (projects.length === 0) {
@@ -42,39 +66,45 @@ const Profile = ({ classes, user, readOnly }) => {
         setSelectedProject(null);
     }
 
+
+
     return (
         <div className={classNames(classes.container, 'profile-container')}>
-            <ProjectModal open={!!selectedProject} project={selectedProject} onClose={closeProjectModal} ariaLabelledBy='test' ariaDsescribedBy='test' />
-            <AddProjectModal open={addProject} onClose={() => setAddProject(false)} ariaLabelledBy='Add Project' ariaDsescribedBy='Add Project' />
-            <Card>
-                <div className={classes.header}>
-                    <Typography variant="h1" className={classes.headerText}>{user.name}'s Portfolio</Typography>
-                    <div className={classes.tags}>
-                        {user.tags.map(x => (
-                            <Typography variant="body1" key={`x${Math.random() * 100}`} className={classes.tag}>{x}</Typography>
-                        ))}
+            <ProjectModal open={!!selectedProject} project={selectedProject} onClose={closeProjectModal} ariaLabelledBy='View Project' ariaDsescribedBy='View Project' />
+            <AddProjectModal open={addProject} currUser={user} onClose={() => setAddProject(false)} ariaLabelledBy='Add Project' ariaDsescribedBy='Add Project' />
+
+            <div className={classes.topPortion}>
+                <Card ref={overviewCard}>
+                    <div className={classes.topPortion}>
+                        <Typography variant="h1" className={classes.headerText}>{user.name}'s Portfolio</Typography>
+                        <div className={classes.tags}>
+                            {user.tags.map(x => (
+                                <Typography variant="body1" key={`x${Math.random() * 100}`} className={classes.tag}>{x}</Typography>
+                            ))}
+                        </div>
                     </div>
-                </div>
-                <div className={classNames(classes.infoContainer)}>
-                    <div className={classNames(classes.imageContainer)}>
-                        <img src={user.profileImage} width="320px" height="320px" alt="test" />
-                    </div>
-                    <div className={classNames(classes.generalInfoContainer)}>
-                        <div>
-                            <Typography variant="h2" className={classNames(classes.infoItem)}>{user.title}</Typography>
-                            <Typography variant="h3" className={classNames(classes.infoItem, classes.company)}>{user.company}</Typography>
-                            <Typography variant="h3" className={classNames(classes.infoItem)}>Contact: {user.email}</Typography>
-                            <Typography variant="h2" className={classNames(classes.infoItem, classes.summary)}>"{user.summary}"</Typography>
-                            <div className={classes.socialButtons}>
-                                <DefaultButton>Github</DefaultButton>
-                                <DefaultButton>LinkedIn</DefaultButton>
+                    <div className={classNames(classes.infoContainer)}>
+                        <div className={classNames(classes.imageContainer)}>
+                            <img src={user.profileImage} width="320px" height="320px" alt="test" />
+                        </div>
+                        <div className={classNames(classes.generalInfoContainer)}>
+                            <div>
+                                <Typography variant="h2" className={classNames(classes.infoItem)}>{user.title}</Typography>
+                                <Typography variant="h3" className={classNames(classes.infoItem, classes.company)}>{user.company}</Typography>
+                                <Typography variant="h3" className={classNames(classes.infoItem)}>Contact: {user.email}</Typography>
+                                <Typography variant="h2" className={classNames(classes.infoItem, classes.summary)}>"{user.summary}"</Typography>
+                                <div className={classes.socialButtons}>
+                                    <DefaultButton>Github</DefaultButton>
+                                    <DefaultButton>LinkedIn</DefaultButton>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </Card>
-            <React.Fragment>
-                <div className={classes.projectsHeader}>
+                </Card>
+            </div>
+
+            <div className={classes.projects}>
+                <div className={classes.projectsHeader}  ref={projectsSection}>
                     <Typography variant="h1">Projects</Typography>
                     {!readOnly &&
                         <IconButton onClick={() => setAddProject(true)}>
@@ -85,11 +115,11 @@ const Profile = ({ classes, user, readOnly }) => {
                 <Grid container spacing={3}>
                     {projects.map(project => (
                         <Grid item xs={4} key={project.id}>
-                            <ProjectCard project={project} onClick={() => openProjectModal(project)} />
+                            <ProjectCard currUser={user} project={project} onClick={() => openProjectModal(project)} />
                         </Grid>
                     ))}
                 </Grid>
-            </React.Fragment>
+            </div>
         </div>
     );
 };

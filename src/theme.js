@@ -31,7 +31,8 @@ export const overrides = {
   MuiCard: {
     root: {
       padding: '20px 50px',
-      margin: '10px 0 30px 0'
+      margin: '10px 0 30px 0',
+      zIndex: 0
     },
   },
   MuiIconButton: {
@@ -44,6 +45,11 @@ export const overrides = {
       width: '100%',
       margin: '10px 0'
     },
+  },
+  MuiGrid: {
+    item: {
+      paddingTop: 0
+    }
   }
 }
 

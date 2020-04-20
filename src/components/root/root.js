@@ -8,7 +8,7 @@ import { Route, Switch } from 'react-router-dom'
 import classNames from 'classnames';
 import ProtectedRoute from './protected-route';
 import Navigation from '../navigation/navigation';
-  
+
 
 /**
  * Root Component of portfolium-frontend.
@@ -21,13 +21,14 @@ const Root = ({ classes }) => {
             <div className={classes.navigation}>
                 <Navigation />
             </div>
-            <div className={classes.mainContainer}>
-                <Switch>
-                    <ProtectedRoute path="/home" component={Home} />
-                    <Route path="/" component={Login} />
-                </Switch>
+            <div className={classNames(classes.scrollContainer)} id='scroll-container'>
+                <div className={classes.mainContainer}>
+                    <Switch>
+                        <ProtectedRoute path="/home" component={Home} />
+                        <Route path="/" component={Login} />
+                    </Switch>
+                </div>
             </div>
-
         </div>
 
     );

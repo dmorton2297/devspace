@@ -1,22 +1,24 @@
 import React, { useState } from 'react'
-import { withStyles } from '@material-ui/styles';
-import styles from './styles';
 import { object, bool, func, string } from 'prop-types';
-import { Typography, TextField, Button, Card, IconButton } from '@material-ui/core';
-import BaseModal from '../base-modal';
+import { createUserProject, editUserProject } from '../../../services/webService';
+import { Typography, TextField, IconButton, Button } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import { createUserProject } from '../../../services/webService';
+import BaseModal from '../base-modal';
+import styles from './styles';
+import { withStyles } from '@material-ui/styles';
 
 
-const AddProjectModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribedby, currUser }) => {
+
+const EditProjectModal = ({ classes, open, onClose, project, ariaLabelledBy, ariaDescribedby, currUser }) => {
     const [state, setState] = useState({
-        name: '',
-        description: '',
-        github: '',
+        id: project ? project.id : '',
+        name: project ? project.name : '',
+        description: project ? project.description : '',
+        github: project ? project.github : '',
         images: [],
         projectLink: '',
         website: '',
-        tags: '',
+        tags: project ? project.tags.join(',') : '',
         demoVideo: '',
     });
 
@@ -24,14 +26,15 @@ const AddProjectModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribed
 
     const resetState = () => {
         setState({
-            name: '',
-            description: '',
-            github: '',
+            id: project ? project.id : '',
+            name: project ? project.name : '',
+            description: project ? project.description : '',
+            github: project ? project.github : '',
             images: [],
-            projectLink: '',
-            website: '',
-            tags: '',
-            demoVideo: '',
+            projectLink: project ? project.projectLink : '',
+            website: project ? project.website : '',
+            tags: project ? project.tags.join(',') : '',
+            demoVideo: project ? project.demoVideo : '',
         });
         setInvalid([]);
     }
@@ -90,11 +93,14 @@ const AddProjectModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribed
             setInvalid([]);
         }
         console.log(currUser);
-        createUserProject({...state, tags: state.tags.split(',')}, currUser.id).then((res) => {
+        editUserProject({ ...state, tags: state.tags.split(',') }, currUser.id).then((res) => {
             console.log(res);
         })
     };
 
+    if (!project) {
+        return <div></div>;
+    }
 
     return (
         <BaseModal
@@ -102,36 +108,36 @@ const AddProjectModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribed
             onClose={() => { resetState(); onClose() }}
             aria-labelledby={ariaLabelledBy}
             aria-describedby={ariaDescribedby}
-            buttonText="create"
+            buttonText="edit"
             buttonFunc={submit}
             cancelButton={true}>
             <div className={classes.section}>
-                <Typography varisant="h1">Add Project</Typography>
+                <Typography varisant="h1">Edit Project</Typography>
             </div>
 
             <div className={classes.section}>
                 <Typography variant="h1">General Information</Typography>
-                <TextField error={isInvalid('name')} variant="outlined" label="Name" defaultValue='' placeholder="name"
+                <TextField error={isInvalid('name')} variant="outlined" label="Name" defaultValue={project.name} placeholder="name"
                     helperText={isInvalid('name') ? 'Required' : ''} onChange={(event) => {
                         setState({ ...state, name: event.target.value });
                     }} />
-                <TextField error={isInvalid('description')} variant="outlined" label="Description" defaultValue='' placeholder="Description"
+                <TextField error={isInvalid('description')} variant="outlined" label="Description" defaultValue={project.description} placeholder="Description"
                     helperText={isInvalid('description') ? 'Required' : ''} onChange={(event) => {
                         setState({ ...state, description: event.target.value });
                     }} />
-                <TextField error={isInvalid('github')} variant="outlined" label="Github URL" defaultValue='' placeholder="URL"
+                <TextField error={isInvalid('github')} variant="outlined" label="Github URL" defaultValue={project.github} placeholder="URL"
                     helperText={isInvalid('github') ? 'Must be a URL' : ''} onChange={(event) => {
                         setState({ ...state, github: event.target.value });
                     }} />
-                <TextField error={isInvalid('website')} variant="outlined" label="Website" defaultValue='' placeholder="URL"
+                <TextField error={isInvalid('website')} variant="outlined" label="Website" defaultValue={project ? project.website : ''} placeholder="URL"
                     helperText={isInvalid('website') ? 'Must be a URL' : ''} onChange={(event) => {
                         setState({ ...state, website: event.target.value });
                     }} />
-                <TextField error={isInvalid('projectLink')} variant="outlined" label="Deployed Project URL" defaultValue='' placeholder="URL"
+                <TextField error={isInvalid('projectLink')} variant="outlined" label="Deployed Project URL" defaultValue={project ? project.projectLink : ''} placeholder="URL"
                     helperText={isInvalid('projectLink') ? 'Must be a URL' : ''} onChange={(event) => {
                         setState({ ...state, projectLink: event.target.value });
                     }} />
-                <TextField error={isInvalid('tags')} variant="outlined" label="Tags" defaultValue='' placeholder="comma,seperate,tags"
+                <TextField error={isInvalid('tags')} variant="outlined" label="Tags" defaultValue={project.tags.join(',')} placeholder="comma,seperate,tags"
                     helperText={isInvalid('tags') ? 'Must be a comma seperated list' : ''} onChange={(event) => {
                         setState({ ...state, tags: event.target.value });
                     }} />
@@ -161,7 +167,7 @@ const AddProjectModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribed
 
             <div className={classes.section}>
                 <Typography variant='h1'>Video Demo Details</Typography>
-                <TextField error={isInvalid('demoVideo')} variant="outlined" label="Video Demo URL" defaultValue='' placeholder="URL"
+                <TextField error={isInvalid('demoVideo')} variant="outlined" label="Video Demo URL" defaultValue={project ? project.projectLink : ''} placeholder="URL"
                     helperText={isInvalid('demoVideo') ? 'Must be a URL' : ''} onChange={(event) => {
                         setState({ ...state, demoVideo: event.target.value });
                     }} />
@@ -170,13 +176,14 @@ const AddProjectModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribed
     );
 };
 
-AddProjectModal.propTypes = {
+EditProjectModal.propTypes = {
     classes: object.isRequired,
     open: bool.isRequired,
+    project: object.isRequired,
     onClose: func.isRequired,
     ariaLabelledBy: string,
     currUser: object.isRequired,
     ariaDescribedby: string
 }
 
-export default withStyles(styles)(AddProjectModal);
+export default withStyles(styles)(EditProjectModal);
