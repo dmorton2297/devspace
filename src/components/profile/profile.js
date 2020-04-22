@@ -38,7 +38,6 @@ const Profile = ({ classes, user, readOnly }) => {
             console.log(cardRect);
             if (position.y <= cardRect.bottom) {
                 const percentage = (cardRect.bottom - position.y) / cardRect.bottom;
-                console.log(percentage);
                 overviewCard.current.style.backgroundColor = `rgba(0, 0, 0, ${percentage}`;
                 overviewCard.current.style.boxShadow = 'none';
             } else {
@@ -53,10 +52,6 @@ const Profile = ({ classes, user, readOnly }) => {
             scrollContainer.removeEventListener('scroll', onScroll)
         }
     }, [dispatch, user]);
-
-    if (projects.length === 0) {
-        return <div></div>;
-    }
 
     const openProjectModal = (project) => {
         setSelectedProject(project);
@@ -76,7 +71,7 @@ const Profile = ({ classes, user, readOnly }) => {
     return (
         <div className={classNames(classes.container, 'profile-container')}>
             <Snackbar open={!!success} autoHideDuration={6000} onClose={() => showSuccess(null)} >
-                <SnackbarContent className='snackbar-width' message={success} action={<IconButton style={{color: 'white'}} onClick={() => showSuccess(null)}><CloseIcon /></IconButton>}/>
+                <SnackbarContent className='snackbar-width' message={success} action={<IconButton style={{ color: 'white' }} onClick={() => showSuccess(null)}><CloseIcon /></IconButton>} />
             </Snackbar>
             <ProjectModal open={!!selectedProject} project={selectedProject} onClose={closeProjectModal} ariaLabelledBy='View Project' ariaDsescribedBy='View Project' />
             <AddProjectModal showSuccess={showSuccessMessage} open={addProject} currUser={user} onClose={() => setAddProject(false)} ariaLabelledBy='Add Project' ariaDsescribedBy='Add Project' />
@@ -123,9 +118,14 @@ const Profile = ({ classes, user, readOnly }) => {
                 <Grid className={classes.projectCards} container spacing={3}>
                     {projects.map(project => (
                         <Grid item xs={4} key={project.id}>
-                            <ProjectCard currUser={user} project={project} onClick={() => openProjectModal(project)} />
+                            <ProjectCard showSuccess={showSuccessMessage} currUser={user} project={project} onClick={() => openProjectModal(project)} />
                         </Grid>
                     ))}
+                    {projects.length === 0 &&
+                        <Grid item xs={12}>
+                            <Typography variant="h2" className={classes.noProjectsMessage}>No projects have been created.</Typography>
+                        </Grid>
+                    }
                 </Grid>
             </div>
         </div>

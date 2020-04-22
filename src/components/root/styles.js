@@ -46,7 +46,7 @@ const styles = theme => {
             },
             '.flex-vert': {
                 display: 'flex',
-                flexDirector: 'column'
+                flexDirection: 'column'
             },
             '.snackbar-width': {
                 width: '90%'

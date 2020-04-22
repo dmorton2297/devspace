@@ -1,15 +1,17 @@
 import React, { useState } from 'react'
 import { object, bool, func, string } from 'prop-types';
-import { createUserProject, editUserProject } from '../../../services/webService';
+import { editUserProject } from '../../../services/webService';
 import { Typography, TextField, IconButton, Button } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import BaseModal from '../base-modal';
 import styles from './styles';
 import { withStyles } from '@material-ui/styles';
+import { useDispatch } from 'react-redux';
+import { updateProject } from '../../../actions/projectsActions';
 
 
 
-const EditProjectModal = ({ classes, open, onClose, project, ariaLabelledBy, ariaDescribedby, currUser }) => {
+const EditProjectModal = ({ classes, open, onClose, project, ariaLabelledBy, ariaDescribedby, currUser, showSuccess }) => {
     const [state, setState] = useState({
         id: project ? project.id : '',
         name: project ? project.name : '',
@@ -24,6 +26,8 @@ const EditProjectModal = ({ classes, open, onClose, project, ariaLabelledBy, ari
 
     const [invalid, setInvalid] = useState([]);
 
+    const dispatch = useDispatch();
+
     const resetState = () => {
         setState({
             id: project ? project.id : '',
@@ -33,7 +37,7 @@ const EditProjectModal = ({ classes, open, onClose, project, ariaLabelledBy, ari
             images: [],
             projectLink: project ? project.projectLink : '',
             website: project ? project.website : '',
-            tags: project ? project.tags.join(',') : '',
+            tags: project.tags ? project.tags.join(',') : '',
             demoVideo: project ? project.demoVideo : '',
         });
         setInvalid([]);
@@ -91,11 +95,13 @@ const EditProjectModal = ({ classes, open, onClose, project, ariaLabelledBy, ari
         }
         else {
             setInvalid([]);
+            editUserProject({ ...state, tags: state.tags.split(',') }, currUser.id).then((res) => {
+                dispatch(updateProject(res.data));
+                onClose();
+                showSuccess('Program Updated');
+            })
         }
-        console.log(currUser);
-        editUserProject({ ...state, tags: state.tags.split(',') }, currUser.id).then((res) => {
-            console.log(res);
-        })
+        
     };
 
     if (!project) {
@@ -183,7 +189,12 @@ EditProjectModal.propTypes = {
     onClose: func.isRequired,
     ariaLabelledBy: string,
     currUser: object.isRequired,
-    ariaDescribedby: string
+    ariaDescribedby: string,
+    showSuccess: func
+};
+
+EditProjectModal.defaultProps = {
+    showSuccess: () => {}
 }
 
 export default withStyles(styles)(EditProjectModal);

@@ -5,7 +5,8 @@ export const palette = {
     main: '#232C35',
     light: '#fcfcfc',
     dark: '#232C35',
-    warn: '#f44336'
+    warn: '#f44336',
+    medium: '#ebebeb'
   },
 };
 

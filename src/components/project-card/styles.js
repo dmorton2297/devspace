@@ -3,7 +3,6 @@ const styles = theme => {
         container: {
             overflow: 'hidden',
             padding: 0
-
         },
         projectName: {
             padding: 30,
@@ -29,7 +28,8 @@ const styles = theme => {
         deleteButton: {
             '&:hover': {
                 color: theme.palette.primary.warn
-            }
+            },
+            paddingRight: 20
         },
         header: {
             backgroundColor: theme.palette.primary.dark,

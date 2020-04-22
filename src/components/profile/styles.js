@@ -64,6 +64,9 @@ const styles = (theme) => {
         },
         projectCards: {
             padding: '0 2px'
+        },
+        noProjectsMessage: {
+            padding: '20px 0'
         }
     });
 };
