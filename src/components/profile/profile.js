@@ -3,7 +3,7 @@ import { withStyles } from '@material-ui/styles'
 import styles from './styles';
 import classNames from 'classnames';
 import DefaultButton from '../default-button';
-import { Typography, Card, Grid, IconButton } from '@material-ui/core';
+import { Typography, Card, Grid, IconButton, Snackbar, SnackbarContent } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserProjects } from '../../services/webService';
 import { setProjects } from '../../actions/projectsActions';
@@ -13,7 +13,7 @@ import AddIcon from '@material-ui/icons/Add';
 import { object, bool } from 'prop-types';
 import AddProjectModal from '../modals/add-project-modal';
 import theme from '../../theme';
-
+import CloseIcon from '@material-ui/icons/Close';
 
 const Profile = ({ classes, user, readOnly }) => {
     const dispatch = useDispatch();
@@ -23,6 +23,7 @@ const Profile = ({ classes, user, readOnly }) => {
 
     const [selectedProject, setSelectedProject] = useState(null);
     const [addProject, setAddProject] = useState(false);
+    const [success, showSuccess] = useState(null);
 
     useEffect(() => {
         getUserProjects(user.id).then((res) => {
@@ -57,7 +58,6 @@ const Profile = ({ classes, user, readOnly }) => {
         return <div></div>;
     }
 
-
     const openProjectModal = (project) => {
         setSelectedProject(project);
     }
@@ -66,12 +66,20 @@ const Profile = ({ classes, user, readOnly }) => {
         setSelectedProject(null);
     }
 
+    const showSuccessMessage = (message) => {
+        console.log(message);
+        showSuccess(message);
+    }
+
 
 
     return (
         <div className={classNames(classes.container, 'profile-container')}>
+            <Snackbar open={!!success} autoHideDuration={6000} onClose={() => showSuccess(null)} >
+                <SnackbarContent className='snackbar-width' message={success} action={<IconButton style={{color: 'white'}} onClick={() => showSuccess(null)}><CloseIcon /></IconButton>}/>
+            </Snackbar>
             <ProjectModal open={!!selectedProject} project={selectedProject} onClose={closeProjectModal} ariaLabelledBy='View Project' ariaDsescribedBy='View Project' />
-            <AddProjectModal open={addProject} currUser={user} onClose={() => setAddProject(false)} ariaLabelledBy='Add Project' ariaDsescribedBy='Add Project' />
+            <AddProjectModal showSuccess={showSuccessMessage} open={addProject} currUser={user} onClose={() => setAddProject(false)} ariaLabelledBy='Add Project' ariaDsescribedBy='Add Project' />
 
             <div className={classes.topPortion}>
                 <Card ref={overviewCard}>
@@ -104,7 +112,7 @@ const Profile = ({ classes, user, readOnly }) => {
             </div>
 
             <div className={classes.projects}>
-                <div className={classes.projectsHeader}  ref={projectsSection}>
+                <div className={classes.projectsHeader} ref={projectsSection}>
                     <Typography variant="h1">Projects</Typography>
                     {!readOnly &&
                         <IconButton onClick={() => setAddProject(true)}>
@@ -112,7 +120,7 @@ const Profile = ({ classes, user, readOnly }) => {
                         </IconButton>
                     }
                 </div>
-                <Grid container spacing={3}>
+                <Grid className={classes.projectCards} container spacing={3}>
                     {projects.map(project => (
                         <Grid item xs={4} key={project.id}>
                             <ProjectCard currUser={user} project={project} onClick={() => openProjectModal(project)} />

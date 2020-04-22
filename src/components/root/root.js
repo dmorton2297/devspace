@@ -7,7 +7,7 @@ import Home from '../home';
 import { Route, Switch } from 'react-router-dom'
 import classNames from 'classnames';
 import ProtectedRoute from './protected-route';
-import Navigation from '../navigation/navigation';
+import Navigation from '../navigation';
 
 
 /**

@@ -18,16 +18,23 @@ const styles = theme => {
         projImage: {
             
         },
-        editButton: {
+        controlButton: {
             backgroundColor: theme.palette.primary.dark,
             color: theme.palette.primary.light,
             '&:hover': {
                 color: 'lightgray'
             },
-            padding: '0 20px'
+            padding: '0 10px'
+        },
+        deleteButton: {
+            '&:hover': {
+                color: theme.palette.primary.warn
+            }
         },
         header: {
-            backgroundColor: theme.palette.primary.dark
+            backgroundColor: theme.palette.primary.dark,
+            position: 'sticky',
+            justifyContent: 'space-between'
         }
     });
 };

@@ -60,7 +60,10 @@ const styles = (theme) => {
             top: 0,
             zIndex: 1,
             backgroundColor: theme.palette.primary.light,
-            height: '102%'
+            minHeight: '102%',
+        },
+        projectCards: {
+            padding: '0 2px'
         }
     });
 };

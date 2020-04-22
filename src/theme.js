@@ -4,7 +4,8 @@ export const palette = {
   primary: {
     main: '#232C35',
     light: '#fcfcfc',
-    dark: '#232C35'
+    dark: '#232C35',
+    warn: '#f44336'
   },
 };
 
@@ -49,6 +50,11 @@ export const overrides = {
   MuiGrid: {
     item: {
       paddingTop: 0
+    }
+  },
+  MuiSnackbar: {
+    root: {
+      minWidth: '100%'
     }
   }
 }

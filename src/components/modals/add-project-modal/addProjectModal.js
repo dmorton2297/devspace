@@ -2,13 +2,17 @@ import React, { useState } from 'react'
 import { withStyles } from '@material-ui/styles';
 import styles from './styles';
 import { object, bool, func, string } from 'prop-types';
-import { Typography, TextField, Button, Card, IconButton } from '@material-ui/core';
+import { Typography, TextField, Button, IconButton, CircularProgress } from '@material-ui/core';
 import BaseModal from '../base-modal';
 import CloseIcon from '@material-ui/icons/Close';
 import { createUserProject } from '../../../services/webService';
+import { useDispatch } from 'react-redux';
+import { addProject } from '../../../actions/projectsActions';
 
 
-const AddProjectModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribedby, currUser }) => {
+const AddProjectModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribedby, currUser, showSuccess }) => {
+    const dispatch = useDispatch();
+    const [loading, setLoading] = useState(false);
     const [state, setState] = useState({
         name: '',
         description: '',
@@ -88,13 +92,15 @@ const AddProjectModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribed
         }
         else {
             setInvalid([]);
-        }
-        console.log(currUser);
-        createUserProject({...state, tags: state.tags.split(',')}, currUser.id).then((res) => {
-            console.log(res);
-        })
+            setLoading(true);
+            createUserProject({...state, tags: state.tags.split(',')}, currUser.id).then((res) => {
+                setLoading(false);
+                dispatch(addProject(res.data));
+                onClose();
+                showSuccess('Project Created Successfully!');
+            })
+        }        
     };
-
 
     return (
         <BaseModal
@@ -105,6 +111,9 @@ const AddProjectModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribed
             buttonText="create"
             buttonFunc={submit}
             cancelButton={true}>
+            {loading &&
+            <CircularProgress />
+            }
             <div className={classes.section}>
                 <Typography varisant="h1">Add Project</Typography>
             </div>
@@ -176,7 +185,8 @@ AddProjectModal.propTypes = {
     onClose: func.isRequired,
     ariaLabelledBy: string,
     currUser: object.isRequired,
-    ariaDescribedby: string
+    ariaDescribedby: string,
+    showSuccess: func.isRequired
 }
 
 export default withStyles(styles)(AddProjectModal);
