@@ -8,7 +8,8 @@ const styles = theme => {
             padding: 30,
             backgroundColor: theme.palette.primary.dark,
             color: theme.palette.primary.light,
-            flexGrow: 1
+            flexGrow: 1,
+            minHeight: 50
         },
         projectImage: {
             height: 400,
@@ -23,7 +24,8 @@ const styles = theme => {
             '&:hover': {
                 color: 'lightgray'
             },
-            padding: '0 10px'
+            padding: '0 10px',
+            paddingBottom: '20px'
         },
         deleteButton: {
             '&:hover': {
@@ -33,7 +35,6 @@ const styles = theme => {
         },
         header: {
             backgroundColor: theme.palette.primary.dark,
-            position: 'sticky',
             justifyContent: 'space-between'
         }
     });

@@ -3,7 +3,7 @@ import { withStyles } from '@material-ui/styles'
 import styles from './styles';
 import classNames from 'classnames';
 import DefaultButton from '../default-button';
-import { Typography, Card, Grid, IconButton, Snackbar, SnackbarContent } from '@material-ui/core';
+import { Typography, Card, Grid, IconButton, Snackbar, SnackbarContent, Icon, TextField } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserProjects } from '../../services/webService';
 import { setProjects } from '../../actions/projectsActions';
@@ -14,6 +14,7 @@ import { object, bool } from 'prop-types';
 import AddProjectModal from '../modals/add-project-modal';
 import theme from '../../theme';
 import CloseIcon from '@material-ui/icons/Close';
+import EditIcon from '@material-ui/icons/Edit';
 
 const Profile = ({ classes, user, readOnly }) => {
     const dispatch = useDispatch();
@@ -23,6 +24,7 @@ const Profile = ({ classes, user, readOnly }) => {
 
     const [selectedProject, setSelectedProject] = useState(null);
     const [addProject, setAddProject] = useState(false);
+    const [editProfile, setEditProfile] = useState(false);
     const [success, showSuccess] = useState(null);
 
     useEffect(() => {
@@ -66,6 +68,15 @@ const Profile = ({ classes, user, readOnly }) => {
         showSuccess(message);
     }
 
+    const editProfileClicked = () => {
+        if (!!editProfile) {
+            setEditProfile(null);
+        }
+        else {
+            setEditProfile({ ...user });
+        }
+    }
+
 
 
     return (
@@ -78,9 +89,17 @@ const Profile = ({ classes, user, readOnly }) => {
 
             <div className={classes.topPortion}>
                 <Card ref={overviewCard}>
-                    <div className={classes.topPortion}>
-                        <Typography variant="h1" className={classes.headerText}>{user.name}'s Portfolio</Typography>
+                    <div className={classNames(classes.topPortion, 'bottom-margin')}>
+                        <Typography variant="h1" className={classNames(!readOnly ? classes.headerText : {}, 'margin-bottom')}>{user.name}'s Portfolio</Typography>
                         <div className={classes.tags}>
+                            {!readOnly &&
+                                <div className='grow'>
+                                    <div className={classes.editButton} onClick={editProfileClicked}>
+                                        <EditIcon style={{ height: 12, width: 12, marginRight: 5 }} />
+                                        <Typography variant="body2">Edit Profile Details</Typography>
+                                    </div>
+                                </div>
+                            }
                             {user.tags.map(x => (
                                 <Typography variant="body1" key={`x${Math.random() * 100}`} className={classes.tag}>{x}</Typography>
                             ))}
@@ -91,16 +110,39 @@ const Profile = ({ classes, user, readOnly }) => {
                             <img src={user.profileImage} width="320px" height="320px" alt="test" />
                         </div>
                         <div className={classNames(classes.generalInfoContainer)}>
-                            <div>
-                                <Typography variant="h2" className={classNames(classes.infoItem)}>{user.title}</Typography>
-                                <Typography variant="h3" className={classNames(classes.infoItem, classes.company)}>{user.company}</Typography>
-                                <Typography variant="h3" className={classNames(classes.infoItem)}>Contact: {user.email}</Typography>
-                                <Typography variant="h2" className={classNames(classes.infoItem, classes.summary)}>"{user.summary}"</Typography>
-                                <div className={classes.socialButtons}>
-                                    <DefaultButton>Github</DefaultButton>
-                                    <DefaultButton>LinkedIn</DefaultButton>
+                            {editProfile &&
+                                <div className='full-width'>
+                                    <TextField variant="outlined" label="Job Title" defaultValue={user.title} placeholder="title"
+                                        onChange={(event) => {
+                                            setEditProfile({ ...editProfile, title: event.target.value });
+                                        }} />
+                                    <TextField variant="outlined" label="Company Title" defaultValue={user.company} placeholder="title"
+                                        onChange={(event) => {
+                                            setEditProfile({ ...editProfile, company: event.target.value });
+                                        }} />
+                                    <TextField variant="outlined" label="User Email" defaultValue={user.company} placeholder="title"
+                                        onChange={(event) => {
+                                            setEditProfile({ ...editProfile, email: event.target.value });
+                                        }} />
+                                    <TextField variant="outlined" label="Summary" defaultValue={user.summary} placeholder="title"
+                                        onChange={(event) => {
+                                            setEditProfile({ ...editProfile, summary: event.target.value });
+                                        }} />
                                 </div>
-                            </div>
+
+                            }
+                            {!editProfile &&
+                                <div>
+                                    <Typography variant="h2" className={classNames(classes.infoItem)}>{user.title}</Typography>
+                                    <Typography variant="h3" className={classNames(classes.infoItem, classes.company)}>{user.company}</Typography>
+                                    <Typography variant="h3" className={classNames(classes.infoItem)}>Contact: {user.email}</Typography>
+                                    <Typography variant="h2" className={classNames(classes.infoItem, classes.summary)}>"{user.summary}"</Typography>
+                                    <div className={classes.socialButtons}>
+                                        <DefaultButton>Github</DefaultButton>
+                                        <DefaultButton>LinkedIn</DefaultButton>
+                                    </div>
+                                </div>
+                            }
                         </div>
                     </div>
                 </Card>

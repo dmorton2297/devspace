@@ -21,6 +21,9 @@ const styles = (theme) => {
             padding: '20px 0',
             display: 'flex'
         },
+        headerText: {
+            paddingBottom: 10
+        },
         test: {
             marginLeft: 50
         },
@@ -67,6 +70,13 @@ const styles = (theme) => {
         },
         noProjectsMessage: {
             padding: '20px 0'
+        },
+        editButton: {
+            display: 'flex',
+            '&:hover': {
+                cursor: 'pointer',
+                color: theme.palette.primary.medium
+            }
         }
     });
 };

@@ -67,7 +67,7 @@ const EditProjectModal = ({ classes, open, onClose, project, ariaLabelledBy, ari
             projectLink: true, tags: true,
             demoVideo: true
         };
-        if (state.name === '') validation.name = false;
+        if (state.name === '' || state.name.length > 50) validation.name = false;
         if (state.description === '') validation.description = false;
         if (state.github !== '' && !validURL(state.github)) validation.github = false;
         if (state.website !== '' && !validURL(state.website)) validation.website = false;
@@ -124,7 +124,7 @@ const EditProjectModal = ({ classes, open, onClose, project, ariaLabelledBy, ari
             <div className={classes.section}>
                 <Typography variant="h1">General Information</Typography>
                 <TextField error={isInvalid('name')} variant="outlined" label="Name" defaultValue={project.name} placeholder="name"
-                    helperText={isInvalid('name') ? 'Required' : ''} onChange={(event) => {
+                    helperText={isInvalid('name') ? 'Required. Must be less than 50 characters.' : ''} onChange={(event) => {
                         setState({ ...state, name: event.target.value });
                     }} />
                 <TextField error={isInvalid('description')} variant="outlined" label="Description" defaultValue={project.description} placeholder="Description"

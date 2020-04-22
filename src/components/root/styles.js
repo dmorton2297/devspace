@@ -6,6 +6,7 @@ const styles = theme => {
     return ({
         root: {
             width: '100%',
+            minWidth: 1080,
             height: 'calc(100vh)',
             backgroundColor: theme.palette.primary.light,
         },
@@ -34,7 +35,10 @@ const styles = theme => {
                 },
             },
             '.bottom-margin': {
-                marginBottom: 10
+                marginBottom: '10px !important'
+            },
+            '.top-margin': {
+                marginTop: '10px !important'
             },
             '.invalid': {
                 boxSizing: 'border-box',
@@ -50,6 +54,12 @@ const styles = theme => {
             },
             '.snackbar-width': {
                 width: '90%'
+            },
+            '.full-width': {
+                width: '100%'
+            },
+            '.grow':  {
+                flexGrow: 1
             }
         }
     })
