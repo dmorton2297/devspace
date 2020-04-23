@@ -1,4 +1,4 @@
-import { SET_USER } from '../actions/userActions';
+import { SET_USER, UPDATE_USER } from '../actions/userActions';
 
 const userReducer = (user = {}, action) => {
     switch (action.type) {
@@ -7,6 +7,10 @@ const userReducer = (user = {}, action) => {
                 ...user, 
                 ...action.payload
             });
+        case UPDATE_USER:
+            return ({
+                ...action.payload
+            })
         default:
             return user;
     };

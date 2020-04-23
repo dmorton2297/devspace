@@ -31,7 +31,7 @@ const styles = (theme) => {
             display: 'flex',
             position: 'sticky',
             backgroundColor: theme.palette.primary.light,
-            padding: '30px 0',
+            padding: '25px 0',
             zIndex: 2,
             top: 0
         },
@@ -66,7 +66,8 @@ const styles = (theme) => {
             minHeight: '102%',
         },
         projectCards: {
-            padding: '0 2px'
+            padding: '0 2px',
+            paddingTop: 18
         },
         noProjectsMessage: {
             padding: '20px 0'
@@ -80,6 +81,10 @@ const styles = (theme) => {
         },
         cancelButton: {
             backgroundColor: theme.palette.primary.warn
+        },
+        inputs: {
+            maxHeight: 280,
+            overflowY: 'auto'
         }
     });
 };
