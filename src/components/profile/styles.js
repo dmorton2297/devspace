@@ -46,7 +46,8 @@ const styles = (theme) => {
             color: theme.palette.primary.light,
             padding: 10,
             borderRadius: 10,
-            marginRight: 5
+            marginRight: 10,
+            height: 20
         },
         tags: {
             display: 'flex',

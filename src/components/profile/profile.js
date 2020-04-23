@@ -27,6 +27,8 @@ const Profile = ({ classes, user, readOnly }) => {
     const [addProject, setAddProject] = useState(false);
     const [editProfile, setEditProfile] = useState(false);
     const [success, showSuccess] = useState(null);
+    const [tagBuffer, setTagBuffer] = useState(null);
+    const [newTag, setNewTag] = useState(null);
 
     useEffect(() => {
         getUserProjects(user.id).then((res) => {
@@ -72,9 +74,11 @@ const Profile = ({ classes, user, readOnly }) => {
     const editProfileClicked = () => {
         if (!!editProfile) {
             setEditProfile(null);
+            setTagBuffer(null);
         }
         else {
             setEditProfile({ ...user });
+            setTagBuffer(user.tags);
         }
     }
 
@@ -90,12 +94,34 @@ const Profile = ({ classes, user, readOnly }) => {
         if (!editProfile) {
             return;
         }
-        updateProfile(editProfile, user.id).then((res) => {
+        updateProfile({ ...editProfile, tags: tagBuffer }, user.id).then((res) => {
             showSuccessMessage('Profile Updated');
             dispatch(updateUser(res.data));
             setEditProfile(null);
+            setTagBuffer(null);
         })
     }
+
+    const onDeleteTag = tag => {
+        setTagBuffer(tagBuffer.filter(x => x !== tag));
+    }
+
+    const onAddTag = () => {
+        setTagBuffer([...tagBuffer, newTag]);
+    }
+
+    const Tag = ({ content, readOnly, onDelete }) => {
+        return <div className={classNames(classes.tag, 'flex')}>
+            {!readOnly &&
+                <IconButton onClick={() => onDelete(content)} style={{ color: 'white' }}><CloseIcon style={{ height: 20, width: 20 }} /></IconButton>
+            }
+            <Typography variant="body1" key={`x${Math.random() * 100}`}>{content}</Typography>
+        </div>
+    };
+
+    Tag.defaultProps = {
+        readOnly: true
+    };
 
 
 
@@ -120,8 +146,21 @@ const Profile = ({ classes, user, readOnly }) => {
                                     </div>
                                 </div>
                             }
-                            {user.tags.map(x => (
-                                <Typography variant="body1" key={`x${Math.random() * 100}`} className={classes.tag}>{x}</Typography>
+                            {!tagBuffer && user.tags.map(x => (
+                                <Tag content={x} />
+                            ))}
+                            {tagBuffer && tagBuffer.length < 6 &&
+                                <React.Fragment>
+                                    <TextField style={{ width: 100 }} label="" defaultValue='' placeholder='new tag'
+                                        onChange={(event) => {
+                                            setNewTag(event.target.value);
+                                        }} />
+                                    <IconButton onClick={onAddTag}><AddIcon style={{ width: 30, height: 30 }} /></IconButton>
+                                </React.Fragment>
+                            }
+                            {tagBuffer && tagBuffer.map(x => (
+                                <Tag content={x} readOnly={!editProfile} onDelete={tag => onDeleteTag(tag)} />
+
                             ))}
                         </div>
                     </div>
@@ -160,7 +199,10 @@ const Profile = ({ classes, user, readOnly }) => {
                                     </div>
                                     <div className='flex'>
                                         <DefaultButton onClick={onUpdateProfile}>Update</DefaultButton>
-                                        <DefaultButton warn={true} onClick={() => setEditProfile(null)}>Cancel</DefaultButton>
+                                        <DefaultButton warn={true} onClick={() => {
+                                            setEditProfile(null);
+                                            setTagBuffer(null);
+                                        }}>Cancel</DefaultButton>
                                     </div>
                                 </div>
 
