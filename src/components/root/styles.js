@@ -6,7 +6,6 @@ const styles = theme => {
     return ({
         root: {
             width: '100%',
-            minWidth: 1080,
             height: 'calc(100vh)',
             backgroundColor: theme.palette.primary.light,
         },
@@ -21,7 +20,8 @@ const styles = theme => {
         mainContainer: {
             padding: `0 ${mainSidePadding}px`,
             width: mainWidth,
-            maxWidth: '1500px',
+            maxWidth: 1300,
+            minWidth: 784,
             height: `calc(100vh - ${navigationHeight + 10}px)`,
         },
         '@global': {

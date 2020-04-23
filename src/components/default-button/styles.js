@@ -5,6 +5,12 @@ const styles = theme => {
             color: theme.palette.primary.light,
             width: 100,
             marginRight: 10
+        },
+        warn: {
+            backgroundColor: theme.palette.primary.warn,
+            color: theme.palette.primary.light,
+            width: 100,
+            marginRight: 10
         }
     });
 };

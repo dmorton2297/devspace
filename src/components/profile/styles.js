@@ -77,6 +77,9 @@ const styles = (theme) => {
                 cursor: 'pointer',
                 color: theme.palette.primary.medium
             }
+        },
+        cancelButton: {
+            backgroundColor: theme.palette.primary.warn
         }
     });
 };

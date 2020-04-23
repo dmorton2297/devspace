@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import DefaultButton from '../default-button';
 import { Typography, Card, Grid, IconButton, Snackbar, SnackbarContent, Icon, TextField } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserProjects } from '../../services/webService';
+import { getUserProjects, updateProfile } from '../../services/webService';
 import { setProjects } from '../../actions/projectsActions';
 import ProjectCard from '../project-card';
 import ProjectModal from '../modals/project-modal';
@@ -77,6 +77,16 @@ const Profile = ({ classes, user, readOnly }) => {
         }
     }
 
+    const onUpdateProfile = () => {
+        if (!editProfile) {
+            return;
+        }
+
+        updateProfile(editProfile, user.id).then((res) => {
+            showSuccessMessage('Profile Updated');
+        })
+    }
+
 
 
     return (
@@ -120,7 +130,7 @@ const Profile = ({ classes, user, readOnly }) => {
                                         onChange={(event) => {
                                             setEditProfile({ ...editProfile, company: event.target.value });
                                         }} />
-                                    <TextField variant="outlined" label="User Email" defaultValue={user.company} placeholder="title"
+                                    <TextField variant="outlined" label="User Email" defaultValue={user.email} placeholder="title"
                                         onChange={(event) => {
                                             setEditProfile({ ...editProfile, email: event.target.value });
                                         }} />
@@ -128,6 +138,10 @@ const Profile = ({ classes, user, readOnly }) => {
                                         onChange={(event) => {
                                             setEditProfile({ ...editProfile, summary: event.target.value });
                                         }} />
+                                    <div className='flex'>
+                                        <DefaultButton onClick={onUpdateProfile}>Update</DefaultButton>
+                                        <DefaultButton warn={true} onClick={() => setEditProfile(null)}>Cancel</DefaultButton>
+                                    </div>
                                 </div>
 
                             }
