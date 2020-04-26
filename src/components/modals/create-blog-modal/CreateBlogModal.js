@@ -6,6 +6,7 @@ import BaseModal from '../base-modal';
 import { Typography, TextField, IconButton, Button } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Cancel';
 import { createBlogPost } from '../../../services/webService';
+import { validateBlogPost, isInvalid } from '../../../utils/validator';
 const CreateBlogModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribedby, currUser, showSuccess }) => {
 
     const STEPS = {
@@ -14,6 +15,7 @@ const CreateBlogModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribed
     }
 
     const [step, setStep] = useState(STEPS.general);
+    const [invalid, setInvalid] = useState([]);
     const [state, setState] = useState({
         title: '',
         description: '',
@@ -33,9 +35,16 @@ const CreateBlogModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribed
     };
 
     const onSubmit = () => {
-        createBlogPost({ ...state, tags: state.tags.split(',') }, currUser.id).then((res) => {
-            resetState();
-        });
+        const _validate = validateBlogPost(state);
+        if (!_validate.setValid) {
+            setInvalid(_validate.results);
+        }
+        else {
+            setInvalid([])
+            createBlogPost({ ...state, tags: state.tags.split(',') }, currUser.id).then((res) => {
+                resetState();
+            });
+        }
     }
 
 
@@ -58,16 +67,16 @@ const CreateBlogModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribed
                 <div className={classes.generalInfoForm}>
                     <Typography className='margin-bottom' variant="h1">Let's get some general info ...</Typography>
                     <div className='form-section'>
-                        <TextField variant="outlined" label="Blog Title" defaultValue={state.title} placeholder="Name"
+                        <TextField error={isInvalid('title', invalid)} variant="outlined" label="Blog Title" defaultValue={state.title} placeholder="Name"
                             helperText='' onChange={(event) => {
                                 setState({ ...state, title: event.target.value })
                             }} />
-                        <TextField variant="outlined" label="Blog Description" multiline rows={3} defaultValue={state.description} placeholder="Description"
+                        <TextField error={isInvalid('description', invalid)} variant="outlined" label="Blog Description" multiline rows={3} defaultValue={state.description} placeholder="Description"
                             helperText='' onChange={(event) => {
                                 setState({ ...state, description: event.target.value })
 
                             }} />
-                        <TextField variant="outlined" label="Blog Tags" defaultValue={state.tags} placeholder="tag,tag,tag"
+                        <TextField error={isInvalid('tags', invalid)} variant="outlined" label="Blog Tags" defaultValue={state.tags} placeholder="tag,tag,tag"
                             helperText='' onChange={(event) => {
                                 setState({ ...state, tags: event.target.value })
                             }} />
@@ -97,7 +106,7 @@ const CreateBlogModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribed
 
             }
             {step === STEPS.content &&
-                <TextField variant="outlined" label="Text" defaultValue='' placeholder="Markdown"
+                <TextField error={isInvalid('text', invalid)} variant="outlined" label="Text" defaultValue='' placeholder="Markdown"
                     helperText='' onChange={(event) => {
                         setState({ ...state, text: event.target.value })
                     }} multiline rows={55} />

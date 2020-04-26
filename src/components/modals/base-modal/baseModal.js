@@ -49,7 +49,7 @@ BaseModal.propTypes = {
 
 BaseModal.defaultProps = {
     cancelButton: false,
-    stepButton: {},
+    stepButton: null,
     showButton: true
 }
 
