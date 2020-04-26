@@ -29,13 +29,17 @@ const validEmail = (input) => {
  * @returns {boolean} - true/false for validity of tag as string
  */
 const validTags = (input) => {
+    console.log('IN here');
     const val = input.split(',');
     val.forEach(x => {
+        console.log(`X:   ${x}`);
         if (!x || x.length === 0) {
-            console.log('in here');
+            console.log('Not valid');
             return false;
         }
     });
+
+    console.log('returning true');
     return true;
 }
 
@@ -75,8 +79,8 @@ export const validateBlogPost = (state) => {
     };
     if (state.title === '' || state.title.length >= 60) validation.title = false;
     if (state.description === '') validation.description = false;
-    if (state.image === '' || !validURL(state.image)) validation.image = false;
-    if (state.tags !== '' || !validTags(state.tags)) validation.tags = false;
+    if (state.image === '') validation.image = false;
+    if (state.tags !== '' && !validTags(state.tags)) validation.tags = false;
     if (state.text === '') validation.text = false;
 
     const results = Object.keys(validation).filter(x => !validation[x]);
@@ -93,7 +97,7 @@ export const validateProfile = (state) => {
         title: true, company: true, email: true,
         summary: true, github: true, linkedin: true
     };
-    if (state.title === '' || state.title.length >= 120) validation.title = false;
+    if (state.title === '' || state.title.length >= 80) validation.title = false;
     if (state.email === '' ||!validEmail(state.email)) validation.email = false;
     if (state.summary === '' || state.summary.length >= 250) validation.summary = false;
     if (state.github !== '' && !validURL(state.github)) validation.github = false;

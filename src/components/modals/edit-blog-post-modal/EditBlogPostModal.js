@@ -1,52 +1,50 @@
 import React, { useState } from 'react'
-import { withStyles } from '@material-ui/styles'
+import { withStyles } from '@material-ui/styles';
 import styles from './styles';
-import { object, bool, func, string } from 'prop-types';
 import BaseModal from '../base-modal';
-import { Typography, TextField, IconButton, Button } from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Cancel';
-import { createBlogPost } from '../../../services/webService';
-import { validateBlogPost, isInvalid } from '../../../utils/validator';
+import { object, bool, func, string } from 'prop-types';
 import { resetState } from '../../../utils/resetState';
+import { validateBlogPost, isInvalid } from '../../../utils/validator';
+import { Typography, TextField, IconButton, Button } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
+import { editBlogPost } from '../../../services/webService';
 import { useDispatch } from 'react-redux';
-import blogReducer from '../../../reducers/blogReducer';
-import { addBlogPost } from '../../../actions/blogActions';
-const CreateBlogModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribedby, currUser, showSuccess }) => {
+import { updateBlogPost } from '../../../actions/blogActions';
+
+
+const EditBlogPostModal = ({ classes, open, onClose, blog, ariaLabelledBy, ariaDescribedby, currUser, showSuccess }) => {
 
     const STEPS = {
         general: 'General',
         content: 'Content'
     }
+    const dispatch = useDispatch();
+    const [state, setState] = useState({
+        id: `${blog.id}`,
+        title: blog.title,
+        description: blog.description,
+        image: blog.image,
+        tags: blog.tags.join(','),
+        text: blog.text
+    });
     const [step, setStep] = useState(STEPS.general);
     const [invalid, setInvalid] = useState([]);
-    const [state, setState] = useState({
-        title: '',
-        description: '',
-        image: '',
-        tags: '',
-        text: ''
-    });
 
-    const dispatch = useDispatch();
 
     const onSubmit = () => {
-        console.log('in here');
-        console.log(state);
         const _validate = validateBlogPost(state);
-        console.log(_validate);
         if (!_validate.isValid) {
+            console.log(_validate.results);
             setInvalid(_validate.results);
+            console.log('valid');
         }
         else {
             setInvalid([])
-            console.log('in create');
-            createBlogPost({ ...state, tags: state.tags.split(',') }, currUser.id).then((res) => {
-                resetState(state, setState, setInvalid);
-                dispatch(addBlogPost(res.data));
+            editBlogPost({ ...state, tags: state.tags.split(',') }, currUser.id).then(res => {
+                console.log(res);
+                dispatch(updateBlogPost(res.data));
                 onClose();
-
             });
-
         }
     }
 
@@ -108,24 +106,26 @@ const CreateBlogModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribed
 
             }
             {step === STEPS.content &&
-                <TextField error={isInvalid('text', invalid)} variant="outlined" label="Text" defaultValue='' placeholder="Markdown"
+                <TextField error={isInvalid('text', invalid)} variant="outlined" label="Text" defaultValue={state.text} placeholder="Markdown"
                     helperText={isInvalid('text', invalid) ? 'Required' : ''} onChange={(event) => {
                         setState({ ...state, text: event.target.value })
                     }} multiline rows={55} />
             }
 
         </BaseModal>
-    )
-}
+    );
+};
 
-CreateBlogModal.propTypes = {
+EditBlogPostModal.propTypes = {
     classes: object.isRequired,
     open: bool.isRequired,
+    blog: object.isRequired,
     onClose: func.isRequired,
     ariaLabelledBy: string,
     currUser: object.isRequired,
     ariaDescribedby: string,
-    showSuccess: func.isRequired
-}
+    showSuccess: func
+};
 
-export default withStyles(styles)(CreateBlogModal)
+
+export default withStyles(styles)(EditBlogPostModal);

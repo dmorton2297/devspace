@@ -30,7 +30,7 @@ const Blog = ({ classes, user, history, readOnly }) => {
     if (!blog.title) return <React.Fragment></React.Fragment>;
     return (
         <div className={classNames(classes.container)}>
-            <CreateBlogModal open={createBlog} onClose={() => setCreateBlog(false)} ariaLabelledBy='Create Blog' ariaDescribedBy='Create Blog' currUser={user} showSuccess={() => {}} />
+            <CreateBlogModal open={createBlog} onClose={() => setCreateBlog(false)} ariaLabelledBy='Create Blog' ariaDescribedBy='Create Blog' currUser={user} showSuccess={() => { }} />
             <Card>
                 <div className={classNames(classes.titleTags, 'flex', 'bottom-margin')}>
                     <Typography variant="h1">{blog.title}</Typography>
@@ -46,19 +46,15 @@ const Blog = ({ classes, user, history, readOnly }) => {
             <div className={classes.posts}>
                 <div className='flex'>
                     <Typography variant="h1">Posts</Typography>
-                    {!readOnly && 
+                    {!readOnly &&
                         <IconButton onClick={() => setCreateBlog(true)}>
                             <AddIcon />
                         </IconButton>
                     }
                 </div>
                 {blog.blogPosts.map(post => (
-                    <div onClick={() => history.push(`/posts/${post.id}/${user.id}`)}>
-                        <BlogPost key={post.id} post={post} />
-                    </div>
-                ))
-
-                }
+                    <BlogPost key={post.id} history={history} user={user} post={post} />
+                ))}
             </div>
         </div>
     )

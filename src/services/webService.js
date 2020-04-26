@@ -40,3 +40,11 @@ export const getBlogPost = (postId, userId) => {
 export const createBlogPost = (post, userId) => {
     return axios.post(`http://localhost:3200/user/${userId}/blog`, post);
 }
+
+export const editBlogPost = (post, userId) => {
+    return axios.post(`http://localhost:3200/user/${userId}/blog/posts/edit`, post);
+}
+
+export const deleteBlogPost = (post, userId) => {
+    return axios.post(`http://localhost:3200/user/${userId}/blog/posts/delete`, post);
+}

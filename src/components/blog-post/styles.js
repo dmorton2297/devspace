@@ -8,7 +8,11 @@ const styles = theme => {
             maxWidth: 400,
             minWidth: 400,
             padding: 20,
-            fontWeight: theme.typography.bold.fontWeight
+            fontWeight: theme.typography.bold.fontWeight,
+            '&:hover': {
+                color: theme.palette.primary.lightAlternate,
+                cursor: 'pointer'
+            }
         },
         description: {
             maxWidth: 400,
@@ -19,13 +23,30 @@ const styles = theme => {
             color: theme.palette.primary.lightAlternate,
             '&:hover': {
                 backgroundColor: theme.palette.primary.darkAlternate,
-            }
+            },
+            zIndex: 1,
+            display: 'grid',
+            gridTemplateColumns: '90% 10%',
+            cursor: 'pointer'
         },
         tagContainer: {
-            padding: '5px 0',
             justifyContent: 'flex-end',
-            backgroundColor: theme.palette.primary.lightAlternateTransparent
-        }
+            padding: '5px 0',
+            backgroundColor: theme.palette.primary.lightAlternateTransparent,
+        },
+        controlButton: {
+            color: theme.palette.primary.light,
+            '&:hover': {
+                color: 'lightgray'
+            },
+            padding: '0 15px',
+            paddingTop: 10,
+            paddingBottom: 15
+        },
+        icon: {
+            height: 30,
+            width: 30
+        },
     })
 };
 

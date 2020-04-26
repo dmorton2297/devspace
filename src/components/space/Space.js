@@ -139,10 +139,7 @@ const Space = ({ classes, user, readOnly }) => {
      * @returns {void} - This function does not return anything
      */
     const onUpdateProfile = () => {
-        if (!editProfile) {
-            return;
-        }
-
+        if (!editProfile) return;
         const _validate = validateProfile(editProfile);
         if (!_validate.isValid) {
             setProfileInvalid(_validate.results);
@@ -156,7 +153,6 @@ const Space = ({ classes, user, readOnly }) => {
                 setTagBuffer(null);
             })
         }
-        
     }
 
     /**

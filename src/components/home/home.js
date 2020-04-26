@@ -22,7 +22,7 @@ const Home = ({ classes }) => {
     const renderTab = tab => {
         switch (tab) {
             case 'space':
-                return <Space user={user} />;
+                return <Blog user={user} />;
             case 'blog':
                 return <Blog user={user} />;
             case 'settings':
