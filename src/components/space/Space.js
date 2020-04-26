@@ -17,6 +17,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import EditIcon from '@material-ui/icons/Edit';
 import { updateUser } from '../../actions/userActions';
 import Tag from '../shared/tag';
+import { validateProfile, isInvalid } from '../../utils/validator';
 
 /**
  * The Space component
@@ -39,6 +40,7 @@ const Space = ({ classes, user, readOnly }) => {
     const [selectedProject, setSelectedProject] = useState(null);
     const [addProject, setAddProject] = useState(false);
     const [editProfile, setEditProfile] = useState(false);
+    const [profileInvalid, setProfileInvalid] = useState([]);
     const [success, showSuccess] = useState(null);
     const [tagBuffer, setTagBuffer] = useState(null);
     const [newTag, setNewTag] = useState(null);
@@ -140,12 +142,21 @@ const Space = ({ classes, user, readOnly }) => {
         if (!editProfile) {
             return;
         }
-        updateProfile({ ...editProfile, tags: tagBuffer }, user.id).then((res) => {
-            showSuccessMessage('Profile Updated');
-            dispatch(updateUser(res.data));
-            setEditProfile(null);
-            setTagBuffer(null);
-        })
+
+        const _validate = validateProfile(editProfile);
+        if (!_validate.isValid) {
+            setProfileInvalid(_validate.results);
+        }
+        else {
+            updateProfile({ ...editProfile, tags: tagBuffer }, user.id).then((res) => {
+                showSuccessMessage('Profile Updated');
+                dispatch(updateUser(res.data));
+                setEditProfile(null);
+                setProfileInvalid([]);
+                setTagBuffer(null);
+            })
+        }
+        
     }
 
     /**
@@ -215,28 +226,28 @@ const Space = ({ classes, user, readOnly }) => {
                             {editProfile &&
                                 <div className='full-width'>
                                     <div className={classes.inputs}>
-                                        <TextField variant="outlined" label="Job Title" defaultValue={user.title} placeholder="title"
-                                            onChange={(event) => {
+                                        <TextField error={isInvalid('title', profileInvalid)} variant="outlined" label="Job Title" defaultValue={user.title} placeholder="title"
+                                            helperText={isInvalid('title', profileInvalid) ? 'Required. Must be less than or equal to 80 characters.' : ''} onChange={(event) => {
                                                 setEditProfile({ ...editProfile, title: event.target.value });
                                             }} />
-                                        <TextField variant="outlined" label="Company Title" defaultValue={user.company} placeholder="title"
-                                            onChange={(event) => {
+                                        <TextField error={isInvalid('company', profileInvalid)} variant="outlined" label="Company Title" defaultValue={user.company} placeholder="title"
+                                            helperText={isInvalid('company', profileInvalid) ? '' : ''} onChange={(event) => {
                                                 setEditProfile({ ...editProfile, company: event.target.value });
                                             }} />
-                                        <TextField variant="outlined" label="User Email" defaultValue={user.email} placeholder="title"
-                                            onChange={(event) => {
+                                        <TextField error={isInvalid('email', profileInvalid)} variant="outlined" label="User Email" defaultValue={user.email} placeholder="title"
+                                            helperText={isInvalid('email', profileInvalid) ? 'Required. Must be a valid email.' : ''} onChange={(event) => {
                                                 setEditProfile({ ...editProfile, email: event.target.value });
                                             }} />
-                                        <TextField variant="outlined" label="Summary" defaultValue={user.summary} placeholder="title"
-                                            onChange={(event) => {
+                                        <TextField error={isInvalid('summary', profileInvalid)} variant="outlined" label="Summary" defaultValue={user.summary} placeholder="title"
+                                            helperText={isInvalid('summary', profileInvalid) ? 'Required. Must be less than 250 characers' : ''} onChange={(event) => {
                                                 setEditProfile({ ...editProfile, summary: event.target.value });
                                             }} />
-                                        <TextField variant="outlined" label="Github" defaultValue={user.github} placeholder="url"
-                                            onChange={(event) => {
+                                        <TextField error={isInvalid('github', profileInvalid)} variant="outlined" label="Github" defaultValue={user.github} placeholder="url"
+                                            helperText={isInvalid('github', profileInvalid) ? 'Must be a valid url.' : ''} onChange={(event) => {
                                                 setEditProfile({ ...editProfile, github: event.target.value });
                                             }} />
-                                        <TextField variant="outlined" label="LinkedIn" defaultValue={user.linkedin} placeholder="url"
-                                            onChange={(event) => {
+                                        <TextField error={isInvalid('linkedin', profileInvalid)} variant="outlined" label="LinkedIn" defaultValue={user.linkedin} placeholder="url"
+                                            helperText={isInvalid('linkedin', profileInvalid) ? 'Must be a valid url.' : ''} onChange={(event) => {
                                                 setEditProfile({ ...editProfile, linkedin: event.target.value });
                                             }} />
                                     </div>
@@ -244,6 +255,7 @@ const Space = ({ classes, user, readOnly }) => {
                                         <DefaultButton onClick={onUpdateProfile}>Update</DefaultButton>
                                         <DefaultButton warn={true} onClick={() => {
                                             setEditProfile(null);
+                                            setProfileInvalid([]);
                                             setTagBuffer(null);
                                         }}>Cancel</DefaultButton>
                                     </div>

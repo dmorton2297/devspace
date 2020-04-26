@@ -14,6 +14,16 @@ const validURL = (input) => {
 }
 
 /**
+ * Checks validity of string as URL
+ * @param {string} input - Input string we are testing
+ * @returns {boolean} - true/false based on validity of string and url 
+ */
+const validEmail = (input) => {
+    const pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return !!pattern.test(String(input).toLowerCase());
+}
+
+/**
  * 
  * @param {string} input - The string we are testing
  * @returns {boolean} - true/false for validity of tag as string
@@ -32,7 +42,7 @@ const validTags = (input) => {
 /**
  * Validates a project
  * @param {object} state - State object we are validating
- * @returns {object} - Object containing info on the validity of the project
+ * @returns {object} - Object containing info on the validity of the project.
  */
 export const validateProject = (state) => {
     const validation = {
@@ -41,7 +51,7 @@ export const validateProject = (state) => {
         projectLink: true, tags: true,
         demoVideo: true
     };
-    if (state.name === '' || state.name.length > 40) validation.name = false;
+    if (state.name === '' || state.name.length >= 40) validation.name = false;
     if (state.description === '') validation.description = false;
     if (state.github !== '' && !validURL(state.github)) validation.github = false;
     if (state.website !== '' && !validURL(state.website)) validation.website = false;
@@ -56,18 +66,38 @@ export const validateProject = (state) => {
 /**
  * Validates a blog post
  * @param {object} state - blog post we are validating
- * @returns {object} = Object containg info on the validit of blog post
+ * @returns {object} - Object containing info on the validity of the blog post.
  */
 export const validateBlogPost = (state) => {
     const validation = {
         title: true, description: true,
         image: true, tags: true, text: true
     };
-    if (state.title === '' || state.title.length > 60) validation.title = false;
+    if (state.title === '' || state.title.length >= 60) validation.title = false;
     if (state.description === '') validation.description = false;
     if (state.image === '' || !validURL(state.image)) validation.image = false;
     if (state.tags !== '' || !validTags(state.tags)) validation.tags = false;
     if (state.text === '') validation.text = false;
+
+    const results = Object.keys(validation).filter(x => !validation[x]);
+    return { isValid: results.length === 0, results }
+}
+
+/**
+ * Validates a profile
+ * @param {object} state - Profile state we are validating 
+ * @returns {object} - Object containing info on the validity of the profile.
+ */
+export const validateProfile = (state) => {
+    const validation = {
+        title: true, company: true, email: true,
+        summary: true, github: true, linkedin: true
+    };
+    if (state.title === '' || state.title.length >= 120) validation.title = false;
+    if (state.email === '' ||!validEmail(state.email)) validation.email = false;
+    if (state.summary === '' || state.summary.length >= 250) validation.summary = false;
+    if (state.github !== '' && !validURL(state.github)) validation.github = false;
+    if (state.linkedin !== '' && !validURL(state.linkedin)) validation.linkedin = false;
 
     const results = Object.keys(validation).filter(x => !validation[x]);
     return { isValid: results.length === 0, results }
