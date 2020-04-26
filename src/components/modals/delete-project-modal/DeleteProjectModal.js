@@ -16,7 +16,6 @@ const DeleteProjectModal = ({ classes, currUser, open, onClose, ariaLabelledBy, 
 
     const onDelete = () => { 
         deleteUserProject(project, 1).then(res => {
-            console.log(res);
             dispatch(deleteProject(res.data));
             onClose();
             showSuccess('Successfully Deleted Project');

@@ -8,6 +8,7 @@ import { Route, Switch } from 'react-router-dom'
 import classNames from 'classnames';
 import ProtectedRoute from './protected-route';
 import Navigation from '../navigation';
+import BlogPost from '../public-facing/blog-post';
 
 
 /**
@@ -25,6 +26,7 @@ const Root = ({ classes }) => {
                 <div className={classes.mainContainer}>
                     <Switch>
                         <ProtectedRoute path="/home" component={Home} />
+                        <Route path="/posts/:id/:userId" component={BlogPost} />
                         <Route path="/" component={Login} />
                     </Switch>
                 </div>

@@ -28,3 +28,15 @@ export const editUserProject = (project, userId) => {
 export const deleteUserProject = (project, userId) => {
     return axios.post(`http://localhost:3200/user/${userId}/projects/delete`, project);
 }
+
+export const getUserBlogs = userId => {
+    return axios.get(`http://localhost:3200/user/${userId}/blog`);
+}
+
+export const getBlogPost = (postId, userId) => {
+    return axios.get(`http://localhost:3200/blog/${postId}/${userId}`);
+}
+
+export const createBlogPost = (post, userId) => {
+    return axios.post(`http://localhost:3200/user/${userId}/blog`, post);
+}

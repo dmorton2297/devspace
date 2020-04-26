@@ -4,7 +4,10 @@ export const palette = {
   primary: {
     main: '#232C35',
     light: '#fcfcfc',
+    lightAlternate: '#f8f8ff',
+    lightAlternateTransparent: 'rgba(248, 248, 255, 0.3)',
     dark: '#232C35',
+    darkAlternate: '#0f1317',
     warn: '#f44336',
     medium: '#ebebeb'
   },
@@ -27,6 +30,9 @@ export const typography = {
   body2: {
     fontSize: 12
   },
+  bold: {
+    fontWeight: 500
+  }
 }
 
 export const overrides = {

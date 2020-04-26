@@ -60,6 +60,12 @@ const styles = theme => {
             },
             '.grow':  {
                 flexGrow: 1
+            },
+            '.text-center': {
+                textAlign: 'center'
+            },
+            '.form-section': {
+                padding: '20px 0'
             }
         }
     })

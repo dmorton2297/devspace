@@ -15,7 +15,6 @@ const projectsReducer = (projects = [], action) => {
             return projects.filter(x => x.id !== action.payload.id)
         case UPDATE_PROJECT:
             const index = projects.findIndex(x => x.id === action.payload.id);
-            console.log(index);
             const _projects = projects;
             _projects[index] = action.payload;
             return ([

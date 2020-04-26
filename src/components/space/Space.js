@@ -2,8 +2,8 @@ import React, { useEffect, useState, useRef } from 'react'
 import { withStyles } from '@material-ui/styles'
 import styles from './styles';
 import classNames from 'classnames';
-import DefaultButton from '../default-button';
-import { Typography, Card, Grid, IconButton, Snackbar, SnackbarContent, Icon, TextField } from '@material-ui/core';
+import DefaultButton from '../shared/default-button';
+import { Typography, Card, Grid, IconButton, Snackbar, SnackbarContent, TextField } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserProjects, updateProfile } from '../../services/webService';
 import { setProjects } from '../../actions/projectsActions';
@@ -16,8 +16,9 @@ import theme from '../../theme';
 import CloseIcon from '@material-ui/icons/Close';
 import EditIcon from '@material-ui/icons/Edit';
 import { updateUser } from '../../actions/userActions';
+import Tag from '../shared/tag';
 
-const Profile = ({ classes, user, readOnly }) => {
+const Space = ({ classes, user, readOnly }) => {
     const dispatch = useDispatch();
     const projects = useSelector(state => state.projectsReducer);
     const projectsSection = useRef();
@@ -40,7 +41,6 @@ const Profile = ({ classes, user, readOnly }) => {
         const onScroll = () => {
             const position = projectsSection.current.getBoundingClientRect();
             const cardRect = overviewCard.current.getBoundingClientRect();
-            console.log(cardRect);
             if (position.y <= cardRect.bottom) {
                 const percentage = (cardRect.bottom - position.y) / cardRect.bottom;
                 overviewCard.current.style.backgroundColor = `rgba(0, 0, 0, ${percentage}`;
@@ -67,7 +67,6 @@ const Profile = ({ classes, user, readOnly }) => {
     }
 
     const showSuccessMessage = (message) => {
-        console.log(message);
         showSuccess(message);
     }
 
@@ -110,21 +109,6 @@ const Profile = ({ classes, user, readOnly }) => {
         setTagBuffer([...tagBuffer, newTag]);
     }
 
-    const Tag = ({ content, readOnly, onDelete }) => {
-        return <div className={classNames(classes.tag, 'flex')}>
-            {!readOnly &&
-                <IconButton onClick={() => onDelete(content)} style={{ color: 'white' }}><CloseIcon style={{ height: 20, width: 20 }} /></IconButton>
-            }
-            <Typography variant="body1" key={`x${Math.random() * 100}`}>{content}</Typography>
-        </div>
-    };
-
-    Tag.defaultProps = {
-        readOnly: true
-    };
-
-
-
     return (
         <div className={classNames(classes.container, 'profile-container')}>
             <Snackbar open={!!success} autoHideDuration={6000} onClose={() => showSuccess(null)} >
@@ -147,7 +131,7 @@ const Profile = ({ classes, user, readOnly }) => {
                                 </div>
                             }
                             {!tagBuffer && user.tags.map(x => (
-                                <Tag content={x} />
+                                <Tag key={x.length + (Math.random() * 100)} content={x} />
                             ))}
                             {tagBuffer && tagBuffer.length < 6 &&
                                 <React.Fragment>
@@ -159,7 +143,7 @@ const Profile = ({ classes, user, readOnly }) => {
                                 </React.Fragment>
                             }
                             {tagBuffer && tagBuffer.map(x => (
-                                <Tag content={x} readOnly={!editProfile} onDelete={tag => onDeleteTag(tag)} />
+                                <Tag content={x} readOnly={!editProfile} key={x.length + (Math.random() * 100)} onDelete={tag => onDeleteTag(tag)} />
 
                             ))}
                         </div>
@@ -250,14 +234,14 @@ const Profile = ({ classes, user, readOnly }) => {
     );
 };
 
-Profile.propTypes = {
+Space.propTypes = {
     classes: object.isRequired,
     user: object.isRequired,
     readOnly: bool
 };
 
-Profile.defaultProps = {
+Space.defaultProps = {
     readOnly: false
 };
 
-export default withStyles(styles)(Profile);
+export default withStyles(styles)(Space);

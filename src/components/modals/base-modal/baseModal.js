@@ -3,9 +3,9 @@ import { withStyles } from '@material-ui/styles';
 import styles from './styles';
 import { object, bool, func, string, any } from 'prop-types';
 import { Modal, Card, Button } from '@material-ui/core';
-import DefaultButton from '../../default-button';
+import DefaultButton from '../../shared/default-button';
 
-const BaseModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribedby, children, buttonText, buttonFunc, cancelButton }) => {
+const BaseModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribedby, children, buttonText, buttonFunc, showButton, cancelButton, stepButton }) => {
     return (
         <Modal
             open={open}
@@ -17,10 +17,16 @@ const BaseModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribedby, ch
                     {children}
                 </div>
                 <div className={classes.buttonContainer}>
-                    <DefaultButton onClick={buttonFunc}>{buttonText}</DefaultButton>
+                    {showButton &&
+                        <DefaultButton onClick={buttonFunc}>{buttonText}</DefaultButton>
+                    }
+                    {stepButton &&
+                        <DefaultButton onClick={stepButton.action}>{stepButton.text}</DefaultButton>
+                    }
                     {cancelButton &&
                         <Button className={classes.cancelButton} onClick={onClose}>Cancel</Button>
                     }
+
                 </div>
             </Card>
         </Modal >
@@ -36,11 +42,15 @@ BaseModal.propTypes = {
     children: any.isRequired,
     buttonText: string.isRequired,
     buttonFunc: func.isRequired,
-    cancelButton: bool
+    showButton: bool,
+    cancelButton: bool,
+    stepButton: object,
 }
 
 BaseModal.defaultProps = {
-    cancelButton: false
+    cancelButton: false,
+    stepButton: {},
+    showButton: true
 }
 
 export default withStyles(styles)(BaseModal);
