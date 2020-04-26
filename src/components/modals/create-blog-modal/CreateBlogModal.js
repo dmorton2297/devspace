@@ -4,7 +4,6 @@ import styles from './styles';
 import { object, bool, func, string } from 'prop-types';
 import BaseModal from '../base-modal';
 import { Typography, TextField, IconButton, Button } from '@material-ui/core';
-import DefaultButton from '../../shared/default-button';
 import CloseIcon from '@material-ui/icons/Cancel';
 import { createBlogPost } from '../../../services/webService';
 const CreateBlogModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribedby, currUser, showSuccess }) => {
@@ -35,7 +34,6 @@ const CreateBlogModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribed
 
     const onSubmit = () => {
         createBlogPost({ ...state, tags: state.tags.split(',') }, currUser.id).then((res) => {
-            console.log(res);
             resetState();
         });
     }
