@@ -18,12 +18,24 @@ import EditIcon from '@material-ui/icons/Edit';
 import { updateUser } from '../../actions/userActions';
 import Tag from '../shared/tag';
 
+/**
+ * The Space component
+ * @param {object} $0 - object containing the props for this component
+ * @param {object} $0.classes - classes object provided by withStyles HOC
+ * @param {object} $0.user - current user of the application
+ * @param {boolean} $0.readOnly - Determines if the page is readonly or not 
+ * @returns {element} - Space component
+ */
 const Space = ({ classes, user, readOnly }) => {
+    // hooks for talking to redux store
     const dispatch = useDispatch();
     const projects = useSelector(state => state.projectsReducer);
+
+    // Refs for scrolling effect
     const projectsSection = useRef();
     const overviewCard = useRef();
 
+    // component state
     const [selectedProject, setSelectedProject] = useState(null);
     const [addProject, setAddProject] = useState(false);
     const [editProfile, setEditProfile] = useState(false);
@@ -31,6 +43,7 @@ const Space = ({ classes, user, readOnly }) => {
     const [tagBuffer, setTagBuffer] = useState(null);
     const [newTag, setNewTag] = useState(null);
 
+    // useEffect to deal with scrolling effect on page
     useEffect(() => {
         getUserProjects(user.id).then((res) => {
             dispatch(setProjects(res.data));
@@ -38,6 +51,7 @@ const Space = ({ classes, user, readOnly }) => {
             console.error(error);
         })
 
+        // TODO: Abstract hacky code for scrolling effect and make it reusable 
         const onScroll = () => {
             const position = projectsSection.current.getBoundingClientRect();
             const cardRect = overviewCard.current.getBoundingClientRect();
@@ -58,37 +72,70 @@ const Space = ({ classes, user, readOnly }) => {
         }
     }, [dispatch, user]);
 
+    /**
+     * Opens the view project modal
+     * @param {object} project - Project to open
+     * @returns {void} - This function does not return anything
+     */
     const openProjectModal = (project) => {
         setSelectedProject(project);
     }
 
+    /**
+     * Closes the view project modal
+     * @returns {void} - This function does not return anything
+     */
     const closeProjectModal = () => {
         setSelectedProject(null);
     }
 
+    /**
+     * 
+     * @param {string} message - Message to show
+     * @returns {void} - This function does not return anything 
+     */
     const showSuccessMessage = (message) => {
         showSuccess(message);
     }
 
+    /**
+     * Handles when a user clicks the edit profile button
+     * @returns {void} - This function does not return anything.
+     */
     const editProfileClicked = () => {
         if (!!editProfile) {
+            // Set state to be not editing profile
             setEditProfile(null);
             setTagBuffer(null);
         }
         else {
+            // Set state to be editing profile
             setEditProfile({ ...user });
-            setTagBuffer(user.tags);
+            setTagBuffer(user.tags); // Create a tag buffer in case
+                                     // user adds/removes tags
         }
     }
 
+    /**
+     * Function to handle when the user clicks the github button
+     * @returns {void} - This function does not return anything
+     */
     const onGithubClicked = () => {
         window.open(user.github);
     }
 
+    /**
+     * Function to hanle when a user clicks the linkedin button
+     * @returns {void} - This function does not return anything
+     */
     const onLinkedInClicked = () => {
         window.open(user.linkedin);
     }
 
+    /**
+     * Function to handle when a user submits the edit profile form
+     * @returns {void} - This function does not return anything
+     */
     const onUpdateProfile = () => {
         if (!editProfile) {
             return;
@@ -101,10 +148,22 @@ const Space = ({ classes, user, readOnly }) => {
         })
     }
 
+    /**
+     * Function to handle removing a tag from the tag buffer.
+     * This stages it to be deleted if a user submits the edit profile 
+     * form.
+     * @param {string} tag - Tag to remove 
+     * @returns {void} - This function does not return anything
+     */
     const onDeleteTag = tag => {
         setTagBuffer(tagBuffer.filter(x => x !== tag));
     }
 
+    /**
+     * This stages it to be added if a user submits the edit profile 
+     * form.
+     * @returns {void} - This function does not return anything
+     */
     const onAddTag = () => {
         setTagBuffer([...tagBuffer, newTag]);
     }

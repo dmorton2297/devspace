@@ -20,8 +20,6 @@ render(
                 <Root />
             </ThemeProvider>
         </BrowserRouter>
-    </Provider>
-
-    ,
+    </Provider>,
     document.getElementById('root')
 );
