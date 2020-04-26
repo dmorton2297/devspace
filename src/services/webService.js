@@ -33,6 +33,10 @@ export const getUserBlogs = userId => {
     return axios.get(`http://localhost:3200/user/${userId}/blog`);
 }
 
+export const updateBlogDetails = (blog, userId) => {
+    return axios.post(`http://localhost:3200/user/${userId}/blog/edit`, blog);
+}
+
 export const getBlogPost = (postId, userId) => {
     return axios.get(`http://localhost:3200/blog/${postId}/${userId}`);
 }

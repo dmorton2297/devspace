@@ -46,7 +46,7 @@ const styles = theme => {
         icon: {
             height: 30,
             width: 30
-        },
+        }
     })
 };
 
