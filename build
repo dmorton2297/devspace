@@ -22,5 +22,9 @@ while [[ $# -gt 0 ]]; do
             npm start
             break
             ;;
+        start:docker)
+            docker-compose up -d --build
+            break
+            ;;
     esac
 done
