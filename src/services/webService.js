@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { getItem, setItem } from '../utils/localStorage';
-import firebase from 'firebase';
+import { getItem } from '../utils/localStorage';
 
 axios.interceptors.request.use(config => {
     const token = getItem('auth');

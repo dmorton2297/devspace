@@ -27,7 +27,7 @@ const Root = ({ classes }) => {
                 <div className={classes.mainContainer}>
                     <Switch>
                         <ProtectedRoute path="/home" component={Home} />
-                        <Route path="/signup" component={SignUp} />
+                        <Route path="/signup" component={Login} />
                         <Route path="/posts/:id/:userId" component={BlogPost} />
                         <Route path="/" component={Login} />
                     </Switch>
