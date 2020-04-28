@@ -1,14 +1,32 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { withStyles } from '@material-ui/styles';
 import styles from './styles';
 import { object } from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Space from '../space';
 import Blog from '../blog';
+import Settings from '../settings';
+import { getItem } from '../../utils/localStorage';
+import { getUser } from '../../services/webService';
+import { setUser } from '../../actions/userActions';
 
 const Home = ({ classes }) => {
     const user = useSelector(state => state.userReducer);
     const tab = useSelector(state => state.tabReducer);
+    const dispatch = useDispatch();
+    
+    useEffect(() => {
+        if (!user.id) {
+            console.log('no user found');
+            const email = getItem('email');
+            console.log(email);
+            getUser(email).then((res) => {
+                console.log(res);
+                dispatch(setUser(res.data));
+            })
+        }
+    });
+    
 
     if (!user.id) {
         return <div></div>; // TODO - Add spinner
@@ -22,11 +40,11 @@ const Home = ({ classes }) => {
     const renderTab = tab => {
         switch (tab) {
             case 'space':
-                return <Blog user={user} />;
+                return <Space user={user} />;
             case 'blog':
                 return <Blog user={user} />;
             case 'settings':
-                return <p>Settings</p>
+                return <Settings />;
             default:
                 return <Blog user={user} />;
         }

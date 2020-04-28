@@ -9,7 +9,6 @@ import { createBlogPost } from '../../../services/webService';
 import { validateBlogPost, isInvalid } from '../../../utils/validator';
 import { resetState } from '../../../utils/resetState';
 import { useDispatch } from 'react-redux';
-import blogReducer from '../../../reducers/blogReducer';
 import { addBlogPost } from '../../../actions/blogActions';
 const CreateBlogModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribedby, currUser, showSuccess }) => {
 

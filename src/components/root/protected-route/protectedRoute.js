@@ -1,21 +1,13 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Route, useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { getItem } from '../../../utils/localStorage';
 
 const ProtectedRoute = ({ path, component }) => {
 
-    const user = useSelector(state => state.userReducer);
     const history = useHistory();
-
-    useEffect(() => {
-        if (!user.id) {
-            history.push('/login');
-        };
-        
-    }, [user, history]);
-
-    if (!user.id) {
-        return <h1>Error occured</h1>;
+    const authenticated = getItem('_auth');
+    if (authenticated === 'false') {
+        history.push('/login');
     }
 
     return (

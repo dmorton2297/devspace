@@ -51,7 +51,7 @@ const EditBlogPostModal = ({ classes, open, onClose, blog, ariaLabelledBy, ariaD
     return (
         <BaseModal
             open={open}
-            onClose={onClose}
+            onClose={() => { resetState(state, setState); onClose() }}
             aria-labelledby={ariaLabelledBy}
             aria-describedby={ariaDescribedby}
             buttonText="create"

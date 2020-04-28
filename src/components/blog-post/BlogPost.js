@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { withStyles, Typography, Card, makeStyles, IconButton } from '@material-ui/core';
 import styles from './styles';
-import { object, func, bool } from 'prop-types';
+import { object, bool } from 'prop-types';
 import classNames from 'classnames';
 import Tag from '../shared/tag';
 import EditIcon from '@material-ui/icons/Edit';
@@ -15,7 +15,7 @@ const BlogPost = ({ classes, post, history, user, readOnly }) => {
     const [showControls, setShowControls] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
     const [showDelete, setShowDelete] = useState(false);
-    const [editDetails, setEditDetails] = useState({});
+    const [editDetails] = useState({});
 
     const useStyles = makeStyles({
         projImage: {

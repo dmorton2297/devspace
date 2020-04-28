@@ -7,7 +7,7 @@ const styles = (theme) => {
             alignItems: 'center',
             paddingTop: 100
         },
-        loginControl: {
+        signUpControl: {
             width: 400,
             height: 300
         }

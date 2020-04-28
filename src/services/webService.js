@@ -1,5 +1,28 @@
 import axios from 'axios';
+import { getItem, setItem } from '../utils/localStorage';
+import firebase from 'firebase';
 
+axios.interceptors.request.use(config => {
+    const token = getItem('auth');
+    if (!token) {
+        console.error('Auth Token not set');
+    }
+    else {
+        console.log('in here');
+        console.log(token);
+        config.headers['Authorization'] = token;
+    }
+
+    return config;
+});
+
+axios.interceptors.response.use(res => {
+    return res;
+}, error => {
+    if (error.response.status === 401) {
+        window.location = 'login';
+    }
+})
 /**
  * 
  * @param {string} email - Email of the user we want to login.
@@ -8,6 +31,10 @@ import axios from 'axios';
 export const loginUser = (email, password) => {
     return axios.post('http://localhost:3200/login', { email: email, password: password });
 }; 
+
+export const getUser = (email) => {
+    return axios.get(`http://localhost:3200/user/${email}`);
+}
 
 export const updateProfile = (user, userId) => {
     return axios.post(`http://localhost:3200/user/${userId}/update`, user)
