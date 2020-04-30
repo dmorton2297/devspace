@@ -39,6 +39,43 @@ const styles = theme => {
             background: 'white',
             color: 'black',
         },
+        mobileMenu: {
+            position: 'absolute',
+            width: '250px',
+            height: '100%',
+            top: 0,
+            backgroundColor: theme.palette.primary.mainTransparent,
+            zIndex: 100,
+            left: `${window.innerWidth - 250}px`
+        },
+        menuButtonContainer: {
+            display: 'flex',
+            width: '100%',
+            justifyContent: 'flex-end',
+            paddingRight: 30
+        },
+        menuIcon: {
+            color: theme.palette.primary.light
+        },
+        menuButton: {
+            marginRight: 20
+        },
+        closeMenuIcon: {
+            width: 30,
+            height: 30,
+            color: theme.palette.primary.light
+        },
+        closeMenuButton: {
+            padding: 20
+        },
+        mobileMenuButton: {
+            color: theme.palette.primary.light,
+            cursor: 'pointer',
+            padding: 20,
+            '&:hover': {
+                backgroundColor: theme.palette.primary.darkAlternate
+            }
+        }
     });
 }
 
