@@ -31,9 +31,7 @@ const styles = theme => {
 
         },
         title: {
-            '@media(max-width: 1000px)': {
-                marginBottom: 10
-            }
+            marginBottom: 10
         },
         headerContainer: {
             padding: '20px 0'
