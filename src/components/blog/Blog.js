@@ -81,9 +81,9 @@ const Blog = ({ classes, user, history, readOnly }) => {
         <div className={classNames(classes.container)}>
             <CreateBlogModal open={createBlog} onClose={() => setCreateBlog(false)} ariaLabelledBy='Create Blog' ariaDescribedBy='Create Blog' currUser={user} showSuccess={() => { }} />
             <Card>
-                <div className={classNames(classes.titleTags, 'flex', 'bottom-margin')}>
+                <div className={classNames(classes.titleTags, 'bottom-margin')}>
                     {!editDetails &&
-                        <Typography variant="h1">{blog.title}</Typography>
+                        <Typography className={classes.title} variant="h1">{blog.title}</Typography>
                     }
                     {editDetails &&
                         <React.Fragment>
@@ -141,7 +141,7 @@ const Blog = ({ classes, user, history, readOnly }) => {
                 }
             </Card>
             <div className={classes.posts}>
-                <div className='flex'>
+                <div className={classNames('flex', classes.headerContainer)}>
                     <Typography variant="h1">Posts</Typography>
                     {!readOnly &&
                         <IconButton onClick={() => setCreateBlog(true)}>

@@ -1,6 +1,10 @@
 const styles = () => {
     return ({
-        container: {}
+        container: {
+            '@media(max-width: 1000px)': {
+                padding: 20
+            }
+        }
     });
 };
 

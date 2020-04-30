@@ -2,7 +2,11 @@ const styles = theme => {
     return ({
         container: {
             width: '100%',
-            height: '100%'
+            height: '100%',
+            '@media(max-width: 1000px)': {
+                padding: 15,
+                width: 'calc(100% - 40px)'
+            }
         },
         titleTags: {
             justifyContent: 'space-between',
@@ -19,7 +23,20 @@ const styles = theme => {
             }
         },
         titleTextBox: {
-            paddingRight: '5%'
+            paddingRight: '5%',
+            display: 'flex',
+            '@media(max-width: 1000px)': {
+                display: 'block'
+            }
+
+        },
+        title: {
+            '@media(max-width: 1000px)': {
+                marginBottom: 10
+            }
+        },
+        headerContainer: {
+            padding: '20px 0'
         }
     });
 };

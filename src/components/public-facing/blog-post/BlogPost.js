@@ -71,6 +71,7 @@ const BlogPost = ({ match, classes }) => {
         padding: 20px;
         background-color: #ebebeb;
         padding: 20px;
+        overflow-x: scroll;
     }    
 
     .image-container {
@@ -87,9 +88,10 @@ const BlogPost = ({ match, classes }) => {
     t = t.replace('<p><img', '<p class="image-container"><img')
     console.log(t);
     return (
-        <div dangerouslySetInnerHTML={{ __html: t }}>
-
+        <div className={classes.container}>
+            <div dangerouslySetInnerHTML={{ __html: t }}></div>
         </div>
+        
     );
 };
 

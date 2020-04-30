@@ -1,18 +1,23 @@
 const styles = theme => {
     return ({
         container: {
+            display: 'flex',
             justfiyContent: 'space-between',
-            padding: 0
+            padding: 0,
+            '@media(max-width: 1000px)': {
+                display: 'block',
+                marginBottom: 10
+            }
         },
         title: {
-            maxWidth: 400,
-            minWidth: 400,
+            width: '100%',
             padding: 20,
             fontWeight: theme.typography.bold.fontWeight,
             '&:hover': {
                 color: theme.palette.primary.lightAlternate,
                 cursor: 'pointer'
-            }
+            },
+
         },
         description: {
             maxWidth: 400,
@@ -27,7 +32,10 @@ const styles = theme => {
             zIndex: 1,
             display: 'grid',
             gridTemplateColumns: '90% 10%',
-            cursor: 'pointer'
+            cursor: 'pointer',
+            '@media(max-width: 1000px)': {
+                gridTemplateColumns: '85% 15%',
+            }
         },
         tagContainer: {
             justifyContent: 'flex-end',
@@ -41,7 +49,7 @@ const styles = theme => {
             },
             padding: '0 15px',
             paddingTop: 10,
-            paddingBottom: 15
+            paddingBottom: 15,
         },
         icon: {
             height: 30,

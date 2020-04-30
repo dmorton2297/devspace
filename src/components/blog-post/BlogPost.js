@@ -40,7 +40,7 @@ const BlogPost = ({ classes, post, history, user, readOnly }) => {
     const postImage = useStyles();
     console.log(editDetails);
     return (
-        <Card className={classNames(classes.container, 'full-width', 'flex')}>
+        <Card className={classNames(classes.container, 'full-width')}>
             <EditBlogPostModal open={showEdit} onClose={() => setShowEdit(false)} blog={post}
                 ariaLabelledBy='Edit' ariaDescribedby='Edit' currUser={user} />
             <DeleteBlogPostModal open={showDelete} onClose={() => setShowDelete(false)} post={post}
@@ -62,8 +62,6 @@ const BlogPost = ({ classes, post, history, user, readOnly }) => {
                         </React.Fragment>
                     }
                 </div>
-
-
             </div>
             <div className={postImage.projImage}>
                 <div className={classNames(classes.tagContainer, 'flex')}>
