@@ -17,6 +17,7 @@ import BlogPost from '../public-facing/blog-post';
  * @param {object} $0.classes - Styling classes. 
  */
 const Root = ({ classes }) => {
+    console.log(process.env);
     return (
         <div className={classNames(classes.root, 'root')}>
             <div className={classes.navigation}>

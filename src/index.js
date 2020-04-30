@@ -14,13 +14,13 @@ import { setItem } from './utils/localStorage';
 // Create the application store
 const store = createStore(rootReducer);
 const firebaseConfig = {
-    apiKey: "AIzaSyAEO387k8-piyw6_ouK8JdSHuid9Y2qAP0",
-    authDomain: "devspace-ec004.firebaseapp.com",
-    databaseURL: "https://devspace-ec004.firebaseio.com",
-    projectId: "devspace-ec004",
-    storageBucket: "devspace-ec004.appspot.com",
-    messagingSenderId: "186527984862",
-    appId: "1:186527984862:web:b2ee3d3da69a88f269e64f"
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+    authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+    databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
+    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.REACT_APP_FIREBASE_APP_ID
 };
 
 firebase.initializeApp(firebaseConfig);
