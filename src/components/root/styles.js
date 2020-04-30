@@ -8,21 +8,27 @@ const styles = theme => {
             width: '100%',
             height: 'calc(100vh)',
             backgroundColor: theme.palette.primary.light,
+            overflow: 'hidden'
         },
         navigation: {
             height: navigationHeight,
         },
         scrollContainer: {
             overflowY: 'scroll',
-            display: 'grid',
-            justifyItems: 'center'
+            '@media(min-width: 1000px)': {
+                display: 'grid',
+                justifyItems: 'center'
+            }
         },
         mainContainer: {
             padding: `0 ${mainSidePadding}px`,
             width: mainWidth,
             maxWidth: 1300,
-            minWidth: 784,
             height: `calc(100vh - ${navigationHeight + 10}px)`,
+            '@media(max-width: 1000px)': {
+                width: 'calc(100%)',
+                padding: 0
+            }
         },
         '@global': {
             '.full-size-modal': {
@@ -31,7 +37,8 @@ const styles = theme => {
                 backgroundColor: theme.palette.primary.light,
                 '@media(min-width: 1500px)': {
                     maxWidth: 1400,
-                    transform: `translate(calc(50vw - ${1612 / 2}px), 0%) !important;`                    
+                    transform: `translate(calc(50vw - ${1612 / 2}px), 0%) !important;`,
+                    overflowX: 'hidden'
                 },
             },
             '.bottom-margin': {
@@ -58,7 +65,7 @@ const styles = theme => {
             '.full-width': {
                 width: '100%'
             },
-            '.grow':  {
+            '.grow': {
                 flexGrow: 1
             },
             '.text-center': {
@@ -67,7 +74,7 @@ const styles = theme => {
             '.form-section': {
                 padding: '20px 0'
             }
-        }
+        },
     })
 };
 

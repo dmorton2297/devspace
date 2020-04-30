@@ -114,7 +114,7 @@ const Space = ({ classes, user, readOnly }) => {
             // Set state to be editing profile
             setEditProfile({ ...user });
             setTagBuffer(user.tags); // Create a tag buffer in case
-                                     // user adds/removes tags
+            // user adds/removes tags
         }
     }
 
@@ -187,15 +187,16 @@ const Space = ({ classes, user, readOnly }) => {
                 <Card ref={overviewCard}>
                     <div className={classNames(classes.topPortion, 'bottom-margin')}>
                         <Typography variant="h1" className={classNames(!readOnly ? classes.headerText : {}, 'margin-bottom')}>{user.name}'s Space</Typography>
-                        <div className={classes.tags}>
-                            {!readOnly &&
-                                <div className='grow'>
-                                    <div className={classes.editButton} onClick={editProfileClicked}>
-                                        <EditIcon style={{ height: 12, width: 12, marginRight: 5 }} />
-                                        <Typography variant="body2">Edit Profile Details</Typography>
-                                    </div>
+                        {!readOnly &&
+                            <div className='grow'>
+                                <div className={classes.editButton} onClick={editProfileClicked}>
+                                    <EditIcon style={{ height: 12, width: 12, marginRight: 5 }} />
+                                    <Typography variant="body2">Edit Profile Details</Typography>
                                 </div>
-                            }
+                            </div>
+                        }
+                        <div className={classes.tags}>
+
                             {!tagBuffer && user.tags.map(x => (
                                 <Tag key={x.length + (Math.random() * 100)} content={x} />
                             ))}
@@ -284,18 +285,18 @@ const Space = ({ classes, user, readOnly }) => {
                         </IconButton>
                     }
                 </div>
-                <Grid className={classes.projectCards} container spacing={3}>
+                <div className={classes.projectCards} container spacing={3}>
                     {projects.map(project => (
-                        <Grid item xs={4} key={project.id}>
+                        <div className={classes.projectCard} key={project.id}>
                             <ProjectCard showSuccess={showSuccessMessage} currUser={user} project={project} onClick={() => openProjectModal(project)} />
-                        </Grid>
+                        </div>
                     ))}
                     {projects.length === 0 &&
-                        <Grid item xs={12}>
+                        <div item xs={12}>
                             <Typography variant="h2" className={classes.noProjectsMessage}>No projects have been created.</Typography>
-                        </Grid>
+                        </div>
                     }
-                </Grid>
+                </div>
             </div>
         </div>
     );

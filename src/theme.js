@@ -40,7 +40,11 @@ export const overrides = {
     root: {
       padding: '20px 50px',
       margin: '10px 0 30px 0',
-      zIndex: 0
+      zIndex: 0,
+      '@media(max-width: 1000px)': {
+        padding: '20px 10px',
+        margin: 0
+      }
     },
   },
   MuiIconButton: {
