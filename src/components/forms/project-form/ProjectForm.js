@@ -5,7 +5,16 @@ import { isInvalid } from '../../../utils/validator';
 import CloseIcon from '@material-ui/icons/Close';
 import { object, func, arrayOf, string } from 'prop-types';
 
-
+/**
+ * Add project form element.
+ * @param {object} $0 - Object containing props for this component
+ * @param {object} $0.classes - object containing styling for this component
+ * @param {object} $0.state - state object form values are mapped to
+ * @param {function} $0.setState - function to set state
+ * @param {string[]} $0.invalid - invalid fields
+ * @param {string} $0.action - action verb for this form
+ * @return {element} - the add project form
+ */
 const ProjectForm = ({ classes, state, setState, invalid, action }) => {
     return (
         <React.Fragment>
