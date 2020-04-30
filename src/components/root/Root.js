@@ -9,7 +9,6 @@ import classNames from 'classnames';
 import ProtectedRoute from './protected-route';
 import Navigation from '../navigation';
 import BlogPost from '../public-facing/blog-post';
-import SignUp from '../sign-up';
 
 
 /**
