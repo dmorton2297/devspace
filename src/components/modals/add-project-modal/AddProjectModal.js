@@ -11,11 +11,23 @@ import { validateProject } from '../../../utils/validator';
 import { resetState } from '../../../utils/resetState';
 import ProjectForm from '../../forms/project-form';
 
-
-const AddProjectModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribedby, currUser, showSuccess }) => {
+/**
+ * Add project modal component.
+ * @param {object} $0 - Object containing props for this component
+ * @param {boolean} $0.open - Specifies if modal is open
+ * @param {function} $0.onCLose - Function handler for closing the modal
+ * @param {string} $0.ariaLabelledBy - aria-labelled-by
+ * @param {string} $0.ariaDescribedby - aria-described-by
+ * @param {object} $0.currUser - current user of the applicatoin
+ * @param {function} $0.showSuccess - function to handle a successful state (optional)
+ * @returns {element} - the add project modal
+ */
+const AddProjectModal = ({ open, onClose, ariaLabelledBy, ariaDescribedby, currUser, showSuccess }) => {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const [invalid, setInvalid] = useState([]);
+
+    // each state property maps to a form value
     const [state, setState] = useState({
         name: '',
         description: '',
@@ -27,14 +39,21 @@ const AddProjectModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribed
         demoVideo: '',
     });
 
+    /**
+     * Function to handle when the Add Project form is submitted
+     * @returns {void} - this function does not return anything
+     */
     const submit = () => {
-        const _validate = validateProject(state);
+        const _validate = validateProject(state); // validate the project
         if (!_validate.isValid) {
-            setInvalid(_validate.results);
+            setInvalid(_validate.results); // Set validation results if there was a fail. results will
+                                           // contain an array of strings specifying invalid field names
         }
         else {
             setInvalid([]);
             setLoading(true);
+            
+            // call the API and update the object
             createUserProject({ ...state, tags: state.tags.split(',') }, currUser.id).then((res) => {
                 setLoading(false);
                 dispatch(addProject(res.data));
@@ -44,6 +63,7 @@ const AddProjectModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribed
         }
     };
 
+    // render
     return (
         <BaseModal
             open={open}
