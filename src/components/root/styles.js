@@ -73,7 +73,7 @@ const styles = theme => {
             },
             '.form-section': {
                 padding: '20px 0'
-            }
+            },
         },
     })
 };
