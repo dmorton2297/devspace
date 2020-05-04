@@ -38,8 +38,13 @@ const styles = theme => {
                 '@media(min-width: 1500px)': {
                     maxWidth: 1400,
                     transform: `translate(calc(50vw - ${1612 / 2}px), 0%) !important;`,
-                    overflowX: 'hidden'
+                    overflowX: 'hidden',
                 },
+
+                '@media(max-width: 1000px)': {
+                    margin: 15,
+                    height: 'calc(100vh - 70px)'
+                }
             },
             '.bottom-margin': {
                 marginBottom: '10px !important'
