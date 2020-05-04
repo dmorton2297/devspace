@@ -12,7 +12,7 @@ import ProjectForm from '../../forms/project-form';
 
 
 /**
- * 
+ * Edit project modal component.
  * @param {object} $0 - Object containing props for this component
  * @param {boolean} $0.open - Specifies if modal is open
  * @param {function} $0.onCLose - Function handler for closing the modal
@@ -20,22 +20,25 @@ import ProjectForm from '../../forms/project-form';
  * @param {string} $0.ariaDescribedby - aria-described-by
  * @param {object} $0.currUser - current user of the applicatoin
  * @param {function} $0.showSuccess - function to handle a successful state (optional)
+ * @param {object} $0.project - project object we want to edit
+ * @returns {element} - The edit project modal
  */
 const EditProjectModal = ({ open, onClose, project, ariaLabelledBy, ariaDescribedby, currUser, showSuccess }) => {
 
     const [invalid, setInvalid] = useState([]); // track which form fields are invalid
     const dispatch = useDispatch();
 
+    console.log(project);
     // each state property maps to a form value
     const [state, setState] = useState({
-        id: project ? project.id : '',
+        id: project ? project._id : '',
         name: project ? project.name : '',
         description: project ? project.description : '',
         github: project ? project.github : '',
         images: [],
         projectLink: '',
         website: '',
-        tags: project ? project.tags.join(',') : '',
+        tags: project.tags ? project.tags.join(',') : '',
         demoVideo: '',
     });
 
@@ -53,7 +56,7 @@ const EditProjectModal = ({ open, onClose, project, ariaLabelledBy, ariaDescribe
             setInvalid([]);
             
             // call the API to update the project
-            editUserProject({ ...state, tags: state.tags.split(',') }, currUser.id).then((res) => {
+            editUserProject({ ...state, tags: state.tags.split(',') }, currUser._id).then((res) => {
                 dispatch(updateProject(res.data));
                 onClose();
                 showSuccess('Project Updated');

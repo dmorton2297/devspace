@@ -1,10 +1,15 @@
-import { SET_BLOG, ADD_BLOG_POST, UPDATE_BLOG_POST, DELETE_BLOG_POST } from '../actions/blogActions';
+import { SET_BLOG, ADD_BLOG_POST, UPDATE_BLOG_POST, DELETE_BLOG_POST, SET_BLOG_DETAILS } from '../actions/blogActions';
 
 const blogReducer = (blog = {}, action) => {
     switch (action.type) {
         case SET_BLOG:
             return ({
                 ...action.payload
+            })
+        case SET_BLOG_DETAILS:
+            return ({
+                ...action.payload,
+                blogPosts: blog.blogPosts
             })
         case ADD_BLOG_POST:
             return({
@@ -22,9 +27,10 @@ const blogReducer = (blog = {}, action) => {
                 ...blog
             });
         case DELETE_BLOG_POST:
+            console.log(action.payload);
             return({
                 ...blog,
-                blogPosts: [ ...(blog ? blog.blogPosts.filter(x => `${x.id}` !== `${action.payload.id}`) : [])]
+                blogPosts: [ ...(blog ? blog.blogPosts.filter(x => `${x._id}` !== `${action.payload}`) : [])]
             })
         default:
             return blog;

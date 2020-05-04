@@ -20,7 +20,7 @@ const EditBlogPostModal = ({ classes, open, onClose, blog, ariaLabelledBy, ariaD
     }
     const dispatch = useDispatch();
     const [state, setState] = useState({
-        id: `${blog.id}`,
+        id: `${blog._id}`,
         title: blog.title,
         description: blog.description,
         image: blog.image,
@@ -40,7 +40,7 @@ const EditBlogPostModal = ({ classes, open, onClose, blog, ariaLabelledBy, ariaD
         }
         else {
             setInvalid([])
-            editBlogPost({ ...state, tags: state.tags.split(',') }, currUser.id).then(res => {
+            editBlogPost({ ...state, tags: state.tags.split(',') }, currUser._id).then(res => {
                 console.log(res);
                 dispatch(updateBlogPost(res.data));
                 onClose();

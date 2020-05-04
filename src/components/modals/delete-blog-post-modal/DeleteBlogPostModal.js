@@ -18,8 +18,8 @@ const DeleteBlogPostModal = ({ classes, currUser, open, onClose, ariaLabelledBy,
     const onDelete = () => {
         console.log('On delete clicked')
         console.log(post);
-        console.log(currUser.id);
-        deleteBlogPost(post, currUser.id).then((res) => {
+        console.log(currUser._id);
+        deleteBlogPost(post, currUser._id).then((res) => {
             console.log(res);
             dispatch(removeBlogPost(res.data));
             onClose();

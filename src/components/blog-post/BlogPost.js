@@ -46,7 +46,7 @@ const BlogPost = ({ classes, post, history, user, readOnly }) => {
             <DeleteBlogPostModal open={showDelete} onClose={() => setShowDelete(false)} post={post}
                 ariaDescribedby='Delete' ariaLabelledBy='Delete' currUser={user} />
             <div className={classes.infoContainer}>
-                <div onClick={() => history.push(`/posts/${post.id}/${user.id}`)}>
+                <div onClick={() => history.push(`/posts/${post._id}/${user._id}`)}>
                     <Typography className={classNames(classes.title)} variant='h2'>{post.title}</Typography>
                     <hr style={{ color: 'white', margin: '0 30px 0 20px' }} />
                     <Typography className={classNames(classes.description)} variant="h2">{post.description}</Typography>

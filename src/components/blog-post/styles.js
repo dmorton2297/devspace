@@ -31,8 +31,11 @@ const styles = theme => {
             },
             zIndex: 1,
             display: 'grid',
-            gridTemplateColumns: '90% 10%',
+            gridTemplateColumns: '420px auto',
             cursor: 'pointer',
+            '@media(min-width: 1001px)': {
+                width: 500,
+            },
             '@media(max-width: 1000px)': {
                 gridTemplateColumns: '85% 15%',
             }

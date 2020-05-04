@@ -16,7 +16,7 @@ const Home = ({ classes }) => {
     const dispatch = useDispatch();
     
     useEffect(() => {
-        if (!user.id) {
+        if (!user._id) {
             console.log('no user found');
             const email = getItem('email');
             console.log(email);
@@ -28,7 +28,7 @@ const Home = ({ classes }) => {
     });
     
 
-    if (!user.id) {
+    if (!user._id) {
         return <div></div>; // TODO - Add spinner
     }
 

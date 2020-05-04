@@ -73,7 +73,8 @@ const styles = (theme) => {
         topPortion: {
             position: 'sticky',
             top: 0,
-            zIndex: 0
+            zIndex: 0,
+            padding: '0 3px'
         },
         projects: {
             position: 'sticky',

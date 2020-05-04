@@ -7,7 +7,7 @@ import styles from './styles';
 import { Card, Typography, IconButton, TextField } from '@material-ui/core';
 import { getUserBlogs, updateBlogDetails } from '../../services/webService';
 import { useDispatch, useSelector } from 'react-redux';
-import { setBlog } from '../../actions/blogActions';
+import { setBlog, setBlogDetails } from '../../actions/blogActions';
 import Tag from '../shared/tag';
 import { withRouter } from 'react-router-dom';
 import BlogPost from '../blog-post/BlogPost';
@@ -26,7 +26,7 @@ const Blog = ({ classes, user, history, readOnly }) => {
     const [newTag, setNewTag] = useState(null);
 
     useEffect(() => {
-        getUserBlogs(user.id).then((res) => {
+        getUserBlogs(user._id).then((res) => {
             dispatch(setBlog(res.data));
         })
     }, [dispatch, user])
@@ -40,6 +40,7 @@ const Blog = ({ classes, user, history, readOnly }) => {
         else {
             setTagBuffer(blog.tags);
             setEditDetails({
+                _id: blog._id,
                 title: blog.title,
                 description: blog.description,
                 tags: blog.tags
@@ -48,9 +49,9 @@ const Blog = ({ classes, user, history, readOnly }) => {
     }
 
     const updateDetails = () => {
-        updateBlogDetails({ ...editDetails, tags: tagBuffer }, user.id).then((res) => {
+        updateBlogDetails({ ...editDetails, tags: tagBuffer }, user._id).then((res) => {
             console.log(res);
-            dispatch(setBlog(res.data));
+            dispatch(setBlogDetails(res.data));
             setTagBuffer(null);
             setEditDetails(null);
         })
@@ -79,7 +80,7 @@ const Blog = ({ classes, user, history, readOnly }) => {
     if (!blog.title) return <React.Fragment></React.Fragment>;
     return (
         <div className={classNames(classes.container)}>
-            <CreateBlogModal open={createBlog} onClose={() => setCreateBlog(false)} ariaLabelledBy='Create Blog' ariaDescribedBy='Create Blog' currUser={user} showSuccess={() => { }} />
+            <CreateBlogModal open={createBlog} onClose={() => setCreateBlog(false)} blogId={blog._id} ariaLabelledBy='Create Blog' ariaDescribedBy='Create Blog' currUser={user} showSuccess={() => { }} />
             <Card>
                 <div className={classNames(classes.titleTags, 'bottom-margin')}>
                     {!editDetails &&

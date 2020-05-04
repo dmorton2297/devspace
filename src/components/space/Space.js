@@ -12,7 +12,6 @@ import ProjectModal from '../modals/project-modal';
 import AddIcon from '@material-ui/icons/Add';
 import { object, bool } from 'prop-types';
 import AddProjectModal from '../modals/add-project-modal';
-import theme from '../../theme';
 import CloseIcon from '@material-ui/icons/Close';
 import EditIcon from '@material-ui/icons/Edit';
 import { updateUser } from '../../actions/userActions';
@@ -32,10 +31,6 @@ const Space = ({ classes, user, readOnly }) => {
     const dispatch = useDispatch();
     const projects = useSelector(state => state.projectsReducer);
 
-    // Refs for scrolling effect
-    const projectsSection = useRef();
-    const overviewCard = useRef();
-
     // component state
     const [selectedProject, setSelectedProject] = useState(null);
     const [addProject, setAddProject] = useState(false);
@@ -47,31 +42,11 @@ const Space = ({ classes, user, readOnly }) => {
 
     // useEffect to deal with scrolling effect on page
     useEffect(() => {
-        getUserProjects(user.id).then((res) => {
+        getUserProjects(user._id).then((res) => {
             dispatch(setProjects(res.data));
         }).catch(error => {
             console.error(error);
         })
-
-        // TODO: Abstract hacky code for scrolling effect and make it reusable 
-        const onScroll = () => {
-            const position = projectsSection.current.getBoundingClientRect();
-            const cardRect = overviewCard.current.getBoundingClientRect();
-            if (position.y <= cardRect.bottom) {
-                const percentage = (cardRect.bottom - position.y) / cardRect.bottom;
-                overviewCard.current.style.backgroundColor = `rgba(0, 0, 0, ${percentage}`;
-                overviewCard.current.style.boxShadow = 'none';
-            } else {
-                overviewCard.current.style.backgroundColor = theme.palette.primary.light;
-                overviewCard.current.style.boxShadow = '0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)';
-
-            }
-        }
-        const scrollContainer = document.getElementById('scroll-container');
-        scrollContainer.addEventListener('scroll', onScroll);
-        return () => {
-            scrollContainer.removeEventListener('scroll', onScroll)
-        }
     }, [dispatch, user]);
 
     /**
@@ -145,7 +120,7 @@ const Space = ({ classes, user, readOnly }) => {
             setProfileInvalid(_validate.results);
         }
         else {
-            updateProfile({ ...editProfile, tags: tagBuffer }, user.id).then((res) => {
+            updateProfile({ ...editProfile, tags: tagBuffer }, user._id).then((res) => {
                 showSuccessMessage('Profile Updated');
                 dispatch(updateUser(res.data));
                 setEditProfile(null);
@@ -184,7 +159,7 @@ const Space = ({ classes, user, readOnly }) => {
             <AddProjectModal showSuccess={showSuccessMessage} open={addProject} currUser={user} onClose={() => setAddProject(false)} ariaLabelledBy='Add Project' ariaDsescribedBy='Add Project' />
 
             <div className={classes.topPortion}>
-                <Card ref={overviewCard}>
+                <Card>
                     <div className={classNames(classes.topPortion, 'bottom-margin')}>
                         <Typography variant="h1" className={classNames(!readOnly ? classes.headerText : {}, 'margin-bottom')}>{user.name}'s Space</Typography>
                         {!readOnly &&
@@ -277,7 +252,7 @@ const Space = ({ classes, user, readOnly }) => {
             </div>
 
             <div className={classes.projects}>
-                <div className={classes.projectsHeader} ref={projectsSection}>
+                <div className={classes.projectsHeader}>
                     <Typography variant="h1">Projects</Typography>
                     {!readOnly &&
                         <IconButton onClick={() => setAddProject(true)}>

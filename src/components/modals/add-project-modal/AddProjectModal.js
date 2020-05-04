@@ -54,7 +54,7 @@ const AddProjectModal = ({ open, onClose, ariaLabelledBy, ariaDescribedby, currU
             setLoading(true);
             
             // call the API and update the object
-            createUserProject({ ...state, tags: state.tags.split(',') }, currUser.id).then((res) => {
+            createUserProject({ ...state, tags: state.tags.split(',') }, currUser._id).then((res) => {
                 setLoading(false);
                 dispatch(addProject(res.data));
                 onClose();
