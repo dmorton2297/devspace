@@ -43,7 +43,7 @@ const styles = theme => {
 
                 '@media(max-width: 1000px)': {
                     margin: 15,
-                    height: 'calc(100vh - 70px)'
+                    height: 'calc(100vh - 100px)'
                 }
             },
             '.bottom-margin': {
