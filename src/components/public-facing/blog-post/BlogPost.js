@@ -31,7 +31,8 @@ const BlogPost = ({ match, classes }) => {
             }
 
             return ''; // use external default escaping
-        }
+        },
+        breaks: true
     });
 
     const style = `
@@ -48,6 +49,7 @@ const BlogPost = ({ match, classes }) => {
     h2 {
         font-size: 24;
         padding: 20px 0;
+        font-weight: 400;
     }
     
     h3 {
@@ -55,6 +57,11 @@ const BlogPost = ({ match, classes }) => {
         padding: 20px 0;
     }
     
+    p {
+        padding: 10px 0;
+        font-size: 20px;
+    }
+
     h4 {
         font-size: 18px;
         font-weight: 500
