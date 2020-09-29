@@ -28,7 +28,6 @@ const EditProjectModal = ({ open, onClose, project, ariaLabelledBy, ariaDescribe
     const [invalid, setInvalid] = useState([]); // track which form fields are invalid
     const dispatch = useDispatch();
 
-    console.log(project);
     // each state property maps to a form value
     const [state, setState] = useState({
         id: project ? project._id : '',

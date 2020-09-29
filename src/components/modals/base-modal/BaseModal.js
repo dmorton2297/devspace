@@ -24,7 +24,7 @@ const BaseModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribedby, ch
                         <DefaultButton onClick={stepButton.action}>{stepButton.text}</DefaultButton>
                     }
                     {cancelButton &&
-                        <Button className={classes.cancelButton} onClick={onClose}>Cancel</Button>
+                        <DefaultButton className={classes.cancelButton} onClick={onClose} warn={true}>Cancel</DefaultButton>
                     }
 
                 </div>

@@ -18,7 +18,6 @@ const blogReducer = (blog = {}, action) => {
             })
         case UPDATE_BLOG_POST:
             const post = blog.blogPosts.find(x => `${x.id}` === `${action.payload.id}`);
-            console.log(post);
             post.text = action.payload.text;
             post.title = action.payload.title;
             post.description = action.payload.description;
@@ -27,7 +26,6 @@ const blogReducer = (blog = {}, action) => {
                 ...blog
             });
         case DELETE_BLOG_POST:
-            console.log(action.payload);
             return({
                 ...blog,
                 blogPosts: [ ...(blog ? blog.blogPosts.filter(x => `${x._id}` !== `${action.payload}`) : [])]

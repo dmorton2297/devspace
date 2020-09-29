@@ -31,7 +31,8 @@ const styles = theme => {
 
         },
         title: {
-            marginBottom: 10
+            marginBottom: 10,
+            fontSize: 32
         },
         headerContainer: {
             padding: '20px 0'

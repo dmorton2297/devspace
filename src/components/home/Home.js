@@ -17,11 +17,8 @@ const Home = ({ classes }) => {
     
     useEffect(() => {
         if (!user._id) {
-            console.log('no user found');
             const email = getItem('email');
-            console.log(email);
             getUser(email).then((res) => {
-                console.log(res);
                 dispatch(setUser(res.data));
             })
         }

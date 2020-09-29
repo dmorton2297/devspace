@@ -9,7 +9,7 @@ const styles = theme => {
             backgroundColor: theme.palette.primary.dark,
             color: theme.palette.primary.light,
             flexGrow: 1,
-            minHeight: 50
+            minHeight: 50,
         },
         projectImage: {
             height: 400,
@@ -35,7 +35,8 @@ const styles = theme => {
         },
         header: {
             backgroundColor: theme.palette.primary.dark,
-            justifyContent: 'space-between'
+            justifyContent: 'space-between',
+            paddingTop: 10
         }
     });
 };

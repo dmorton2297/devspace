@@ -1,4 +1,4 @@
-const mainSidePadding = 100;
+const mainSidePadding = 80;
 const mainWidth = `calc(100% - ${mainSidePadding * 2}px)`;
 const navigationHeight = 80;
 
@@ -7,7 +7,6 @@ const styles = theme => {
         root: {
             width: '100%',
             height: 'calc(100vh)',
-            backgroundColor: theme.palette.primary.light,
             overflow: 'hidden'
         },
         navigation: {
@@ -44,7 +43,7 @@ const styles = theme => {
                 '@media(max-width: 1000px)': {
                     margin: 15,
                     height: 'calc(100vh - 100px)'
-                }
+                },
             },
             '.bottom-margin': {
                 marginBottom: '10px !important'

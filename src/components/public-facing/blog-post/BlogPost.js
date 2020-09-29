@@ -8,7 +8,6 @@ import MarkdownIt from 'markdown-it';
 import './styles.css';
 
 const BlogPost = ({ match, classes }) => {
-    console.log(match);
     const [post, setPost] = useState(null);
     useEffect(() => {
         getBlogPost(match.params.id, match.params.userId).then((res) => {
@@ -24,8 +23,6 @@ const BlogPost = ({ match, classes }) => {
         highlight: function (str, lang) {
             if (lang && hljs.getLanguage(lang)) {
                 try {
-                    const test = hljs.highlight(lang, str).value;
-                    console.log(test);
                     return hljs.highlight(lang, str).value;
                 } catch (__) { }
             }
@@ -93,7 +90,6 @@ const BlogPost = ({ match, classes }) => {
     let t = `<style>${style}</style>${md.render(post.text)}`;
     t = t.replace(/\\"/g, '"');
     t = t.replace('<p><img', '<p class="image-container"><img')
-    console.log(t);
     return (
         <div className={classes.container}>
             <div dangerouslySetInnerHTML={{ __html: t }}></div>

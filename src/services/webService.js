@@ -4,11 +4,9 @@ import { getItem } from '../utils/localStorage';
 axios.interceptors.request.use(config => {
     const token = getItem('auth');
     if (!token) {
-        console.error('Auth Token not set');
+        console.error('Authorization token note set');
     }
     else {
-        console.log('in here');
-        console.log(token);
         config.headers['Authorization'] = token;
     }
 
@@ -18,8 +16,8 @@ axios.interceptors.request.use(config => {
 axios.interceptors.response.use(res => {
     return res;
 }, error => {
-    if (error.response.status === 401) {
-        window.location = 'login';
+    if (error.response && error.response.status === 401) {
+        // window.location = 'login';
     }
 })
 
@@ -80,4 +78,8 @@ export const editBlogPost = (post, userId) => {
 
 export const deleteBlogPost = (post, userId) => {
     return axios.post(`${BASE_URL}user/${userId}/blog/posts/delete`, post);
+}
+
+export const createUser = (user) => {
+    return axios.post(`${BASE_URL}user/create`, user);
 }

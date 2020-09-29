@@ -32,7 +32,6 @@ const Blog = ({ classes, user, history, readOnly }) => {
     }, [dispatch, user])
 
     const editBlogDetails = () => {
-        console.log('in here');
         if (editDetails) {
             setTagBuffer(null);
             setEditDetails(null);
@@ -50,7 +49,6 @@ const Blog = ({ classes, user, history, readOnly }) => {
 
     const updateDetails = () => {
         updateBlogDetails({ ...editDetails, tags: tagBuffer }, user._id).then((res) => {
-            console.log(res);
             dispatch(setBlogDetails(res.data));
             setTagBuffer(null);
             setEditDetails(null);

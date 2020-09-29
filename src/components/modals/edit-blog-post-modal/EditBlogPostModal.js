@@ -34,14 +34,11 @@ const EditBlogPostModal = ({ classes, open, onClose, blog, ariaLabelledBy, ariaD
     const onSubmit = () => {
         const _validate = validateBlogPost(state);
         if (!_validate.isValid) {
-            console.log(_validate.results);
             setInvalid(_validate.results);
-            console.log('valid');
         }
         else {
             setInvalid([])
             editBlogPost({ ...state, tags: state.tags.split(',') }, currUser._id).then(res => {
-                console.log(res);
                 dispatch(updateBlogPost(res.data));
                 onClose();
             });

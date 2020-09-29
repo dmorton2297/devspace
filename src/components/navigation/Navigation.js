@@ -1,8 +1,8 @@
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 import styles from './styles';
 import { withStyles } from '@material-ui/styles';
 import classNames from 'classnames';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setTab } from '../../actions/tabActions';
 import { IconButton, Typography } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -17,7 +17,6 @@ const Button = ({ classes, clicked, first, onClick, text }) => {
 
 
 const Navigation = ({ classes }) => {
-    const user = useSelector(state => state.userReducer);
     const [space, setSpace] = useState(true);
     const [blog, setBlog] = useState(false);
     const [settings, setSettings] = useState(false);

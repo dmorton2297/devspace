@@ -1,3 +1,5 @@
+import { userExists } from "../services/publicWebService";
+
 /**
  * Validates a string against a URL
  * @param {string} input - The string we are testing
@@ -29,17 +31,13 @@ const validEmail = (input) => {
  * @returns {boolean} - true/false for validity of tag as string
  */
 const validTags = (input) => {
-    console.log('IN here');
     const val = input.split(',');
     val.forEach(x => {
-        console.log(`X:   ${x}`);
         if (!x || x.length === 0) {
-            console.log('Not valid');
             return false;
         }
     });
 
-    console.log('returning true');
     return true;
 }
 
@@ -98,7 +96,7 @@ export const validateProfile = (state) => {
         summary: true, github: true, linkedin: true
     };
     if (state.title === '' || state.title.length >= 80) validation.title = false;
-    if (state.email === '' ||!validEmail(state.email)) validation.email = false;
+    if (state.email === '' || !validEmail(state.email)) validation.email = false;
     if (state.summary === '' || state.summary.length >= 250) validation.summary = false;
     if (state.github !== '' && !validURL(state.github)) validation.github = false;
     if (state.linkedin !== '' && !validURL(state.linkedin)) validation.linkedin = false;
@@ -108,7 +106,7 @@ export const validateProfile = (state) => {
 }
 
 /**
- * 
+ * Checks to see if a field is invalid
  * @param {string} label - Label associated to an <input> 
  * @param {*} invalid - List of invalid entires from validation call
  */
@@ -118,3 +116,29 @@ export const isInvalid = (label, invalid) => {
     }
     return false;
 }
+
+/**
+ * Validates a new signup
+ * @param {object} state - Signup object we are validating 
+ */
+export const validateSignUp = async (state) => {
+    const validation = {
+        email: true, password: true, passwordConfirm: true
+    };
+
+    const res = await userExists(state.email);
+    if (res.data) {
+        validation.email = false;
+    }
+
+    if (!state.password || state.password.length === 0) {
+        validation.password = false;
+    }
+
+    if (state.password !== state.passwordMatch) {
+        validation.passwordConfirm = false;
+    }
+
+    const results = Object.keys(validation).filter(x => !validation[x]);
+    return { isValid: results.length === 0, results }
+};

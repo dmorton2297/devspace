@@ -43,7 +43,7 @@ const styles = theme => {
         tagContainer: {
             justifyContent: 'flex-end',
             padding: '5px 0',
-            backgroundColor: theme.palette.primary.lightAlternateTransparent,
+            backgroundColor: theme.palette.primary.light,
         },
         controlButton: {
             color: theme.palette.primary.light,

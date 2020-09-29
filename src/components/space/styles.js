@@ -3,7 +3,19 @@ const styles = (theme) => {
         container: {
             width: '100%',
             height: '100%',
-            backgroundColor: theme.palette.primary.light,
+        },
+        firstTimeUser: {
+            minHeight: 430,
+            height: 430,
+        },
+        infoMessage: {
+            borderBottom: `1px solid ${theme.palette.primary.main}`,
+            padding: '20px 0'
+        },
+        firstTimeFieldsContainer: {
+            overflowY: 'auto',
+            maxHeight: 350,
+            marginTop: 10
         },
         infoContainer: {
             display: 'grid',
@@ -38,7 +50,6 @@ const styles = (theme) => {
         projectsHeader: {
             display: 'flex',
             position: 'sticky',
-            backgroundColor: theme.palette.primary.light,
             padding: '25px 0',
             zIndex: 2,
             top: 0
@@ -47,7 +58,6 @@ const styles = (theme) => {
             backgroundColor: theme.palette.primary.main,
             color: theme.palette.primary.light,
             padding: 30,
-            borderRadius: 5,
             '@media(max-width: 1000px)': {
                 padding: 20
             }
@@ -71,7 +81,6 @@ const styles = (theme) => {
 
         },
         topPortion: {
-            position: 'sticky',
             top: 0,
             zIndex: 0,
             padding: '0 3px'
@@ -80,7 +89,6 @@ const styles = (theme) => {
             position: 'sticky',
             top: 0,
             zIndex: 1,
-            backgroundColor: theme.palette.primary.light,
             minHeight: '102%',
             '@media(max-width: 1000px)': {
                 margin: 10

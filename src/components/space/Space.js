@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import { withStyles } from '@material-ui/styles'
 import styles from './styles';
 import classNames from 'classnames';
 import DefaultButton from '../shared/default-button';
-import { Typography, Card, Grid, IconButton, Snackbar, SnackbarContent, TextField } from '@material-ui/core';
+import { Typography, Card, IconButton, Snackbar, SnackbarContent, TextField } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserProjects, updateProfile } from '../../services/webService';
 import { setProjects } from '../../actions/projectsActions';
@@ -150,6 +150,7 @@ const Space = ({ classes, user, readOnly }) => {
         setTagBuffer([...tagBuffer, newTag]);
     }
 
+    const firstTimeUser = !user.name || user.name === '';
     return (
         <div className={classNames(classes.container, 'profile-container')}>
             <Snackbar open={!!success} autoHideDuration={6000} onClose={() => showSuccess(null)} >
@@ -160,94 +161,131 @@ const Space = ({ classes, user, readOnly }) => {
 
             <div className={classes.topPortion}>
                 <Card>
-                    <div className={classNames(classes.topPortion, 'bottom-margin')}>
-                        <Typography variant="h1" className={classNames(!readOnly ? classes.headerText : {}, 'margin-bottom')}>{user.name}'s Space</Typography>
-                        {!readOnly &&
-                            <div className='grow'>
-                                <div className={classes.editButton} onClick={editProfileClicked}>
-                                    <EditIcon style={{ height: 12, width: 12, marginRight: 5 }} />
-                                    <Typography variant="body2">Edit Profile Details</Typography>
+                    {!firstTimeUser && <React.Fragment>
+                        <div className={classNames(classes.topPortion, 'bottom-margin')}>
+                            <Typography variant="h1" className={classNames(!readOnly ? classes.headerText : {}, 'margin-bottom')}>{user.name}'s Space</Typography>
+                            {!readOnly &&
+                                <div className='grow'>
+                                    <div className={classes.editButton} onClick={editProfileClicked}>
+                                        <EditIcon style={{ height: 12, width: 12, marginRight: 5 }} />
+                                        <Typography variant="body2">Edit Profile Details</Typography>
+                                    </div>
                                 </div>
+                            }
+                            <div className={classes.tags}>
+                                {!tagBuffer && user.tags.map(x => (
+                                    <Tag key={x.length + (Math.random() * 100)} content={x} />
+                                ))}
+                                {tagBuffer && tagBuffer.length < 6 &&
+                                    <React.Fragment>
+                                        <TextField style={{ width: 100 }} label="" defaultValue='' placeholder='new tag'
+                                            onChange={(event) => {
+                                                setNewTag(event.target.value);
+                                            }} />
+                                        <IconButton onClick={onAddTag}><AddIcon style={{ width: 30, height: 30 }} /></IconButton>
+                                    </React.Fragment>
+                                }
+                                {tagBuffer && tagBuffer.map(x => (
+                                    <Tag content={x} readOnly={!editProfile} key={x.length + (Math.random() * 100)} onDelete={tag => onDeleteTag(tag)} />
+
+                                ))}
                             </div>
-                        }
-                        <div className={classes.tags}>
-
-                            {!tagBuffer && user.tags.map(x => (
-                                <Tag key={x.length + (Math.random() * 100)} content={x} />
-                            ))}
-                            {tagBuffer && tagBuffer.length < 6 &&
-                                <React.Fragment>
-                                    <TextField style={{ width: 100 }} label="" defaultValue='' placeholder='new tag'
-                                        onChange={(event) => {
-                                            setNewTag(event.target.value);
-                                        }} />
-                                    <IconButton onClick={onAddTag}><AddIcon style={{ width: 30, height: 30 }} /></IconButton>
-                                </React.Fragment>
-                            }
-                            {tagBuffer && tagBuffer.map(x => (
-                                <Tag content={x} readOnly={!editProfile} key={x.length + (Math.random() * 100)} onDelete={tag => onDeleteTag(tag)} />
-
-                            ))}
                         </div>
-                    </div>
-                    <div className={classNames(classes.infoContainer)}>
-                        <div className={classNames(classes.imageContainer)}>
-                            <img src={user.profileImage} width="320px" height="320px" alt="test" />
-                        </div>
-                        <div className={classNames(classes.generalInfoContainer)}>
-                            {editProfile &&
-                                <div className='full-width'>
-                                    <div className={classes.inputs}>
-                                        <TextField error={isInvalid('title', profileInvalid)} variant="outlined" label="Job Title" defaultValue={user.title} placeholder="title"
-                                            helperText={isInvalid('title', profileInvalid) ? 'Required. Must be less than or equal to 80 characters.' : ''} onChange={(event) => {
-                                                setEditProfile({ ...editProfile, title: event.target.value });
-                                            }} />
-                                        <TextField error={isInvalid('company', profileInvalid)} variant="outlined" label="Company Title" defaultValue={user.company} placeholder="title"
-                                            helperText={isInvalid('company', profileInvalid) ? '' : ''} onChange={(event) => {
-                                                setEditProfile({ ...editProfile, company: event.target.value });
-                                            }} />
-                                        <TextField error={isInvalid('email', profileInvalid)} variant="outlined" label="User Email" defaultValue={user.email} placeholder="title"
-                                            helperText={isInvalid('email', profileInvalid) ? 'Required. Must be a valid email.' : ''} onChange={(event) => {
-                                                setEditProfile({ ...editProfile, email: event.target.value });
-                                            }} />
-                                        <TextField error={isInvalid('summary', profileInvalid)} variant="outlined" label="Summary" defaultValue={user.summary} placeholder="title"
-                                            helperText={isInvalid('summary', profileInvalid) ? 'Required. Must be less than 250 characers' : ''} onChange={(event) => {
-                                                setEditProfile({ ...editProfile, summary: event.target.value });
-                                            }} />
-                                        <TextField error={isInvalid('github', profileInvalid)} variant="outlined" label="Github" defaultValue={user.github} placeholder="url"
-                                            helperText={isInvalid('github', profileInvalid) ? 'Must be a valid url.' : ''} onChange={(event) => {
-                                                setEditProfile({ ...editProfile, github: event.target.value });
-                                            }} />
-                                        <TextField error={isInvalid('linkedin', profileInvalid)} variant="outlined" label="LinkedIn" defaultValue={user.linkedin} placeholder="url"
-                                            helperText={isInvalid('linkedin', profileInvalid) ? 'Must be a valid url.' : ''} onChange={(event) => {
-                                                setEditProfile({ ...editProfile, linkedin: event.target.value });
-                                            }} />
+                        <div className={classNames(classes.infoContainer)}>
+                            <div className={classNames(classes.imageContainer)}>
+                                <img src={user.profileImage} width="320px" height="320px" alt="test" />
+                            </div>
+                            <div className={classNames(classes.generalInfoContainer)}>
+                                {editProfile &&
+                                    <div className='full-width'>
+                                        <div className={classes.inputs}>
+                                            <TextField error={isInvalid('title', profileInvalid)} variant="outlined" label="Job Title" defaultValue={user.title} placeholder="title"
+                                                helperText={isInvalid('title', profileInvalid) ? 'Required. Must be less than or equal to 80 characters.' : ''} onChange={(event) => {
+                                                    setEditProfile({ ...editProfile, title: event.target.value });
+                                                }} />
+                                            <TextField error={isInvalid('company', profileInvalid)} variant="outlined" label="Company Title" defaultValue={user.company} placeholder="title"
+                                                helperText={isInvalid('company', profileInvalid) ? '' : ''} onChange={(event) => {
+                                                    setEditProfile({ ...editProfile, company: event.target.value });
+                                                }} />
+                                            <TextField error={isInvalid('email', profileInvalid)} variant="outlined" label="User Email" defaultValue={user.email} placeholder="title"
+                                                helperText={isInvalid('email', profileInvalid) ? 'Required. Must be a valid email.' : ''} onChange={(event) => {
+                                                    setEditProfile({ ...editProfile, email: event.target.value });
+                                                }} />
+                                            <TextField error={isInvalid('summary', profileInvalid)} variant="outlined" label="Summary" defaultValue={user.summary} placeholder="title"
+                                                helperText={isInvalid('summary', profileInvalid) ? 'Required. Must be less than 250 characers' : ''} onChange={(event) => {
+                                                    setEditProfile({ ...editProfile, summary: event.target.value });
+                                                }} />
+                                            <TextField error={isInvalid('github', profileInvalid)} variant="outlined" label="Github" defaultValue={user.github} placeholder="url"
+                                                helperText={isInvalid('github', profileInvalid) ? 'Must be a valid url.' : ''} onChange={(event) => {
+                                                    setEditProfile({ ...editProfile, github: event.target.value });
+                                                }} />
+                                            <TextField error={isInvalid('linkedin', profileInvalid)} variant="outlined" label="LinkedIn" defaultValue={user.linkedin} placeholder="url"
+                                                helperText={isInvalid('linkedin', profileInvalid) ? 'Must be a valid url.' : ''} onChange={(event) => {
+                                                    setEditProfile({ ...editProfile, linkedin: event.target.value });
+                                                }} />
+                                        </div>
+                                        <div className='flex'>
+                                            <DefaultButton onClick={onUpdateProfile}>Update</DefaultButton>
+                                            <DefaultButton warn={true} onClick={() => {
+                                                setEditProfile(null);
+                                                setProfileInvalid([]);
+                                                setTagBuffer(null);
+                                            }}>Cancel</DefaultButton>
+                                        </div>
                                     </div>
-                                    <div className='flex'>
-                                        <DefaultButton onClick={onUpdateProfile}>Update</DefaultButton>
-                                        <DefaultButton warn={true} onClick={() => {
-                                            setEditProfile(null);
-                                            setProfileInvalid([]);
-                                            setTagBuffer(null);
-                                        }}>Cancel</DefaultButton>
-                                    </div>
-                                </div>
 
-                            }
-                            {!editProfile &&
-                                <div>
-                                    <Typography variant="h2" className={classNames(classes.infoItem)}>{user.title}</Typography>
-                                    <Typography variant="h3" className={classNames(classes.infoItem, classes.company)}>{user.company}</Typography>
-                                    <Typography variant="h3" className={classNames(classes.infoItem)}>Contact: {user.email}</Typography>
-                                    <Typography variant="h2" className={classNames(classes.infoItem, classes.summary)}>"{user.summary}"</Typography>
-                                    <div className={classes.socialButtons}>
-                                        <DefaultButton onClick={onGithubClicked}>Github</DefaultButton>
-                                        <DefaultButton onClick={onLinkedInClicked}>LinkedIn</DefaultButton>
+                                }
+                                {!editProfile &&
+                                    <div>
+                                        <Typography variant="h2" className={classNames(classes.infoItem)}>{user.title}</Typography>
+                                        <Typography variant="h3" className={classNames(classes.infoItem, classes.company)}>{user.company}</Typography>
+                                        <Typography variant="h3" className={classNames(classes.infoItem)}>Contact: {user.email}</Typography>
+                                        <Typography variant="h2" className={classNames(classes.infoItem, classes.summary)}>"{user.summary}"</Typography>
+                                        <div className={classes.socialButtons}>
+                                            <DefaultButton onClick={onGithubClicked}>Github</DefaultButton>
+                                            <DefaultButton onClick={onLinkedInClicked}>LinkedIn</DefaultButton>
+                                        </div>
                                     </div>
-                                </div>
-                            }
+                                }
+                            </div>
                         </div>
-                    </div>
+                    </React.Fragment>
+                    }
+                    {firstTimeUser &&
+                        <div className={classes.firstTimeUser}>
+                            <Typography variant='h1' className={classes.infoMessage}>Let's get some basic info.</Typography>
+                            <div className={classes.firstTimeFieldsContainer}>
+                                <TextField variant="outlined" label="Name" defaultValue={user.name} placeholder="title"
+                                />
+                                <TextField error={isInvalid('title', profileInvalid)} variant="outlined" label="Job Title" defaultValue={user.title} placeholder="title"
+                                    helperText={isInvalid('title', profileInvalid) ? 'Required. Must be less than or equal to 80 characters.' : ''} onChange={(event) => {
+                                        setEditProfile({ ...editProfile, title: event.target.value });
+                                    }} />
+                                <TextField error={isInvalid('company', profileInvalid)} variant="outlined" label="Company Title" defaultValue={user.company} placeholder="title"
+                                    helperText={isInvalid('company', profileInvalid) ? '' : ''} onChange={(event) => {
+                                        setEditProfile({ ...editProfile, company: event.target.value });
+                                    }} />
+                                <TextField error={isInvalid('email', profileInvalid)} variant="outlined" label="User Email" defaultValue={user.email} placeholder="title"
+                                    helperText={isInvalid('email', profileInvalid) ? 'Required. Must be a valid email.' : ''} onChange={(event) => {
+                                        setEditProfile({ ...editProfile, email: event.target.value });
+                                    }} />
+                                <TextField error={isInvalid('summary', profileInvalid)} variant="outlined" label="Summary" defaultValue={user.summary} placeholder="title"
+                                    helperText={isInvalid('summary', profileInvalid) ? 'Required. Must be less than 250 characers' : ''} onChange={(event) => {
+                                        setEditProfile({ ...editProfile, summary: event.target.value });
+                                    }} />
+                                <TextField error={isInvalid('github', profileInvalid)} variant="outlined" label="Github" defaultValue={user.github} placeholder="url"
+                                    helperText={isInvalid('github', profileInvalid) ? 'Must be a valid url.' : ''} onChange={(event) => {
+                                        setEditProfile({ ...editProfile, github: event.target.value });
+                                    }} />
+                                <TextField error={isInvalid('linkedin', profileInvalid)} variant="outlined" label="LinkedIn" defaultValue={user.linkedin} placeholder="url"
+                                    helperText={isInvalid('linkedin', profileInvalid) ? 'Must be a valid url.' : ''} onChange={(event) => {
+                                        setEditProfile({ ...editProfile, linkedin: event.target.value });
+                                    }} />
+                                <DefaultButton onClick={onUpdateProfile}>Save</DefaultButton>
+
+                            </div>
+                        </div>
+                    }
                 </Card>
             </div>
 
@@ -260,14 +298,14 @@ const Space = ({ classes, user, readOnly }) => {
                         </IconButton>
                     }
                 </div>
-                <div className={classes.projectCards} container spacing={3}>
+                <div className={classes.projectCards} spacing={3}>
                     {projects.map(project => (
-                        <div className={classes.projectCard} key={project.id}>
+                        <div className={classes.projectCard} key={project._id}>
                             <ProjectCard showSuccess={showSuccessMessage} currUser={user} project={project} onClick={() => openProjectModal(project)} />
                         </div>
                     ))}
                     {projects.length === 0 &&
-                        <div item xs={12}>
+                        <div xs={12}>
                             <Typography variant="h2" className={classes.noProjectsMessage}>No projects have been created.</Typography>
                         </div>
                     }

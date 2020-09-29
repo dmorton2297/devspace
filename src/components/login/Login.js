@@ -5,7 +5,8 @@ import classNames from 'classnames';
 import { object } from 'prop-types';
 import { withRouter, useHistory } from 'react-router-dom';
 import DefaultButton from '../shared/default-button';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 import { setItem, getItem } from '../../utils/localStorage';
 
 const Login = ({ classes }) => {
@@ -21,7 +22,6 @@ const Login = ({ classes }) => {
             firebase.auth().currentUser.getIdToken(true).then(cookie => {
                 setItem('auth', cookie);
                 history.push('home');
-                console.log(cookie);
             })
         })
     };
@@ -48,7 +48,6 @@ const Login = ({ classes }) => {
                 <div className='flex'>
                     <DefaultButton onClick={login}>Login</DefaultButton>
                     <DefaultButton onClick={signUp}>Sign Up</DefaultButton>
-
                 </div>
             </div>
         </div>

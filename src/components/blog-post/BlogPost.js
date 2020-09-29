@@ -38,7 +38,6 @@ const BlogPost = ({ classes, post, history, user, readOnly }) => {
 
 
     const postImage = useStyles();
-    console.log(editDetails);
     return (
         <Card className={classNames(classes.container, 'full-width')}>
             <EditBlogPostModal open={showEdit} onClose={() => setShowEdit(false)} blog={post}

@@ -42,7 +42,7 @@ const ProjectCard = ({ project, classes, onClick, showSuccess }) => {
             <DeleteProjectModal showSuccess={showSuccess} open={!!deleteProject} project={project} currUser={user} onClose={() => setDeleteProject(null)} ariaDsescribedBy='Delete Project' ariaLabelledBy='Delete Project' />
             <Card className={classes.container}>
                 <div className={classNames(classes.header, 'flex')}>
-                    <Typography className={classes.projectName} variant="h2">{project.name}</Typography>
+                    <Typography className={classes.projectName} variant="h1">{project.name}</Typography>
                     <IconButton className={classes.controlButton} onClick={() => editProjectModal(project)}><EditIcon /></IconButton>
                     <IconButton className={classNames(classes.controlButton, classes.deleteButton)} onClick={() => deleteProjectModal(project)}><DeleteIcon /></IconButton>
                 </div>

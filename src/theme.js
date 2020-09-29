@@ -16,7 +16,7 @@ export const palette = {
 
 export const typography = {
   h1: {
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: 400
   },
   h2: {
@@ -41,10 +41,13 @@ export const overrides = {
     root: {
       padding: '20px 50px',
       margin: '10px 0 30px 0',
+      borderRadius: '0px !important',
+      outline: `1px solid ${palette.primary.main  } !important`,
       zIndex: 0,
+      boxShadow: '5px 8px #ebeced',
       '@media(max-width: 1000px)': {
-        padding: '20px 10px',
-        margin: 0
+        padding: 20,
+        margin: '10px 10px'
       }
     },
   },
@@ -67,6 +70,12 @@ export const overrides = {
   MuiSnackbar: {
     root: {
       minWidth: '100%'
+    }
+  },
+  MuiButton: {
+    root: {
+      borderRadius: 0,
+      boxShadow: '5px 5px #888888'
     }
   }
 }

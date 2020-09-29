@@ -7,7 +7,8 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import rootReducer from './reducers';
 import { BrowserRouter } from 'react-router-dom'
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 import { setItem } from './utils/localStorage';
 
 
@@ -30,7 +31,6 @@ firebase.auth().onAuthStateChanged(function (user) {
         setItem('email', user.email);
 
     } else {
-        console.log('in here');
         setItem('_auth', false);
     }
 });

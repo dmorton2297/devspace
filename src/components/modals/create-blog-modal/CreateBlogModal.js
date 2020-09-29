@@ -8,7 +8,7 @@ import CloseIcon from '@material-ui/icons/Cancel';
 import { createBlogPost } from '../../../services/webService';
 import { validateBlogPost, isInvalid } from '../../../utils/validator';
 import { resetState } from '../../../utils/resetState';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addBlogPost } from '../../../actions/blogActions';
 
 const CreateBlogModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribedby, currUser, showSuccess, blogId}) => {
@@ -30,17 +30,12 @@ const CreateBlogModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribed
     const dispatch = useDispatch();
 
     const onSubmit = () => {
-        console.log(blogId);
-        console.log('in here');
-        console.log(state);
         const _validate = validateBlogPost(state);
-        console.log(_validate);
         if (!_validate.isValid) {
             setInvalid(_validate.results);
         }
         else {
             setInvalid([])
-            console.log('in create');
             createBlogPost({ ...state, tags: state.tags.split(','), blogId }, currUser._id ).then((res) => {
                 resetState(state, setState, setInvalid);
                 dispatch(addBlogPost(res.data));
