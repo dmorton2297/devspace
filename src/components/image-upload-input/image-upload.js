@@ -14,8 +14,8 @@ const ImageUpload = ({ classes, onImageChanged, existingImages }) => {
     const imageChanged = async (image) => {
         setUploadingImage(true);
         const response = await uploadImage(image, user._id);
-        setImages([...images, response]);
-        onImageChanged([...images, response]);
+        setImages([...(images ? images : []), response]);
+        onImageChanged([...(images ? images : []), response]);
         setUploadingImage(false);
     }
 

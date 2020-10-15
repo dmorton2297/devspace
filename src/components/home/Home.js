@@ -18,9 +18,12 @@ const Home = ({ classes }) => {
     useEffect(() => {
         if (!user._id) {
             const email = getItem('email');
+            console.log(email);
             getUser(email).then((res) => {
                 dispatch(setUser(res.data));
-            })
+            }).catch(async (e) => {
+                console.error(e);
+            });
         }
     });
     

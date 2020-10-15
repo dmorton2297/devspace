@@ -10,8 +10,9 @@ import { resetState } from '../../../utils/resetState';
 import { useDispatch } from 'react-redux';
 import { addBlogPost } from '../../../actions/blogActions';
 import ImageUpload from '../../image-upload-input';
+import BlogPostForm from '../../forms/blog-post-form';
 
-const CreateBlogModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribedby, currUser, showSuccess, blogId}) => {
+const CreateBlogModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribedby, currUser, showSuccess, blogId }) => {
 
     const STEPS = {
         general: 'General',
@@ -36,7 +37,7 @@ const CreateBlogModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribed
         }
         else {
             setInvalid([])
-            createBlogPost({ ...state, tags: state.tags.split(','), blogId }, currUser._id ).then((res) => {
+            createBlogPost({ ...state, tags: state.tags.split(','), blogId }, currUser._id).then((res) => {
                 resetState(state, setState, setInvalid);
                 dispatch(addBlogPost(res.data));
                 onClose();
@@ -44,6 +45,10 @@ const CreateBlogModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribed
             });
 
         }
+    }
+
+    const stateChanged = (state) => {
+        setState(state);
     }
 
     const imageChanged = async (images) => {
@@ -64,37 +69,13 @@ const CreateBlogModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribed
                 action: step === STEPS.content ? () => setStep(STEPS.general) : () => setStep(STEPS.content)
             }}
             showButton={step === STEPS.content}>
-            <Typography variant="h2">Create Post</Typography>
-            {step === STEPS.general &&
-                <div className={classes.generalInfoForm}>
-                    <Typography className='margin-bottom' variant="h1">Let's get some general info ...</Typography>
-                    <div className='form-section'>
-                        <TextField error={isInvalid('title', invalid)} variant="outlined" label="Blog Title" defaultValue={state.title} placeholder="Name"
-                            helperText={isInvalid('title', invalid) ? 'Required. Must be less than 60 characters.' : ''} onChange={(event) => {
-                                setState({ ...state, title: event.target.value })
-                            }} />
-                        <TextField error={isInvalid('description', invalid)} variant="outlined" label="Blog Description" multiline rows={3} defaultValue={state.description} placeholder="Description"
-                            helperText={isInvalid('description', invalid) ? 'Required.' : ''} onChange={(event) => {
-                                setState({ ...state, description: event.target.value })
-
-                            }} />
-                        <TextField error={isInvalid('tags', invalid)} variant="outlined" label="Blog Tags" defaultValue={state.tags} placeholder="tag,tag,tag"
-                            helperText={isInvalid('tags', invalid) ? 'Must be a comma seperated list' : ''} onChange={(event) => {
-                                setState({ ...state, tags: event.target.value })
-                            }} />
-                    </div>
-                    <div className='form-section'>
-                        <ImageUpload onImageChanged={imageChanged} />
-                    </div>
-                </div>
-
-            }
-            {step === STEPS.content &&
-                <TextField error={isInvalid('text', invalid)} variant="outlined" label="Text" defaultValue='' placeholder="Markdown"
-                    helperText={isInvalid('text', invalid) ? 'Required' : ''} onChange={(event) => {
-                        setState({ ...state, text: event.target.value })
-                    }} multiline rows={55} />
-            }
+            <BlogPostForm
+                state={state}
+                setState={stateChanged}
+                step={step}
+                invalid={invalid}
+                action="Create"
+            />
 
         </BaseModal>
     )
