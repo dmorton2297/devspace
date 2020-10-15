@@ -1,11 +1,9 @@
-import React, { useState } from 'react'
-import { withStyles, Typography, TextField, IconButton, Button, CircularProgress } from '@material-ui/core';
+import React from 'react'
+import { withStyles, Typography, TextField } from '@material-ui/core';
 import styles from './styles';
 import { isInvalid } from '../../../utils/validator';
-import CloseIcon from '@material-ui/icons/Close';
 import { object, func, arrayOf, string } from 'prop-types';
-import { useSelector } from 'react-redux';
-import { uploadImage, removeImage } from '../../../services/imageStorageService';
+import ImageUpload from '../../image-upload-input';
 
 /**
  * Add project form element.
@@ -18,22 +16,11 @@ import { uploadImage, removeImage } from '../../../services/imageStorageService'
  * @return {element} - the add project form
  */
 const ProjectForm = ({ classes, state, setState, invalid, action }) => {
-    const user = useSelector(state => state.userReducer);
-    const [uploadingImage, setUploadingImage] = useState(false);
 
-    const imageChanged = async (image) => {
-        setUploadingImage(true);
-        const url = await uploadImage(image, user._id);
-        setState({ ...state, images: [...state.images, url] });
-        setUploadingImage(false);
+    const imageChanged = async (images) => {
+        setState({ ...state, images: images });
     }
 
-    const onRemoveImage = async (image) => {
-        removeImage(user._id, image.id);
-        setState({
-            ...state, images: state.images.filter(i => i.id !== image.id)
-        });
-    }
 
     return (
         <React.Fragment>
@@ -70,30 +57,7 @@ const ProjectForm = ({ classes, state, setState, invalid, action }) => {
             </div>
 
             <div className='form-section'>
-                <Typography variant='h1' className='bottom-margin'>Add Project Images</Typography>
-                <Typography variant='h2' className='bottom-margin'>.PNG, .JPEG, .GIF allowed</Typography>
-                {state.images && state.images.map(image => (
-                    <div className={classes.imageRow}>
-                        <img src={image.url} alt='test' width='98%' height='500px' style={{ objectFit: 'contain' }} />
-                        <div className={classes.iconContainer}>
-                            <IconButton styles={{ color: 'white' }} onClick={() => onRemoveImage(image)}><CloseIcon /></IconButton>
-                        </div>
-
-                    </div>
-                ))}
-                {!uploadingImage && <Button
-                    className={classes.addImageButton}
-                    variant="contained"
-                    component="label">
-                    Add Image
-                    <input type="file" style={{ display: 'none' }} onChange={event => {
-                        event.preventDefault();
-                        imageChanged(event.target.files[0]);
-                    }} />
-                </Button>}
-                {uploadingImage &&
-                    <CircularProgress />
-                }
+                <ImageUpload onImageChanged={imageChanged} />
             </div>
 
             <div className='form-section'>

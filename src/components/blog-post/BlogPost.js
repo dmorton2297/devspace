@@ -23,7 +23,7 @@ const BlogPost = ({ classes, post, history, user, readOnly }) => {
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: '50% 50%',
-            backgroundImage: `url("${post.image}")`
+            backgroundImage: `url("${post.image.url}")`
         }
     });
 

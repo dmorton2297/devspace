@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styles from './styles';
 import { withStyles } from '@material-ui/styles';
 import classNames from 'classnames';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setTab } from '../../actions/tabActions';
 import { IconButton, Typography } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -61,20 +61,25 @@ const Navigation = ({ classes }) => {
         setShowMenu(false);
     }
 
+    const user =  useSelector(state => state.userReducer);
+    const authenticated = !!user._id;
+
+
+
     return (
         <div className={classNames(classes.container, 'navigation-container')}>
             <div className={classes.logo}>
                 <img src="/app-logo.png" width="160px" alt="app-logo" />
             </div>
             <div></div>
-            {window.innerWidth > 1000 &&
+            {authenticated && window.innerWidth > 1000 &&
                 <div className={classes.navigationControl}>
                     <Button classes={classes} clicked={space} first={true} onClick={onSpaceClicked} text={'Space'} />
                     <Button classes={classes} clicked={blog} first={false} onClick={onBlogClicked} text={'Blog'} />
                     <Button classes={classes} clicked={settings} first={false} onClick={onSettingsClicked} text={'Settings'} />
                 </div>
             }
-            {window.innerWidth < 1000 && showMenu &&
+            {authenticated && window.innerWidth < 1000 && showMenu &&
                 <div className={classes.mobileMenu}>
                     <IconButton className={classes.closeMenuButton} onClick={closeAppMenu}>
                         <CloseIcon className={classes.closeMenuIcon}></CloseIcon>
@@ -93,7 +98,7 @@ const Navigation = ({ classes }) => {
 
                 </div>
             }
-            {window.innerWidth < 1000 && !showMenu &&
+            {authenticated && window.innerWidth < 1000 && !showMenu &&
                 <div className={classes.menuButtonContainer}>
                     <IconButton className={classes.menuButton} onClick={showAppMenu}>
                         <MenuIcon className={classes.menuIcon}></MenuIcon>

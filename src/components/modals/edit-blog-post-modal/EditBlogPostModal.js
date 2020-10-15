@@ -5,11 +5,11 @@ import BaseModal from '../base-modal';
 import { object, bool, func, string } from 'prop-types';
 import { resetState } from '../../../utils/resetState';
 import { validateBlogPost, isInvalid } from '../../../utils/validator';
-import { Typography, TextField, IconButton, Button } from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
+import { Typography, TextField } from '@material-ui/core';
 import { editBlogPost } from '../../../services/webService';
 import { useDispatch } from 'react-redux';
 import { updateBlogPost } from '../../../actions/blogActions';
+import ImageUpload from '../../image-upload-input';
 
 
 const EditBlogPostModal = ({ classes, open, onClose, blog, ariaLabelledBy, ariaDescribedby, currUser, showSuccess }) => {
@@ -43,6 +43,10 @@ const EditBlogPostModal = ({ classes, open, onClose, blog, ariaLabelledBy, ariaD
                 onClose();
             });
         }
+    }
+
+    const imageChanged = async (images) => {
+        setState({ ...state, image: images.length > 0 ? images[0] : null });
     }
 
     return (
@@ -79,25 +83,8 @@ const EditBlogPostModal = ({ classes, open, onClose, blog, ariaLabelledBy, ariaD
                             }} />
                     </div>
                     <div className='form-section'>
-                        <Typography variant='h1' className='bottom-margin'>Add Post Image (Required)</Typography>
-                        <Typography variant='h2' className='bottom-margin'>.PNG, .JPEG, .GIF allowed</Typography>
-                        {state.image !== '' &&
-                            <div className={classes.imageRow}>
-                                <Typography varant="body2" className={classes.imageRowContent}>{state.image}</Typography>
-                                <IconButton styles={{ color: 'white' }} onClick={() => setState({
-                                    ...state, image: ''
-                                })}><CloseIcon /></IconButton>
-                            </div>
-                        }
-                        <Button
-                            className={classes.addImageButton}
-                            variant="contained"
-                            component="label">
-                            Add Image
-                            <input type="file" style={{ display: 'none' }} onChange={event => {
-                                setState({ ...state, image: event.target.value });
-                            }} />
-                        </Button>
+                        <ImageUpload onImageChanged={imageChanged} existingImages={[state.image]} />
+
                     </div>
                 </div>
 
