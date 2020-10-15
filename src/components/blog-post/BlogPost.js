@@ -15,7 +15,6 @@ const BlogPost = ({ classes, post, history, user, readOnly }) => {
     const [showControls, setShowControls] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
     const [showDelete, setShowDelete] = useState(false);
-    const [editDetails] = useState({});
 
     const useStyles = makeStyles({
         projImage: {

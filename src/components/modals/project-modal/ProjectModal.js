@@ -8,6 +8,7 @@ import BaseModal from '../base-modal';
 
 const ProjectModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribedby, project }) => {
     if (!project) return <div></div>;
+    console.log(project.image.url);
     return (
         <BaseModal
             open={open}
@@ -19,7 +20,7 @@ const ProjectModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribedby,
             <Typography variant="h1" className='modal-header'>{project.name}</Typography>
             <Typography variant="h2" className={classes.header}>{project.description}{project.description}{project.description}</Typography>
             <div className={classes.imageContainer}>
-                <img src={project.image} className={classes.projectImage} alt='project' />
+                <img src={project.image.url} className={classes.projectImage} alt='project' />
             </div>
         </BaseModal>
     );

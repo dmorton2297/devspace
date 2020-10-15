@@ -2,7 +2,7 @@ import React from 'react'
 import { withStyles } from '@material-ui/styles';
 import styles from './styles';
 import { object, bool, func, string, any } from 'prop-types';
-import { Modal, Card, Button } from '@material-ui/core';
+import { Modal, Card } from '@material-ui/core';
 import DefaultButton from '../../shared/default-button';
 
 const BaseModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribedby, children, buttonText, buttonFunc, showButton, cancelButton, stepButton }) => {

@@ -23,7 +23,7 @@ const ProjectCard = ({ project, classes, onClick, showSuccess }) => {
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: '50% 50%',
-            backgroundImage: `url("${project.image}")`
+            backgroundImage: `url("${project.image.url}")`
         }
     });
 

@@ -1,9 +1,11 @@
-import React from 'react'
-import { withStyles, Typography, TextField, IconButton, Button } from '@material-ui/core';
+import React, { useState } from 'react'
+import { withStyles, Typography, TextField, IconButton, Button, CircularProgress } from '@material-ui/core';
 import styles from './styles';
 import { isInvalid } from '../../../utils/validator';
 import CloseIcon from '@material-ui/icons/Close';
 import { object, func, arrayOf, string } from 'prop-types';
+import { useSelector } from 'react-redux';
+import { uploadImage, removeImage } from '../../../services/imageStorageService';
 
 /**
  * Add project form element.
@@ -16,6 +18,23 @@ import { object, func, arrayOf, string } from 'prop-types';
  * @return {element} - the add project form
  */
 const ProjectForm = ({ classes, state, setState, invalid, action }) => {
+    const user = useSelector(state => state.userReducer);
+    const [uploadingImage, setUploadingImage] = useState(false);
+
+    const imageChanged = async (image) => {
+        setUploadingImage(true);
+        const url = await uploadImage(image, user._id);
+        setState({ ...state, images: [...state.images, url] });
+        setUploadingImage(false);
+    }
+
+    const onRemoveImage = async (image) => {
+        removeImage(user._id, image.id);
+        setState({
+            ...state, images: state.images.filter(i => i.id !== image.id)
+        });
+    }
+
     return (
         <React.Fragment>
             <div className='form-section'>
@@ -55,21 +74,26 @@ const ProjectForm = ({ classes, state, setState, invalid, action }) => {
                 <Typography variant='h2' className='bottom-margin'>.PNG, .JPEG, .GIF allowed</Typography>
                 {state.images && state.images.map(image => (
                     <div className={classes.imageRow}>
-                        <Typography varant="body2" className={classes.imageRowContent}>{image}</Typography>
-                        <IconButton styles={{ color: 'white' }} onClick={() => setState({
-                            ...state, images: state.images.filter(i => i !== image)
-                        })}><CloseIcon /></IconButton>
+                        <img src={image.url} alt='test' width='98%' height='500px' style={{ objectFit: 'contain' }} />
+                        <div className={classes.iconContainer}>
+                            <IconButton styles={{ color: 'white' }} onClick={() => onRemoveImage(image)}><CloseIcon /></IconButton>
+                        </div>
+
                     </div>
                 ))}
-                <Button
+                {!uploadingImage && <Button
                     className={classes.addImageButton}
                     variant="contained"
                     component="label">
                     Add Image
                     <input type="file" style={{ display: 'none' }} onChange={event => {
-                        setState({ ...state, images: [...state.images, event.target.value] });
+                        event.preventDefault();
+                        imageChanged(event.target.files[0]);
                     }} />
-                </Button>
+                </Button>}
+                {uploadingImage &&
+                    <CircularProgress />
+                }
             </div>
 
             <div className='form-section'>

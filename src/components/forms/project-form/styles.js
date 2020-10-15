@@ -17,7 +17,7 @@ const styles = theme => {
         },
         imageRowContent: {
             marginTop: 2,
-            flexGrow: 1
+            flexGrow: 1,
         }
     });
 };
