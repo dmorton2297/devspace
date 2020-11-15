@@ -6,7 +6,7 @@ const styles = theme => {
             '@media(max-width: 1000px)': {
                 padding: 15,
                 width: 'calc(100% - 40px)',
-                marginBottom: 100,
+                paddingBottom: 200,
             }
         },
         titleTags: {
