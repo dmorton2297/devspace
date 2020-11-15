@@ -39,7 +39,7 @@ const styles = theme => {
             padding: '20px 0'
         },
         posts: {
-            marginBottom: 100
+            paddingBottom: 200
         }
     });
 };
