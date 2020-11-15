@@ -89,8 +89,8 @@ const BlogPost = ({ match, classes }) => {
 
     img {
         width: 100%;
-        height: 100%;
-        object-fit: contain;
+        height: 300px;
+        object-fit: cover;
     }
     `
     let t = `<style>${style}</style>${md.render(post.text)}`;
