@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import { withStyles } from '@material-ui/styles';
 import styles from '../../blog/styles';
 import { getBlogPost } from '../../../services/webService';

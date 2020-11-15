@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Space from '../space';
 import Blog from '../blog';
 import Settings from '../settings';
-import { getItem } from '../../utils/localStorage';
+import { getItem, setItem } from '../../utils/localStorage';
 import { getUser } from '../../services/webService';
 import { setUser } from '../../actions/userActions';
 
@@ -18,10 +18,10 @@ const Home = ({ classes }) => {
     useEffect(() => {
         if (!user._id) {
             const email = getItem('email');
-            console.log(email);
             getUser(email).then((res) => {
                 dispatch(setUser(res.data));
             }).catch(async (e) => {
+                setItem('_auth', 'false');
                 console.error(e);
             });
         }

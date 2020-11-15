@@ -9,12 +9,16 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import MoreVert from '@material-ui/icons/MoreVert';
 import EditBlogPostModal from '../modals/edit-blog-post-modal';
 import DeleteBlogPostModal from '../modals/delete-blog-post-modal/DeleteBlogPostModal';
+import { getUserBlogs } from '../../services/webService';
+import { useDispatch } from 'react-redux';
+import { setBlog } from '../../actions/blogActions';
 
 const BlogPost = ({ classes, post, history, user, readOnly }) => {
 
     const [showControls, setShowControls] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
     const [showDelete, setShowDelete] = useState(false);
+    const dispatch = useDispatch();
 
     const useStyles = makeStyles({
         projImage: {
@@ -27,6 +31,12 @@ const BlogPost = ({ classes, post, history, user, readOnly }) => {
         }
     });
 
+    const triggerRefresh = () => {
+        getUserBlogs(user._id).then((res) => {
+            dispatch(setBlog(res.data));
+        })
+    }
+
     const onEditClicked = () => {
         setShowEdit(true);
     };
@@ -35,13 +45,23 @@ const BlogPost = ({ classes, post, history, user, readOnly }) => {
         setShowDelete(true);
     }
 
+    const onEditClosed = () => {
+        triggerRefresh();
+        setShowEdit(false);
+    }
+
+    const onDeleteClosed = () => {
+        triggerRefresh();
+        setShowDelete(false);
+    };
+
 
     const postImage = useStyles();
     return (
         <Card className={classNames(classes.container, 'full-width')}>
-            <EditBlogPostModal open={showEdit} onClose={() => setShowEdit(false)} blog={post}
+            <EditBlogPostModal open={showEdit} onClose={onEditClosed} blog={post}
                 ariaLabelledBy='Edit' ariaDescribedby='Edit' currUser={user} />
-            <DeleteBlogPostModal open={showDelete} onClose={() => setShowDelete(false)} post={post}
+            <DeleteBlogPostModal open={showDelete} onClose={onDeleteClosed} post={post}
                 ariaDescribedby='Delete' ariaLabelledBy='Delete' currUser={user} />
             <div className={classes.infoContainer}>
                 <div onClick={() => history.push(`/posts/${post._id}/${user._id}`)}>

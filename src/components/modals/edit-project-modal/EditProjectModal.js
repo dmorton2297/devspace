@@ -34,11 +34,11 @@ const EditProjectModal = ({ open, onClose, project, ariaLabelledBy, ariaDescribe
         name: project ? project.name : '',
         description: project ? project.description : '',
         github: project ? project.github : '',
-        images: [],
-        projectLink: '',
-        website: '',
+        image: project ? project.image : null,
+        projectLink: project ? project.projectLink : '',
+        website: project ? project.website : '',
         tags: project.tags ? project.tags.join(',') : '',
-        demoVideo: '',
+        demoVideo: project ? project.images : '',
     });
 
     /**

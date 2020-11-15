@@ -9,6 +9,7 @@ import classNames from 'classnames';
 import ProtectedRoute from './protected-route';
 import Navigation from '../navigation';
 import BlogPost from '../public-facing/blog-post';
+import PublicBlog from '../public-facing/blog';
 import SignUp from '../sign-up';
 
 
@@ -27,8 +28,9 @@ const Root = ({ classes }) => {
                 <div className={classes.mainContainer}>
                     <Switch>
                         <ProtectedRoute path="/home" component={Home} />
-                        <Route path="/signup" component={SignUp} />
+                        <Route path="/signup" component={SignUp} />s
                         <Route path="/posts/:id/:userId" component={BlogPost} />
+                        <Route path ="/blog/:email" component={PublicBlog} />
                         <Route path="/" component={Login} />
                     </Switch>
                 </div>

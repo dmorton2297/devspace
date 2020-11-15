@@ -35,7 +35,7 @@ const SignUp = ({ classes }) => {
                     firebase.auth().currentUser.getIdToken(true).then(cookie => {
                         setItem('auth', cookie);
                         createUser({ email: state.email }).then((res) => {
-                            console.log(res);
+                            // TODO : Handle success state of creating a user
                         })
                     })
                 })

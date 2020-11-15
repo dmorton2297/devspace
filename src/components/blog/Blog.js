@@ -16,7 +16,7 @@ import CreateBlogModal from '../modals/create-blog-modal';
 import EditIcon from '@material-ui/icons/Edit';
 import DefaultButton from '../shared/default-button';
 
-const Blog = ({ classes, user, history, readOnly }) => {
+const Blog = ({ classes, user, history, readOnly, dataOverride }) => {
 
     const dispatch = useDispatch();
     const blog = useSelector(state => state.blogReducer);
@@ -26,10 +26,16 @@ const Blog = ({ classes, user, history, readOnly }) => {
     const [newTag, setNewTag] = useState(null);
 
     useEffect(() => {
-        getUserBlogs(user._id).then((res) => {
-            dispatch(setBlog(res.data));
-        })
-    }, [dispatch, user])
+        if (dataOverride) {
+            dispatch(setBlog(dataOverride));
+        }
+        else {
+            getUserBlogs(user._id).then((res) => {
+                dispatch(setBlog(res.data));
+            })
+        }
+
+    }, [dispatch, user, dataOverride])
 
     const editBlogDetails = () => {
         if (editDetails) {
@@ -114,7 +120,7 @@ const Blog = ({ classes, user, history, readOnly }) => {
                 {!editDetails &&
                     <React.Fragment>
                         <Typography variant="h2" className={classes.description}>{blog.description}</Typography>
-                        <Typography variant="h3" className='top-margin'>Created and maintained by <strong>{user.name}</strong></Typography>
+                        <Typography variant="h3" className='top-margin'>Created and maintained by <strong>{blog.author}</strong></Typography>
                     </React.Fragment>
 
                 }

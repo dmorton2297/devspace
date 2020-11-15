@@ -3,21 +3,25 @@ import { withStyles } from '@material-ui/styles'
 import styles from './styles';
 import { object, bool, func, string } from 'prop-types';
 import BaseModal from '../base-modal';
-import { Typography, TextField } from '@material-ui/core';
 import { createBlogPost } from '../../../services/webService';
-import { validateBlogPost, isInvalid } from '../../../utils/validator';
+import { validateBlogPost } from '../../../utils/validator';
 import { resetState } from '../../../utils/resetState';
 import { useDispatch } from 'react-redux';
 import { addBlogPost } from '../../../actions/blogActions';
-import ImageUpload from '../../image-upload-input';
 import BlogPostForm from '../../forms/blog-post-form';
 
 const CreateBlogModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribedby, currUser, showSuccess, blogId }) => {
 
+    // Step Constants
     const STEPS = {
         general: 'General',
         content: 'Content'
     }
+
+    // Redux Hooks
+    const dispatch = useDispatch();
+
+    // State Hooks
     const [step, setStep] = useState(STEPS.general);
     const [invalid, setInvalid] = useState([]);
     const [state, setState] = useState({
@@ -28,7 +32,6 @@ const CreateBlogModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribed
         text: ''
     });
 
-    const dispatch = useDispatch();
 
     const onSubmit = () => {
         const _validate = validateBlogPost(state);
@@ -43,16 +46,11 @@ const CreateBlogModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribed
                 onClose();
 
             });
-
         }
     }
 
     const stateChanged = (state) => {
         setState(state);
-    }
-
-    const imageChanged = async (images) => {
-        setState({ ...state, image: images.length > 0 ? images[0] : null });
     }
 
     return (

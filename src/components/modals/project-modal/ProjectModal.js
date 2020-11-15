@@ -8,7 +8,6 @@ import BaseModal from '../base-modal';
 
 const ProjectModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribedby, project }) => {
     if (!project) return <div></div>;
-    console.log(project.image.url);
     return (
         <BaseModal
             open={open}

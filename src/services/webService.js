@@ -68,6 +68,10 @@ export const getBlogPost = (postId, userId) => {
     return axios.get(`${BASE_URL}blog/${postId}/${userId}`);
 }
 
+export const getBlog = (email) => {
+    return axios.get(`${BASE_URL}blog/${email}`);
+}
+
 export const createBlogPost = (post, userId) => {
     return axios.post(`${BASE_URL}user/${userId}/blog`, post);
 }

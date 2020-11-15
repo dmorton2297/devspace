@@ -3,7 +3,7 @@ const styles = theme => {
         button: {
             backgroundColor: theme.palette.primary.dark,
             color: theme.palette.primary.light,
-            width: 100,
+            minWidth: 100,
             marginRight: 10
         },
         warn: {

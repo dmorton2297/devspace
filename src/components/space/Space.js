@@ -17,6 +17,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import { updateUser } from '../../actions/userActions';
 import Tag from '../shared/tag';
 import { validateProfile, isInvalid } from '../../utils/validator';
+import ProfilePhotoModal from '../modals/profile-photo-modal/ProfilePhotoModal';
 
 /**
  * The Space component
@@ -34,7 +35,8 @@ const Space = ({ classes, user, readOnly }) => {
     // component state
     const [selectedProject, setSelectedProject] = useState(null);
     const [addProject, setAddProject] = useState(false);
-    const [editProfile, setEditProfile] = useState(false);
+    const [editProfile, setEditProfile] = useState(null);
+    const [editProfilePhoto, setEditProfilePhoto] = useState(false);
     const [profileInvalid, setProfileInvalid] = useState([]);
     const [success, showSuccess] = useState(null);
     const [tagBuffer, setTagBuffer] = useState(null);
@@ -114,7 +116,7 @@ const Space = ({ classes, user, readOnly }) => {
      * @returns {void} - This function does not return anything
      */
     const onUpdateProfile = () => {
-        if (!editProfile) return;
+        if (!editProfile && !firstTimeUser) return;
         const _validate = validateProfile(editProfile);
         if (!_validate.isValid) {
             setProfileInvalid(_validate.results);
@@ -158,7 +160,7 @@ const Space = ({ classes, user, readOnly }) => {
             </Snackbar>
             <ProjectModal open={!!selectedProject} project={selectedProject} onClose={closeProjectModal} ariaLabelledBy='View Project' ariaDsescribedBy='View Project' />
             <AddProjectModal showSuccess={showSuccessMessage} open={addProject} currUser={user} onClose={() => setAddProject(false)} ariaLabelledBy='Add Project' ariaDsescribedBy='Add Project' />
-
+            <ProfilePhotoModal open={editProfilePhoto} profileImage={user.profileImage} onClose={() => setEditProfilePhoto(false)} ariaLabelledBy="Edit Profile Image" ariaDescribedBy="Edit Profile Image" currUser={user} />
             <div className={classes.topPortion}>
                 <Card>
                     {!firstTimeUser && <React.Fragment>
@@ -173,7 +175,7 @@ const Space = ({ classes, user, readOnly }) => {
                                 </div>
                             }
                             <div className={classes.tags}>
-                                {!tagBuffer && user.tags.map(x => (
+                                {!tagBuffer && user.tags?.map(x => (
                                     <Tag key={x.length + (Math.random() * 100)} content={x} />
                                 ))}
                                 {tagBuffer && tagBuffer.length < 6 &&
@@ -225,8 +227,9 @@ const Space = ({ classes, user, readOnly }) => {
                                                 }} />
                                         </div>
                                         <div className='flex'>
+                                            <DefaultButton onClick={() => setEditProfilePhoto(true)}>Change Profile Photo</DefaultButton>
                                             <DefaultButton onClick={onUpdateProfile}>Update</DefaultButton>
-                                            <DefaultButton warn={true} onClick={() => {
+                                            <DefaultButton width="100px" warn={true} onClick={() => {
                                                 setEditProfile(null);
                                                 setProfileInvalid([]);
                                                 setTagBuffer(null);
@@ -256,6 +259,9 @@ const Space = ({ classes, user, readOnly }) => {
                             <Typography variant='h1' className={classes.infoMessage}>Let's get some basic info.</Typography>
                             <div className={classes.firstTimeFieldsContainer}>
                                 <TextField variant="outlined" label="Name" defaultValue={user.name} placeholder="title"
+                                    onChange={(event) => {
+                                        setEditProfile({ ...editProfile, name: event.target.value });
+                                    }}
                                 />
                                 <TextField error={isInvalid('title', profileInvalid)} variant="outlined" label="Job Title" defaultValue={user.title} placeholder="title"
                                     helperText={isInvalid('title', profileInvalid) ? 'Required. Must be less than or equal to 80 characters.' : ''} onChange={(event) => {

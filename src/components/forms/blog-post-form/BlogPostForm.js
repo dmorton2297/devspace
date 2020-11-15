@@ -39,13 +39,13 @@ const BlogPostForm = ({ classes, state, setState, step, invalid, action }) => {
                             }} />
                     </div>
                     <div className='form-section'>
-                        <ImageUpload onImageChanged={imageChanged} />
+                        <ImageUpload onImageChanged={imageChanged} existingImages={state.image ? [state.image] : null} />
                     </div>
                 </div>
 
             }
             {step === STEPS.content &&
-                <TextField error={isInvalid('text', invalid)} variant="outlined" label="Text" defaultValue='' placeholder="Markdown"
+                <TextField error={isInvalid('text', invalid)} variant="outlined" label="Text" defaultValue={state.text} placeholder="Markdown"
                     helperText={isInvalid('text', invalid) ? 'Required' : ''} onChange={(event) => {
                         setState({ ...state, text: event.target.value })
                     }} multiline rows={55} />

@@ -6,7 +6,7 @@ import { removeImage, uploadImage } from '../../services/imageStorageService';
 import styles from './styles';
 import CloseIcon from '@material-ui/icons/Close';
 
-const ImageUpload = ({ classes, onImageChanged, existingImages }) => {
+const ImageUpload = ({ classes, onImageChanged, existingImages, singleImage }) => {
     const user = useSelector(state => state.userReducer);
     const [uploadingImage, setUploadingImage] = useState(false);
     const [images, setImages] = useState(existingImages ? existingImages : null);
@@ -31,14 +31,14 @@ const ImageUpload = ({ classes, onImageChanged, existingImages }) => {
             <Typography variant='h2' className='bottom-margin'>.PNG, .JPEG, .GIF allowed</Typography>
             {images && images.map(image => (
                 <div className={classes.imageRow}>
-                    <img src={image.url} alt='test' width='98%' height='500px' style={{ objectFit: 'contain' }} />
+                    <img src={image.url} alt='test' width='95%' height='500px' style={{ objectFit: 'contain' }} />
                     <div className={classes.iconContainer}>
                         <IconButton styles={{ color: 'white' }} onClick={() => onRemoveImage(image)}><CloseIcon /></IconButton>
                     </div>
 
                 </div>
             ))}
-            {!uploadingImage && <Button
+            {!uploadingImage && (!singleImage || (singleImage && images.length === 0)) && <Button
                 className={classes.addImageButton}
                 variant="contained"
                 component="label">
