@@ -98,7 +98,7 @@ const BlogPost = ({ match, classes }) => {
     t = t.replace('<p><img', '<p class="image-container"><img')
     return (
         <div className={classes.container}>
-            <div dangerouslySetInnerHTML={{ __html: t }}></div>
+            <div dangerouslySetInnerHTML={{ __html: t }} style={{ paddingBottom: 200 }}></div>
         </div>
         
     );
