@@ -26,7 +26,7 @@ const styles = theme => {
             height: `calc(100vh - ${navigationHeight + 10}px)`,
             '@media(max-width: 1000px)': {
                 width: 'calc(100%)',
-                padding: 0
+                padding: 0,
             }
         },
         '@global': {

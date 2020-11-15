@@ -86,6 +86,12 @@ const BlogPost = ({ match, classes }) => {
         margin-top: 20px;
         margin-bottom: 20px;
     }
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
     `
     let t = `<style>${style}</style>${md.render(post.text)}`;
     t = t.replace(/\\"/g, '"');

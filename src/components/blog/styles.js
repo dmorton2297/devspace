@@ -36,6 +36,9 @@ const styles = theme => {
         },
         headerContainer: {
             padding: '20px 0'
+        },
+        posts: {
+            marginBottom: 100
         }
     });
 };
