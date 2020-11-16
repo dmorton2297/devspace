@@ -85,7 +85,6 @@ const Blog = ({ classes, user, history, readOnly, dataOverride }) => {
 
     if (!blog.title) return <React.Fragment></React.Fragment>;
     const descriptionBlocks = blog.description.split(/(?:\r\n|\r|\n)/g).filter(x => x !== '');
-    console.log(descriptionBlocks);
     return (
         <div className={classNames(classes.container)}>
             <CreateBlogModal open={createBlog} onClose={() => setCreateBlog(false)} blogId={blog._id} ariaLabelledBy='Create Blog' ariaDescribedBy='Create Blog' currUser={user} showSuccess={() => { }} />

@@ -34,7 +34,6 @@ const EditBlogPostModal = ({ open, onClose, blog, ariaLabelledBy, ariaDescribedb
             setInvalid(_validate.results);
         }
         else {
-            console.log(state);
             setInvalid([])
             editBlogPost({ ...state, tags: state.tags.split(',') }, currUser._id).then(res => {
                 dispatch(updateBlogPost(res.data));
