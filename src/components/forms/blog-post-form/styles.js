@@ -1,5 +1,0 @@
-const stlyes = (theme) => {
-    return ({
-        
-    });
-}

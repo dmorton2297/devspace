@@ -154,8 +154,8 @@ const Blog = ({ classes, user, history, readOnly, dataOverride }) => {
                         </IconButton>
                     }
                 </div>
-                {blog.blogPosts.map(post => (
-                    <BlogPost key={post.id} history={history} user={user} post={post} readOnly={readOnly} />
+                {blog.blogPosts.map((post, i) => (
+                    <BlogPost key={i} history={history} user={user} post={post} readOnly={readOnly} />
                 ))}
             </div>
         </div>

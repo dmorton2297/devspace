@@ -2,7 +2,7 @@ import React from 'react'
 import { withStyles, Typography, TextField } from '@material-ui/core';
 import styles from './styles';
 import { isInvalid } from '../../../utils/validator';
-import { object, func, arrayOf, string, bool } from 'prop-types';
+import { object, func, arrayOf, string } from 'prop-types';
 import ImageUpload from '../../image-upload-input';
 
 /**

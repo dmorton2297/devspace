@@ -1,17 +1,14 @@
 import React from 'react';
-import { withStyles } from '@material-ui/styles';
-import styles from './styles';
 import { TextField, Typography } from '@material-ui/core';
 import { isInvalid } from '../../../utils/validator';
 import ImageUpload from '../../image-upload-input';
 
-const BlogPostForm = ({ classes, state, setState, step, invalid, action }) => {
+const BlogPostForm = ({ state, setState, step, invalid, action }) => {
 
     const STEPS = {
         general: 'General',
         content: 'Content'
     };
-
 
     const imageChanged = async (images) => {
         setState({ ...state, image: images.length > 0 ? images[0] : null });
@@ -21,7 +18,7 @@ const BlogPostForm = ({ classes, state, setState, step, invalid, action }) => {
         <React.Fragment>
             <Typography variant="h2">{action} Post</Typography>
             {step === STEPS.general &&
-                <div className={classes.generalInfoForm}>
+                <React.Fragment>
                     <Typography className='margin-bottom' variant="h1">Let's get some general info ...</Typography>
                     <div className='form-section'>
                         <TextField error={isInvalid('title', invalid)} variant="outlined" label="Blog Title" defaultValue={state.title} placeholder="Name"
@@ -41,7 +38,7 @@ const BlogPostForm = ({ classes, state, setState, step, invalid, action }) => {
                     <div className='form-section'>
                         <ImageUpload onImageChanged={imageChanged} existingImages={state.image ? [state.image] : null} />
                     </div>
-                </div>
+                </React.Fragment>
 
             }
             {step === STEPS.content &&
@@ -54,4 +51,4 @@ const BlogPostForm = ({ classes, state, setState, step, invalid, action }) => {
     )
 }
 
-export default withStyles(styles)(BlogPostForm);
+export default BlogPostForm;

@@ -49,7 +49,6 @@ const ProfilePhotoModal = ({ open, onClose, profileImage, ariaLabelledBy, ariaDe
 }
 
 ProfilePhotoModal.propTypes = {
-    classes: object.isRequired,
     open: bool.isRequired,
     profileImage: string,
     onClose: func.isRequired,
@@ -61,7 +60,7 @@ ProfilePhotoModal.propTypes = {
 
 ProfilePhotoModal.defaultProps = {
     profileImage: null,
-    showSuccess: false,
+    showSuccess: () => {},
 }
 
 export default ProfilePhotoModal;

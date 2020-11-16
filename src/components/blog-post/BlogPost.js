@@ -48,6 +48,7 @@ const BlogPost = ({ classes, post, history, user, readOnly }) => {
     const onEditClosed = () => {
         triggerRefresh();
         setShowEdit(false);
+        setShowControls(false);
     }
 
     const onDeleteClosed = () => {
@@ -83,8 +84,8 @@ const BlogPost = ({ classes, post, history, user, readOnly }) => {
             </div>
             <div className={postImage.projImage}>
                 <div className={classNames(classes.tagContainer, 'flex')}>
-                    {post.tags.map(tag => (
-                        <Tag content={tag} key={`${tag.length + (Math.random() * 1000)}`} />
+                    {post.tags.map((tag, i) => (
+                        <Tag content={tag} key={i} />
                     ))}
                 </div>
             </div>

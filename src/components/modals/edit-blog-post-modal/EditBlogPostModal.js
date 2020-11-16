@@ -1,19 +1,15 @@
 import React, { useState } from 'react'
-import { withStyles } from '@material-ui/styles';
-import styles from './styles';
 import BaseModal from '../base-modal';
 import { object, bool, func, string } from 'prop-types';
 import { resetState } from '../../../utils/resetState';
-import { validateBlogPost, isInvalid } from '../../../utils/validator';
-import { Typography, TextField } from '@material-ui/core';
+import { validateBlogPost } from '../../../utils/validator';
 import { editBlogPost } from '../../../services/webService';
 import { useDispatch } from 'react-redux';
 import { updateBlogPost } from '../../../actions/blogActions';
-import ImageUpload from '../../image-upload-input';
 import BlogPostForm from '../../forms/blog-post-form';
 
 
-const EditBlogPostModal = ({ classes, open, onClose, blog, ariaLabelledBy, ariaDescribedby, currUser, showSuccess }) => {
+const EditBlogPostModal = ({ open, onClose, blog, ariaLabelledBy, ariaDescribedby, currUser, showSuccess }) => {
 
     const STEPS = {
         general: 'General',
@@ -46,10 +42,6 @@ const EditBlogPostModal = ({ classes, open, onClose, blog, ariaLabelledBy, ariaD
         }
     }
 
-    const imageChanged = async (images) => {
-        setState({ ...state, image: images.length > 0 ? images[0] : null });
-    }
-
     const stateChanged = (state) => {
         setState(state);
     }
@@ -60,7 +52,7 @@ const EditBlogPostModal = ({ classes, open, onClose, blog, ariaLabelledBy, ariaD
             onClose={() => { resetState(state, setState); onClose() }}
             aria-labelledby={ariaLabelledBy}
             aria-describedby={ariaDescribedby}
-            buttonText="create"
+            buttonText="Update"
             buttonFunc={onSubmit}
             cancelButton={true}
             stepButton={{
@@ -81,7 +73,6 @@ const EditBlogPostModal = ({ classes, open, onClose, blog, ariaLabelledBy, ariaD
 };
 
 EditBlogPostModal.propTypes = {
-    classes: object.isRequired,
     open: bool.isRequired,
     blog: object.isRequired,
     onClose: func.isRequired,
@@ -92,4 +83,4 @@ EditBlogPostModal.propTypes = {
 };
 
 
-export default withStyles(styles)(EditBlogPostModal);
+export default EditBlogPostModal;
