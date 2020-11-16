@@ -21,7 +21,7 @@ const EditBlogPostModal = ({ open, onClose, blog, ariaLabelledBy, ariaDescribedb
         title: blog.title,
         description: blog.description,
         image: blog.image,
-        tags: blog.tags.join(','),
+        tags: blog.tags?.join(','),
         text: blog.text
     });
     const [step, setStep] = useState(STEPS.general);
@@ -34,6 +34,7 @@ const EditBlogPostModal = ({ open, onClose, blog, ariaLabelledBy, ariaDescribedb
             setInvalid(_validate.results);
         }
         else {
+            console.log(state);
             setInvalid([])
             editBlogPost({ ...state, tags: state.tags.split(',') }, currUser._id).then(res => {
                 dispatch(updateBlogPost(res.data));
@@ -42,8 +43,8 @@ const EditBlogPostModal = ({ open, onClose, blog, ariaLabelledBy, ariaDescribedb
         }
     }
 
-    const stateChanged = (state) => {
-        setState(state);
+    const stateChanged = (newState) => {
+        setState({...state, ...newState});
     }
 
     return (

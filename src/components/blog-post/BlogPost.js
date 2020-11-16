@@ -87,7 +87,7 @@ const BlogPost = ({ classes, post, history, user, readOnly }) => {
             </div>
             <div className={postImage.projImage} onClick={() => history.push(`/posts/${post._id}`)}>
                 <div className={classNames(classes.tagContainer, 'flex')}>
-                    {post.tags.map((tag, i) => (
+                    {post.tags?.map((tag, i) => (
                         <Tag content={tag} key={i} />
                     ))}
                 </div>
