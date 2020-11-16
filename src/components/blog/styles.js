@@ -13,7 +13,10 @@ const styles = theme => {
             justifyContent: 'space-between',
         },
         description: {
-            padding: '20px 0'
+            padding: '20px 0',
+        },
+        descriptionBlock: {
+            padding: '5px 0',
         },
         editButton: {
             display: 'flex',

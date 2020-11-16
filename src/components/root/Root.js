@@ -29,7 +29,7 @@ const Root = ({ classes }) => {
                     <Switch>
                         <ProtectedRoute path="/home" component={Home} />
                         <Route path="/signup" component={SignUp} />s
-                        <Route path="/posts/:id/:userId" component={BlogPost} />
+                        <Route path="/posts/:id/" component={BlogPost} />
                         <Route path ="/blog/:email" component={PublicBlog} />
                         <Route path="/" component={Login} />
                     </Switch>

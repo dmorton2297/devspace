@@ -7,6 +7,7 @@ import Tag from '../shared/tag';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import MoreVert from '@material-ui/icons/MoreVert';
+import moment from 'moment';
 import EditBlogPostModal from '../modals/edit-blog-post-modal';
 import DeleteBlogPostModal from '../modals/delete-blog-post-modal/DeleteBlogPostModal';
 import { getUserBlogs } from '../../services/webService';
@@ -65,10 +66,12 @@ const BlogPost = ({ classes, post, history, user, readOnly }) => {
             <DeleteBlogPostModal open={showDelete} onClose={onDeleteClosed} post={post}
                 ariaDescribedby='Delete' ariaLabelledBy='Delete' currUser={user} />
             <div className={classes.infoContainer}>
-                <div onClick={() => history.push(`/posts/${post._id}/${user._id}`)}>
+                <div onClick={() => history.push(`/posts/${post._id}`)} className={classes.generalInfo}>
                     <Typography className={classNames(classes.title)} variant='h2'>{post.title}</Typography>
-                    <hr style={{ color: 'white', margin: '0 30px 0 20px' }} />
                     <Typography className={classNames(classes.description)} variant="h2">{post.description}</Typography>
+                    <div className={classes.createdAtContainer}>
+                        <Typography className={classNames(classes.createdAt)} variant="h3">{`Created on ${moment(post.createdAt).format("MM/DD/YYYY hh:mm A")}`}</Typography>
+                    </div>
                 </div>
                 <div>
                     {!readOnly &&
@@ -82,7 +85,7 @@ const BlogPost = ({ classes, post, history, user, readOnly }) => {
                     }
                 </div>
             </div>
-            <div className={postImage.projImage}>
+            <div className={postImage.projImage} onClick={() => history.push(`/posts/${post._id}`)}>
                 <div className={classNames(classes.tagContainer, 'flex')}>
                     {post.tags.map((tag, i) => (
                         <Tag content={tag} key={i} />

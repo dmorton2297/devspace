@@ -12,6 +12,7 @@ const styles = theme => {
         title: {
             width: '100%',
             padding: 20,
+            paddingBottom: 5,
             fontWeight: theme.typography.bold.fontWeight,
             '&:hover': {
                 color: theme.palette.primary.lightAlternate,
@@ -21,7 +22,27 @@ const styles = theme => {
         },
         description: {
             maxWidth: 400,
-            padding: 20
+            padding: 20,
+            paddingTop: 5
+        },
+        generalInfo: {
+            display: 'flex',
+            flexDirection: 'column',
+        },
+        createdAtContainer: {
+            flexGrow: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'flex-end',
+            paddingBottom: 20,
+        },
+        createdAt: {
+            textAlign: 'right',
+            paddingRight: 20,
+            '@media(max-width: 1000px)': {
+                textAlign: 'left',
+                paddingLeft: 20
+            }
         },
         infoContainer: {
             backgroundColor: theme.palette.primary.main,

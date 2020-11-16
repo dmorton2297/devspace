@@ -81,7 +81,11 @@ const Blog = ({ classes, user, history, readOnly, dataOverride }) => {
         setTagBuffer([...tagBuffer, newTag]);
     }
 
+
+
     if (!blog.title) return <React.Fragment></React.Fragment>;
+    const descriptionBlocks = blog.description.split(/(?:\r\n|\r|\n)/g).filter(x => x !== '');
+    console.log(descriptionBlocks);
     return (
         <div className={classNames(classes.container)}>
             <CreateBlogModal open={createBlog} onClose={() => setCreateBlog(false)} blogId={blog._id} ariaLabelledBy='Create Blog' ariaDescribedBy='Create Blog' currUser={user} showSuccess={() => { }} />
@@ -119,7 +123,11 @@ const Blog = ({ classes, user, history, readOnly, dataOverride }) => {
                 </div>
                 {!editDetails &&
                     <React.Fragment>
-                        <Typography variant="h2" className={classes.description}>{blog.description}</Typography>
+                        <div className={classes.description}>
+                            {descriptionBlocks?.map((block, i) => (
+                                <Typography key={i} variant="h2" className={classes.descriptionBlock}>{block}</Typography>
+                            ))}
+                        </div>
                         <Typography variant="h3" className='top-margin'>Created and maintained by <strong>{blog.author}</strong></Typography>
                     </React.Fragment>
 
