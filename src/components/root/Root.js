@@ -36,9 +36,9 @@ const Root = ({ classes }) => {
                 </div>
             </div>
             <div className={classes.footer}>
-                <span><strong>DevSpace</strong> - Personal Blogging Platform - Maintained by Dan Morton - <strong>deepspacedevelopment@gmail.com</strong></span>
-                <a href="http://github.com/dmorton2297"><img src="/github.png" width={20} height={20} alt="github" /></a>
-                <a href="http://www.linkedin.com/in/dan-morton-a10a83101/"><img src="/linked-in.png" width={20} height={20} alt="linkedIn" /></a>
+                <span style={{marginRight: 10}}><strong>DevSpace</strong> - Personal Blogging Platform - Maintained by Dan Morton - <strong>deepspacedevelopment@gmail.com</strong></span>
+                <a href="http://github.com/dmorton2297" style={{marginRight: 10}}><img src="/github.png" width={20} height={20} alt="github" /></a>
+                <a href="http://www.linkedin.com/in/dan-morton-a10a83101/" style={{marginRight: 10}}><img src="/linked-in.png" width={20} height={20} alt="linkedIn" /></a>
             </div>
         </div>
 

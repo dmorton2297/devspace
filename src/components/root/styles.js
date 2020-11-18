@@ -36,7 +36,6 @@ const styles = theme => {
             color: theme.palette.primary.light,
             backgroundColor: theme.palette.primary.dark,
             display: 'flex',
-            gap: '10px',
             justifyContent: 'center',
             fontFamily: "Roboto",
             fontWeight: 300,
