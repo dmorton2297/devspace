@@ -95,7 +95,7 @@ const BlogPost = ({ match, classes }) => {
     `
     let t = `<style>${style}</style>${md.render(post.text)}`;
     t = t.replace(/\\"/g, '"');
-    t = t.replace('<p><img', '<p class="image-container"><img')
+    t = t.replaceAll('<p><img', '<p class="image-container"><img')
     return (
         <div className={classes.container}>
             <div dangerouslySetInnerHTML={{ __html: t }} style={{ paddingBottom: 200 }}></div>
