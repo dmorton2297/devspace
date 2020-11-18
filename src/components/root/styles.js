@@ -23,11 +23,28 @@ const styles = theme => {
             padding: `0 ${mainSidePadding}px`,
             width: mainWidth,
             maxWidth: 1300,
-            height: `calc(100vh - ${navigationHeight + 10}px)`,
+            height: `calc(100vh - ${navigationHeight + 40}px)`,
             '@media(max-width: 1000px)': {
                 width: 'calc(100%)',
                 padding: 0,
             }
+        },
+        footer: {
+            textAlign: 'center',
+            padding: 10,
+            zIndex: 1000,
+            color: theme.palette.primary.light,
+            backgroundColor: theme.palette.primary.dark,
+            display: 'flex',
+            gap: '10px',
+            justifyContent: 'center',
+            '@media(max-width: 1000px)': {
+                height: 'calc(100vh - 100px)',
+                color: 'transparent', // Hide text if on mobile
+                marginTop: -30,
+                display: 'none',
+            },
+            
         },
         '@global': {
             '.full-size-modal': {

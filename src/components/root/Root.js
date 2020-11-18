@@ -35,6 +35,12 @@ const Root = ({ classes }) => {
                     </Switch>
                 </div>
             </div>
+            <div className={classes.footer}>
+                <p><strong>DevSpace</strong> - Personal Blogging Platform - Maintained by Dan Morton - <strong>deepspacedevelopment@gmail.com</strong></p>
+                <img src="/linked-in.png" width={20} height={20} alt="linkedIn" />
+                <img src="/github.png" width={20} height={20} alt="linkedIn" />
+
+            </div>
         </div>
 
     );
