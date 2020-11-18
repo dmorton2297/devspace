@@ -38,13 +38,15 @@ const styles = theme => {
             display: 'flex',
             gap: '10px',
             justifyContent: 'center',
+            fontFamily: "Roboto",
+            fontWeight: 300,
             '@media(max-width: 1000px)': {
                 height: 'calc(100vh - 100px)',
                 color: 'transparent', // Hide text if on mobile
                 marginTop: -30,
                 display: 'none',
             },
-            
+
         },
         '@global': {
             '.full-size-modal': {
