@@ -76,7 +76,25 @@ const BlogPost = ({ match, classes }) => {
         background-color: #ebebeb;
         padding: 20px;
         overflow-x: scroll;
-    }    
+    }
+
+    table {
+        width: 100%;
+    }
+    
+    thead {
+        background-color: lightgray;
+    }
+
+    th {
+        padding: 20;
+        text-align: left !important;
+    }
+
+    td {
+        padding: 20;
+        text-align: left !important;
+    }
 
     .image-container {
         display: flex;
