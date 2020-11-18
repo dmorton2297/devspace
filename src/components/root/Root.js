@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styles from './styles';
 import { withStyles } from '@material-ui/core';
 import { object } from 'prop-types';
@@ -10,7 +10,7 @@ import ProtectedRoute from './protected-route';
 import Navigation from '../navigation';
 import BlogPost from '../public-facing/blog-post';
 import PublicBlog from '../public-facing/blog';
-import SignUp from '../sign-up';
+ // import SignUp from '../sign-up';
 
 
 /**
@@ -19,6 +19,15 @@ import SignUp from '../sign-up';
  * @param {object} $0.classes - Styling classes. 
  */
 const Root = ({ classes }) => {
+
+    const TemporaryRedirect = ({ history }) => {
+        useEffect(() => {
+            history.push('/dmorton2297')
+        });
+    
+        return null;
+    }
+
     return (
         <div className={classNames(classes.root, 'root')}>
             <div className={classes.navigation}>
@@ -27,11 +36,12 @@ const Root = ({ classes }) => {
             <div className={classNames(classes.scrollContainer)} id='scroll-container'>
                 <div className={classes.mainContainer}>
                     <Switch>
-                        <ProtectedRoute path="/home" component={Home} />
-                        <Route path="/signup" component={SignUp} />s
+                        <ProtectedRoute path="/app/home" component={Home} />
+                        <Route path="/app/signup" component={Login} />
+                        <Route path="/app/login" component={Login} />
                         <Route path="/posts/:id/" component={BlogPost} />
-                        <Route path ="/blog/:email" component={PublicBlog} />
-                        <Route path="/" component={Login} />
+                        <Route path ="/:email" component={PublicBlog} />
+                        <Route path ="/" exact component={TemporaryRedirect} />
                     </Switch>
                 </div>
             </div>

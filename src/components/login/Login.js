@@ -21,14 +21,14 @@ const Login = ({ classes }) => {
         firebase.auth().signInWithEmailAndPassword(state.email, state.password).then((res) => {
             firebase.auth().currentUser.getIdToken(true).then(cookie => {
                 setItem('auth', cookie);
-                history.push('home');
+                history.push('/app/home');
             })
         })
     };
 
-    const signUp = () => {
-        history.push('/signup')
-    }
+    /* const signUp = () => {
+        history.push('/app/signup')
+    } */    
 
 
     return (
@@ -47,7 +47,7 @@ const Login = ({ classes }) => {
                 </div>
                 <div className='flex'>
                     <DefaultButton onClick={login}>Login</DefaultButton>
-                    <DefaultButton onClick={signUp}>Sign Up</DefaultButton>
+                    {/*<DefaultButton onClick={signUp}>Sign Up</DefaultButton>*/}
                 </div>
             </div>
         </div>

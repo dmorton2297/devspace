@@ -13,7 +13,7 @@ const Settings = () => {
         firebase.auth().signOut().then(() => {
             setItem('auth', '');
             setItem('email', '');
-            history.push('/login');
+            history.push('/app/login');
         }, error => console.error(error));
     }
     return (

@@ -45,7 +45,7 @@ const SignUp = ({ classes }) => {
     }
 
     const login = () => {
-        history.push('/login');
+        history.push('/app/login');
     }
 
     return (

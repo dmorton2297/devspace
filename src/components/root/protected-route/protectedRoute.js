@@ -7,7 +7,7 @@ const ProtectedRoute = ({ path, component }) => {
     const history = useHistory();
     const authenticated = getItem('_auth');
     if (authenticated === 'false') {
-        history.push('/login');
+        history.push('/app/login');
     }
 
     return (
