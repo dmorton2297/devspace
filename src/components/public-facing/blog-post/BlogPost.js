@@ -38,13 +38,13 @@ const BlogPost = ({ match, classes }) => {
     }
     
     h1  {
-        font-size: 30px;
+        font-size: 40px;
         font-weight: 400;
         padding: 20px 0;
     }
     
     h2 {
-        font-size: 24;
+        font-size: 30px;
         padding: 20px 0;
         font-weight: 400;
     }
@@ -67,8 +67,14 @@ const BlogPost = ({ match, classes }) => {
     }
     
     li {
-        font-size: 16px
-        padding: 20px 0;
+        font-size: 20px;
+        padding: 10px 0px;
+        font-weight: 300;
+        margin: 0;
+    }
+    
+    ul {
+        padding: 0 20px;
     }
     
     pre {
