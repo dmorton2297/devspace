@@ -5,14 +5,14 @@ import { object, bool, func, string, any } from 'prop-types';
 import { Modal, Card } from '@material-ui/core';
 import DefaultButton from '../../shared/default-button';
 
-const BaseModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribedby, children, buttonText, buttonFunc, showButton, cancelButton, stepButton }) => {
+const BaseModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribedby, children, buttonText, buttonFunc, showButton, cancelButton, stepButton, className }) => {
     return (
         <Modal
             open={open}
             onClose={onClose}
             aria-labelledby={ariaLabelledBy}
             aria-describedby={ariaDescribedby}>
-            <Card className='full-size-modal'>
+            <Card className={className}>
                 <div className={classes.contentContainer}>
                     {children}
                 </div>
@@ -29,7 +29,7 @@ const BaseModal = ({ classes, open, onClose, ariaLabelledBy, ariaDescribedby, ch
 
                 </div>
             </Card>
-        </Modal >
+        </Modal>
     );
 };
 
@@ -45,12 +45,14 @@ BaseModal.propTypes = {
     showButton: bool,
     cancelButton: bool,
     stepButton: object,
+    className: string,
 }
 
 BaseModal.defaultProps = {
     cancelButton: false,
     stepButton: null,
-    showButton: true
+    showButton: true,
+    className: 'full-size-modal'
 }
 
 export default withStyles(styles)(BaseModal);

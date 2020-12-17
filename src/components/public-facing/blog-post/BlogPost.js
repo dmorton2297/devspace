@@ -7,17 +7,26 @@ import hljs from 'highlight.js';
 import MarkdownIt from 'markdown-it';
 import './styles.css';
 
-const BlogPost = ({ match, classes }) => {
+const BlogPost = ({ match, classes, p }) => {
     const [post, setPost] = useState(null);
+    const [text, setText] = useState('');
     useEffect(() => {
-        getBlogPost(match.params.id, match.params.userId).then((res) => {
-            setPost(res.data);
-        });
-    }, [setPost, match]);
+        if (match.params.id) {
+            getBlogPost(match.params.id, match.params.userId).then((res) => {
+                setPost(res.data);
+            });
+        }
+        if (p) {
+            setPost(p);
+        }
 
-    if (!post) {
-        return <React.Fragment>Loading...</React.Fragment>
-    }
+    }, [setPost, p, match]);
+
+    useEffect(() => {
+        setText(post?.text);
+    }, [post]);
+
+    
 
     const md = MarkdownIt({
         highlight: function (str, lang) {
@@ -117,14 +126,27 @@ const BlogPost = ({ match, classes }) => {
         object-fit: cover;
     }
     `
-    let t = `<style>${style}</style>${md.render(post.text)}`;
-    t = t.replace(/\\"/g, '"');
-    t = t.replaceAll('<p><img', '<p class="image-container"><img')
+
+    useEffect(() => {
+        let t = `<style>${style}</style>${md.render(post?.text || '')}`;
+        t = t.replace(/\\"/g, '"');
+        t = t.replaceAll('<p><img', '<p class="image-container"><img');
+        setText(t);
+    }, [post, md, style]);
+
+    if (!post || !text) {
+        return <React.Fragment>Loading...</React.Fragment>
+    }
+
+    const renderContent = (text) => {
+        return <div dangerouslySetInnerHTML={{ __html: text }} style={{ paddingBottom: 200 }} />
+    }
+    
     return (
         <div className={classes.container}>
-            <div dangerouslySetInnerHTML={{ __html: t }} style={{ paddingBottom: 200 }}></div>
+            {renderContent(text)}
         </div>
-        
+
     );
 };
 

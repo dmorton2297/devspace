@@ -29,8 +29,8 @@ const ImageUpload = ({ classes, onImageChanged, existingImages, singleImage }) =
         <React.Fragment>
             <Typography variant='h1' className='bottom-margin'>Add Project Images</Typography>
             <Typography variant='h2' className='bottom-margin'>.PNG, .JPEG, .GIF allowed</Typography>
-            {images && images.map(image => (
-                <div className={classes.imageRow}>
+            {images && images.map((image, i) => (
+                <div className={classes.imageRow} key={i}>
                     <img src={image.url} alt='test' width='95%' height='500px' style={{ objectFit: 'contain' }} />
                     <div className={classes.iconContainer}>
                         <IconButton styles={{ color: 'white' }} onClick={() => onRemoveImage(image)}><CloseIcon /></IconButton>

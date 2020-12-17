@@ -2,8 +2,12 @@ import React from 'react';
 import { TextField, Typography } from '@material-ui/core';
 import { isInvalid } from '../../../utils/validator';
 import ImageUpload from '../../image-upload-input';
+import classNames from 'classnames';
+import styles from './styles';
+import { withStyles } from '@material-ui/styles';
+import BlogPost from '../../public-facing/blog-post';
 
-const BlogPostForm = ({ state, setState, step, invalid, action }) => {
+const BlogPostForm = ({ classes, state, setState, step, invalid, action }) => {
 
     const STEPS = {
         general: 'General',
@@ -14,13 +18,18 @@ const BlogPostForm = ({ state, setState, step, invalid, action }) => {
         setState({ ...state, image: images.length > 0 ? images[0] : null });
     }
 
+    const contentChanged = (event) => {
+        setState({ ...state, text: event.target.value })
+    }
+
+
     return (
         <React.Fragment>
             <Typography variant="h2">{action} Post</Typography>
             {step === STEPS.general &&
                 <React.Fragment>
                     <Typography className='margin-bottom' variant="h1">Let's get some general info ...</Typography>
-                    <div className='form-section'>
+                    <div className={'form-section'}>
                         <TextField error={isInvalid('title', invalid)} variant="outlined" label="Blog Title" defaultValue={state.title} placeholder="Name"
                             helperText={isInvalid('title', invalid) ? 'Required. Must be less than 60 characters.' : ''} onChange={(event) => {
                                 setState({ ...state, title: event.target.value })
@@ -42,13 +51,19 @@ const BlogPostForm = ({ state, setState, step, invalid, action }) => {
 
             }
             {step === STEPS.content &&
-                <TextField error={isInvalid('text', invalid)} variant="outlined" label="Text" defaultValue={state.text} placeholder="Markdown"
-                    helperText={isInvalid('text', invalid) ? 'Required' : ''} onChange={(event) => {
-                        setState({ ...state, text: event.target.value })
-                    }} multiline rows={55} />
+                <div className={classNames(classes.inputContainer, 'form-section')}>
+                    <TextField error={isInvalid('text', invalid)} variant="outlined" label="Text" defaultValue={state.text} placeholder="Markdown"
+                        helperText={isInvalid('text', invalid) ? 'Required' : ''} onChange={contentChanged} multiline rows={45}
+
+                    />
+                    <div className={classes.renderedContent}>
+                        <BlogPost match={{}} classes={{}} p={state} />
+                    </div>
+                </div>
+
             }
         </React.Fragment>
     )
 }
 
-export default BlogPostForm;
+export default withStyles(styles)(BlogPostForm);

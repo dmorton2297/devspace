@@ -59,6 +59,7 @@ const EditBlogPostModal = ({ open, onClose, blog, ariaLabelledBy, ariaDescribedb
                 text: step === STEPS.content ? 'Previous' : 'Next',
                 action: step === STEPS.content ? () => setStep(STEPS.general) : () => setStep(STEPS.content)
             }}
+            className="full-screen-modal"
             showButton={step === STEPS.content}>
             <BlogPostForm
                 state={state}

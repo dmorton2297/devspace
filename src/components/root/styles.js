@@ -63,6 +63,10 @@ const styles = theme => {
                     height: 'calc(100vh - 100px)'
                 },
             },
+            '.full-screen-modal': {
+                margin: 5,
+                height: 'calc(100vh - 100px)',
+            },
             '.bottom-margin': {
                 marginBottom: '10px !important'
             },
