@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import Root from './components/root'
+import Root from './components/views/root'
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from './theme';
 import { createStore } from 'redux';
