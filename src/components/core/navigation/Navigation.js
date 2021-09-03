@@ -7,6 +7,7 @@ import { setTab } from '../../../actions/tabActions';
 import { IconButton, Typography } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
+import { useHistory } from 'react-router';
 
 const Button = ({ classes, clicked, first, onClick, text }) => {
     return clicked ?
@@ -17,6 +18,7 @@ const Button = ({ classes, clicked, first, onClick, text }) => {
 
 
 const Navigation = ({ classes }) => {
+    const history = useHistory();
     const [space, setSpace] = useState(true);
     const [blog, setBlog] = useState(false);
     const [settings, setSettings] = useState(false);
@@ -68,7 +70,7 @@ const Navigation = ({ classes }) => {
 
     return (
         <div className={classNames(classes.container, 'navigation-container')}>
-            <div className={classes.logo}>
+            <div className={classes.logo} onClick={authenticated ? () => history.push('/app/home') : () => history.push('/')}>
                 <img src="/app-logo.png" width="160px" alt="app-logo" />
             </div>
             <div></div>

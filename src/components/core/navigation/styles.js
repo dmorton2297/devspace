@@ -12,7 +12,8 @@ const styles = theme => {
             width: '100%',
             display: 'grid',
             alignItems: 'center',
-            justifyConent: 'center'
+            justifyConent: 'center',
+            cursor: 'pointer'
         },
         navigationControl: {
             paddingLeft: 20,
